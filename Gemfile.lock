@@ -15,6 +15,7 @@ GEM
     cucumber-wire (0.0.1)
     diff-lcs (1.2.5)
     gherkin (3.2.0)
+    gosu (0.10.6)
     multi_json (1.11.2)
     multi_test (0.1.2)
     rspec (3.4.0)
@@ -36,6 +37,7 @@ PLATFORMS
 
 DEPENDENCIES
   cucumber
+  gosu
   rspec
 
 BUNDLED WITH
