@@ -10,6 +10,6 @@ When(/^I click "go"$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then(/^the browser should render the web page$/) do
+Then(/^the browser should visit the address$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
