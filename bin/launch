@@ -1,13 +1,7 @@
 #!/usr/bin/env ruby
 
-require "gosu"
+$LOAD_PATH.unshift(File.expand_path("app"))
 
-class GuiWindow < Gosu::Window
-  def initialize
-    super(640, 480)
-
-    self.caption = "Web Crisis browser"
-  end
-end
+require "gui_window"
 
 GuiWindow.new.show
