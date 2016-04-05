@@ -1,0 +1,570 @@
+HTTP/1.1 200 OK
+Date: Tue, 05 Apr 2016 17:06:02 GMT
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.1e-fips
+Expires: -1
+Cache-Control: max-age=0, must-revalidate
+Content-Length: 29458
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+        <html>
+        <head><title>Welcome to LWN.net [LWN.net]</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+        <link rel="icon" href="/images/favicon.png" type="image/png">
+        <link rel="alternate" type="application/rss+xml" title="LWN.net headlines" href="http://lwn.net/headlines/newrss">
+        <link rel="stylesheet" href="/CSS/lwn">
+<link rel="stylesheet" href="/CSS/nosub">
+<link rel="stylesheet" href="/CSS/pure-min">
+           <!--[if lte IE 8]>
+             <link rel="stylesheet" href="/CSS/grids-responsive-old-ie-min">
+           <![endif]-->
+           <!--[if gt IE 8]><!-->
+             <link rel="stylesheet" href="/CSS/grids-responsive-min">
+           <!--<![endif]-->
+           <link rel="stylesheet" href="/CSS/pure-lwn">
+           
+        
+<script type="text/javascript">var p="http",d="static";if(document.location.protocol=="https:"){p+="s";d="engine";}var z=document.createElement("script");z.type="text/javascript";z.async=true;z.src=p+"://"+d+".adzerk.net/ados.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(z,s);</script>
+<script type="text/javascript">
+var ados_keywords = ados_keywords || [];
+if( location.protocol=='https:' ) {
+        ados_keywords.push('T:SSL');
+} else {
+        ados_keywords.push('T:HTTP');
+}
+
+var ados = ados || {};
+ados.run = ados.run || [];
+ados.run.push(function() {
+
+ados_add_placement(4669, 20979, "azk13321_leaderboard", 4).setZone(16026);
+
+ados_add_placement(4669, 20979, "azk93271_right_zone", [5,10,6]).setZone(16027);
+
+ados_add_placement(4669, 20979, "azk31017_tracking", 20).setZone(20995);
+
+ados_keywords.push('S:Homepage');
+
+ados_setKeywords(ados_keywords.join(', ')); 
+ados_load();
+});</script>
+
+        </head>
+        <body bgcolor="#ffffff" link="Blue" VLINK="Green" alink="Green">
+        <a name="t"></a>
+<div id="menu"><a href="/"><img src="https://static.lwn.net/images/logo/barepenguin-70.png" class="logo"
+                 border="0" alt="LWN.net Logo">
+           <font class="logo">LWN<br>.net</font>
+           <font class="logobl">News from the source</font></a>
+           <a href="/"><img src="https://static.lwn.net/images/lcorner-ss.png" class="sslogo"
+                 border="0" alt="LWN"></a><div class="navmenu-container">
+           <ul class="navmenu">
+        <li><a class="navmenu" href="#t"><b>Content</b></a><ul><li><a href="/current/">Weekly Edition</a></li><li><a href="/Archives/">Archives</a></li><li><a href="/Search/">Search</a></li><li><a href="/Kernel/">Kernel</a></li><li><a href="/Security/">Security</a></li><li><a href="/Distributions/">Distributions</a></li><li><a href="/Calendar/">Events calendar</a></li><li><a href="/Comments/unread">Unread comments</a></li><li><hr></li><li><a href="/op/FAQ.lwn">LWN FAQ</a></li><li><a href="/op/AuthorGuide.lwn">Write for us</a></li></ul></li>
+</ul></div>
+</div> <!-- menu -->
+<div class="pure-g not-handset" style="margin-left: 10.5em">
+           <div class="not-print">
+             <div id="azk13321_leaderboard"></div>
+           </div>
+           </div>
+        <div class="topnav-container">
+<div class="not-handset"><form action="https://lwn.net/login" method="post" name="loginform"
+                 class="loginform"">
+        <b>User:</b> <input type="text" name="Username" value="" size="8" /> <b>Password:</b> <input type="password" name="Password" size="8" /> <input type="submit" name="submit" value="Log in" /></form> |
+           <form action="https://lwn.net/newaccount" method="post" class="loginform">
+           <input type="submit" name="submit" value="Register" />
+           </form>
+        </div>
+               <div class="handset-only">
+               <a href="/login"><b>Log in</b> / <b>New account</b></a>
+               </div>
+               </div><div class="pure-grid maincolumn">
+<div class="lwn-u-1 pure-u-md-19-24">
+<div class="PageHeadline">
+<h1>Welcome to LWN.net</h1>
+</div>
+<div class="ArticleText">
+<div class="pure-u-1">
+       <blockquote style="margin-top: 0">
+       LWN.net is a reader-supported news site dedicated to producing the best
+       coverage from within the Linux and free software development communities.
+       See <a href="/op/FAQ.lwn">the LWN FAQ</a> for more information, and
+       please consider <a href="/subscribe/Info">subscribing</a> to gain full
+       access and support our activities.
+       </blockquote>
+       <p>
+       </div><div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>[<font class="Subscription">$</font>] LWN.net Weekly Edition for March 31, 2016</b></div>
+        
+        <font size="-1">Posted Mar 30, 2016 23:54 UTC (Wed)</font><p>
+        The LWN.net Weekly Edition for March 31, 2016 is available.
+<p>
+        <b>Inside this week's LWN.net Weekly Edition</b>
+        <ul>
+<li> <a href="/Articles/681413/">Front</a>: MicroG; KubeCon part 2; A single node of failure.
+            <li> <a href="/Articles/681415/">Security</a>: The impending crypto monoculture; Lots of new vulnerabilities.
+            <li> <a href="/Articles/681416/">Kernel</a>: The 4.6 Merge window closes; Advanced LBR usage; Blurried boundaries in the block layer.
+            <li> <a href="/Articles/681417/">Distributions</a>: Distribution-friendly tactics in the desktop wars; Arch, Fedora, Guix, Mageia, OpenBSD, Ubuntu, ...
+            <li> <a href="/Articles/681418/">Development</a>: What's new in Git 2.8; MediaGoblin 0.9; Sphinx 1.4; String types in Rust; ...
+            <li> <a href="/Articles/681419/">Announcements</a>: MIT Media Lab open source by default, CFPs and events.
+            </ul>
+<a href="/Articles/681413/">Read more</a>
+<p>
+
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Security updates for Tuesday</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Security] Posted Apr 5, 2016 16:28 UTC (Tue) by ris</font>
+        <p>
+        <p><b>Arch Linux</b> has updated <a href="/Articles/682554/">optipng</a> (code execution).
+
+<p><b>Debian</b> has updated <a href="/Articles/682555/">mercurial</a> (three vulnerabilities) and <a href="/Articles/682556/">roundcube</a> (code execution).
+
+<p><b>Fedora</b> has updated <a href="/Articles/682557/">krb5</a> (F22: null pointer dereference) and <b>vtun</b> (<a href="/Articles/682559/">F23</a>; <a href="/Articles/682558/">F22</a>: denial of service).
+
+<p><b>Gentoo</b> has updated <a href="/Articles/682560/">xen</a> (multiple
+vulnerabilities, some from 2012).
+
+<p><b>openSUSE</b> has updated <a href="/Articles/682561/">ghostscript</a>
+(Leap42.1: buffer overflow).
+
+<p><b>Red Hat</b> has updated <a href="/Articles/682553/">nss, nss-util,
+nspr</a> (RHEL6: two vulnerabilities).
+
+<p><b>Slackware</b> has updated <a href="/Articles/682562/">thunderbird</a> (multiple vulnerabilities).
+
+<p><b>SUSE</b> has updated <a href="/Articles/682563/">xen</a> (SLE11-SP4:
+multiple vulnerabilities, some from 2013).
+
+<p><b>Ubuntu</b> has updated <a href="/Articles/682564/">libav</a> (12.04: multiple vulnerabilities) and <a href="/Articles/682565/">xchat-gnome</a> (man-in-the-middle attack).
+        <p>
+        <a href="/Articles/682566/#Comments">Comments (none posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>[<font class="Subscription">$</font>] A single Node of failure</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Development] Posted Mar 30, 2016 20:38 UTC (Wed) by n8willis</font>
+        <p>
+        <p>The web-development community was briefly thrown into chaos in late
+March when a lone Node.js developer suddenly unpublished a short but
+widely used package from the <a href="https://www.npmjs.com/">Node Package Manager</a> (npm) repository.
+The events leading up to that developer's withdrawal are
+controversial in their own right, but the chaotic effects raise even
+more serious questions for the Node.js and npm user communities.
+
+        <p>
+        <a href="/Articles/681410/">Full Story</a> (<a href="/Articles/681410/#Comments">comments: 50</a>)
+<p>
+</div>
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Garrett: There's more than one way to exploit the commons</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Distributions] Posted Apr 5, 2016 12:35 UTC (Tue) by corbet</font>
+        <p>
+        <a href="https://mjg59.dreamwidth.org/41085.html">Matthew Garrett's
+take</a> on the Debian-XScreenSaver disagreement is worth a read.
+"<span>Free software doesn't benefit from distributions antagonising their
+upstreams, even if said upstream is a cranky nightclub owner. Debian's
+users are Debian's highest priority, but those users are going to suffer if
+developers decide that not using free licenses improves their quality of
+life. Kneejerk reactions around specific instances aren't helpful, but now
+is probably a good time to start thinking about what value Debian bring to
+its upstream authors and how that can be increased.</span>"
+        <p>
+        <a href="/Articles/682519/">Comments (6 posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>[<font class="Subscription">$</font>] Distribution-friendly tactics in the desktop wars</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Distributions] Posted Mar 29, 2016 17:25 UTC (Tue) by corbet</font>
+        <p>
+        For many aspiring projects, getting accepted and shipped by popular
+distributions is an important step toward a long and successful life.  But
+even large and established projects can struggle in this area.  The <a
+href="https://dot.kde.org/2016/03/03/announcing-kde-communitys-distribution-outreach-program">distribution
+outreach program</a> recently launched by the KDE project hosted a
+discussion making it clear that KDE cannot count on the support of
+distributions without supporting them in turn.  If the participants are to
+be believed, KDE's second-place 
+position in the desktop competition can at least partially be attributed to
+how the project works with distributors.
+
+        <p>
+        <a href="/Articles/681622/">Full Story</a> (<a href="/Articles/681622/#Comments">comments: 36</a>)
+<p>
+</div>
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>New Linux-based effort to support global civil infrastructure demands</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Announcements] Posted Apr 4, 2016 22:29 UTC (Mon) by ris</font>
+        <p>
+        The Linux Foundation has announced the <a
+href="https://www.cip-project.org/">Civil Infrastructure Platform</a>,
+"<span>an open source framework that will provide the software foundation
+needed to deliver essential services for civil infrastructure and economic
+development on a global scale.</span>"  Civil infrastructure systems
+deliver critical services such as electric power, oil and gas, water,
+health care, communications, transportation and more.  "<span>The Civil
+Infrastructure Platform will aim to work upstream with the Linux 
+kernel and other open source projects to establish a “base layer” of
+industrial-grade software. This base layer will enable the use of software
+building blocks that meet safety, security, reliability and other
+requirements that are critical to industrial and civil infrastructure
+projects.</span>"
+
+        <p>
+        <a href="/Articles/682437/">Full Story</a> (<a href="/Articles/682437/#Comments">comments: 10</a>)
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>[<font class="Subscription">$</font>] Blurred boundaries in the storage stack</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Kernel] Posted Mar 24, 2016 22:55 UTC (Thu) by jake</font>
+        <p>
+        It has been <a href="/Articles/571995/">said</a> that an important part of a maintainer's role is to
+say &quot;no&quot;.  Just how this &quot;no&quot; is said can define the style and
+effectiveness of a maintainer.  Linus Torvalds recently displayed just
+how effective his style can be when saying &quot;<a href="http://mid.gmane.org/CA+55aFx_NPn0VYk=+Ad5S_r=D6J1xFmWmf7JzQ7RmkwKmdkYOg@mail.gmail.com">no</a>&quot; to a pair of fairly
+innocuous <a
+href="http://thread.gmane.org/20160302040932.16685.62789.stgit@birch.djwong.org">patches</a>
+to add a new <tt>ioctl()</tt> command for block devices — patches in
+their fifth revision that had already received &quot;Reviewed-by&quot; tags from
+Christoph Hellwig.
+<p>
+Subscribers can click below to see Neil Brown's look at how this all played out.
+
+        <p>
+        <a href="/Articles/680708/">Full Story</a> (<a href="/Articles/680708/#Comments">comments: 11</a>)
+<p>
+</div>
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Security advisories for Monday</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Security] Posted Apr 4, 2016 16:39 UTC (Mon) by ris</font>
+        <p>
+        <p><b>Arch Linux</b> has updated <a href="/Articles/682366/">squid</a> (denial of service).
+
+<p><b>Debian</b> has updated <a href="/Articles/682367/">lhasa</a> (code execution) and <a href="/Articles/682368/">srtp</a> (denial of service).
+
+<p><b>Fedora</b> has updated <b>apache-commons-collections</b> (<a
+href="/Articles/682370/">F23</a>; <a href="/Articles/682369/">F22</a>: code
+execution), <a href="/Articles/682371/">bind</a> (F22: multiple
+vulnerabilities), <a href="/Articles/682372/">bind99</a> (F22: multiple
+vulnerabilities), and <a href="/Articles/682373/">NetworkManager</a> (F23: multiple vulnerabilities).
+
+<p><b>Gentoo</b> has updated <a href="/Articles/682374/">qemu</a> (multiple
+vulnerabilities) and <a href="/Articles/682375/">xalan</a> (code execution
+from 2014).
+
+<p><b>openSUSE</b> has updated <a href="/Articles/682376/">krb5</a> (13.2: null pointer dereference).
+
+<p><b>Oracle</b> has updated <a href="/Articles/682377/">openssh</a> (OL5:
+two vulnerabilities).
+
+<p><b>Scientific Linux</b> has updated <a href="/Articles/682378/">krb5</a>
+(SL7: three vulnerabilities) and <a href="/Articles/682379/">mariadb</a>
+(SL7: multiple vulnerabilities).
+
+<p><b>Slackware</b> has updated <a href="/Articles/682380/">mercurial</a> (three vulnerabilities) and <a href="/Articles/682381/">php</a> (multiple vulnerabilities).
+        <p>
+        <a href="/Articles/682382/#Comments">Comments (none posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>LWN.net Weekly Edition for March 24, 2016</b></div>
+        
+        <font size="-1">Posted Mar 24, 2016 0:46 UTC (Thu)</font><p>
+        The LWN.net Weekly Edition for March 24, 2016 is available.
+<p>
+        <b>Inside this week's LWN.net Weekly Edition</b>
+        <ul>
+<li> <a href="/Articles/680612/">Front</a>: Firefox and cookie micromanagement;  Fighting DRM in HTML, again;  Bringing Signal to the desktop.
+            <li> <a href="/Articles/680614/">Security</a>: A slow path to a fast fix; New vulnerabilities in jenkins, proftpd, webkitgtk, xen, ...
+            <li> <a href="/Articles/680615/">Kernel</a>: 4.6 Merge window part 2; Variant symlinks; The new control group API.
+            <li> <a href="/Articles/680616/">Distributions</a>: KubeCon EU 2016, part 1: Kubernetes 1.2; FreeNAS 9.10, Redox OS, ...
+            <li> <a href="/Articles/680617/">Development</a>: Last branch records; KDE Plasma 5.6; Evergreen 2.10; Adjusting with Moore's Law; ...
+            <li> <a href="/Articles/680618/">Announcements</a>: Library Freedom Project, Werner Koch win 2015 FSF awards, Andy Grove died, Designing with LibreOffice, ...
+            </ul>
+<a href="/Articles/680612/">Read more</a>
+<p>
+
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Kernel prepatch 4.6-rc2</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Kernel] Posted Apr 3, 2016 14:34 UTC (Sun) by corbet</font>
+        <p>
+        Linus has released the <a href="/Articles/682280/">second 4.6
+prepatch</a>.
+"<span>You all know the drill by now - another week, another rc. I'd say that
+things look fairly normal at this point: it's not a big rc2, but
+that's been true lately (rc3 tends to be a bit bigger - probably just
+because it takes time for people to start noticing issues).</span>"
+        <p>
+        <a href="/Articles/682279/">Comments (none posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>KubeCon EU 2016, part 1: Kubernetes 1.2</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Distributions] Posted Mar 23, 2016 14:44 UTC (Wed) by jake</font>
+        <p>
+        <a href="http://kubecon.io">KubeCon EU</a>, held in London
+March&nbsp;10th, was the second conference dedicated to the  <a
+href="http://kubernetes.io/">Kubernetes</a> container
+orchestration system.  The sold-out attendance of 500 showed how popular
+the project has become since the release of
+version&nbsp;1.0 by Google in July 2015.  One week after the conference, version&nbsp;1.2 was <a 
+href="http://blog.kubernetes.io/2016/03/Kubernetes-1.2-even-more-performance-upgrades-plus-easier-application-deployment-and-management-.html">released</a>,
+which included many long-awaited features.
+<p>
+Subscribers can click below for part 1 of our coverage—two talks about new 1.2 features—by guest author Josh Berkus.
+
+        <p>
+        <a href="/Articles/680833/">Full Story</a> (<a href="/Articles/680833/#Comments">comments: 3</a>)
+<p>
+</div>
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Discourse 1.5 released</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Development] Posted Apr 1, 2016 22:36 UTC (Fri) by n8willis</font>
+        <p>
+        <p>Version 1.5 of the Discourse open-source discussion-and-commenting system has been
+<a
+href="http://blog.discourse.org/2016/04/discourse-1-5-released/">released</a>.
+Significant work went into rewriting the top-level "topics" page,
+resulting in a five-fold speed increase.  Administrators can now
+change and customize every object label used in the interface.  "<span>Want topics to be 'threads'? Users to be
+'funkatrons'? Like to be 'brofist'? Well, Discourse is your
+huckleberry.</span>"  Support for email comments has also been improved, and user
+groups can now exchange private messages.  The badge system, which is
+used to denote user roles and to mark popular posts, received a
+visual refresh and new documentation; user summary pages were also refreshed.
+        <p>
+        <a href="/Articles/682196/">Comments (6 posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>LWN.net Weekly Edition for March 17, 2016</b></div>
+        
+        <font size="-1">Posted Mar 17, 2016 0:06 UTC (Thu)</font><p>
+        The LWN.net Weekly Edition for March 17, 2016 is available.
+<p>
+        <b>Inside this week's LWN.net Weekly Edition</b>
+        <ul>
+<li> <a href="/Articles/679693/">Front</a>: The 2016 DPL election; ManageIQ; The Car Hacker's Handbook.
+            <li> <a href="/Articles/679695/">Security</a>: Apple, iPhones, and encryption; New vulnerabilities in chromium, ffmpeg, firefox, git, ...
+            <li> <a href="/Articles/679696/">Kernel</a>: The 4.6 merge window opens; Resource groups.
+            <li> <a href="/Articles/679697/">Distributions</a>: Modularizing Fedora; CyanogenMod, Debian Astro, SunCamp, ...
+            <li> <a href="/Articles/679698/">Development</a>: Reinventing IMAP with JMAP; Qt 5.6.0; FSF high-priority projects; LXD 2.0; ...
+            <li> <a href="/Articles/679699/">Announcements</a>: Libre Graphics magazine ends, NetDev 1.1 videos now available, TP-Link blocks open source router firmware, ...
+            </ul>
+<a href="/Articles/679693/">Read more</a>
+<p>
+
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Friday's security updates</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Security] Posted Apr 1, 2016 16:49 UTC (Fri) by n8willis</font>
+        <p>
+        <p><b>Arch Linux</b> has updated <a
+href="/Articles/682162/">jdk7-openjdk</a> (sandbox escape), <a
+href="/Articles/682163/">jre7-openjdk</a> (sandbox escape), and <a
+href="/Articles/682164/">jre7-openjdk-headless</a> (sandbox escape).
+
+<p><b>CentOS</b> has updated <a href="/Articles/682141/">krb5</a> (C7:
+multiple vulnerabilities)
+and <a href="/Articles/682142/">mariadb</a> (C7: multiple vulnerabilities). 
+
+<p><b>Fedora</b> has updated <a
+href="/Articles/682143/">kubernetes</a> (F23: improper admission check
+control). 
+
+<p><b>Mageia</b> has updated <a
+href="/Articles/682145/">chromium-browser-stable</a> (M5: multiple vulnerabilities), <a
+href="/Articles/682146/">proftpd</a> (M5: weak key usage), and <a
+href="/Articles/682147/">thunderbird/thunderbird-l10n</a> (M5:
+unspecified vulnerabilities). 
+
+<p><b>openSUSE</b> has updated <b>Chromium</b> (<a
+href="/Articles/682148/">13.2, Leap 42.1</a>; <a
+href="/Articles/682149/">SLE12 SPH</a>: multiple vulnerabilities). 
+
+<p><b>Oracle</b> has updated <a href="/Articles/682150/">krb5</a> (O7:
+multiple vulnerabilities)
+and <a href="/Articles/682151/">mariadb</a> (O7: multiple vulnerabilities). 
+
+<p><b>Red Hat</b> has updated <a href="/Articles/682134/">bind</a>
+(RHEL6: multiple vulnerabilities), <a
+href="/Articles/682135/">krb5</a> (RHEL7: multiple vulnerabilities), <a
+href="/Articles/682136/">libssh</a> (RHEL7: insecure ssh sessions), and <a
+href="/Articles/682137/">mariadb</a> (RHEL7: multiple vulnerabilities).
+        <p>
+        <a href="/Articles/682152/#Comments">Comments (none posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>The Car Hacker's Handbook</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Front] Posted Mar 16, 2016 18:48 UTC (Wed) by n8willis</font>
+        <p>
+        <a href="/Articles/680316/">
+<img src="https://static.lwn.net/images/2016/03-carhackers-cover-sm.png" border=0 hspace=5 vspace=3
+align="right" width=170 height=225 alt="[Car Hacker's Handbook]"
+title="Car Hacker's Handbook">
+</a><p>No Starch Press recently released a book about working with
+automotive software systems: <a href="https://www.nostarch.com/carhacking"><cite>The Car Hacker's Handbook: A Guide
+for the Penetration Tester</cite></a>, written by Craig Smith.  The book
+is an expansion of Smith's popular and widely circulated <a
+href="http://opengarages.org/handbook/">e-book</a> of the same
+title.  The old version remains available online at no cost, but there
+is considerably more content in the new revision&mdash;enough to make
+it a tempting purchase not just for automotive-software fans in
+general, but for those interested in embedded-device security and in
+reverse engineering other classes of consumer product.</p>
+<br clear="all">
+
+        <p>
+        <a href="/Articles/680230/">Full Story</a> (<a href="/Articles/680230/#Comments">comments: none</a>)
+<p>
+</div>
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Mono Relicensed MIT</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Development] Posted Mar 31, 2016 22:12 UTC (Thu) by n8willis</font>
+        <p>
+        <p>At the Mono Project blog, Miguel de Icaza <a href="http://www.mono-project.com/news/2016/03/31/mono-relicensed-mit/">announced</a> that the Mono runtime has been relicensed, moving from a dual-license slate (with LGPLv2 and proprietary optiona) to the MIT license.  The Mono compiler and class libraries were already under the MIT license and will remain so.    "<span>Moving the Mono runtime to the MIT license removes barriers to the adoption of C# and .NET in a large number of scenarios, embedded applications, including embedding Mono as a scripting engine in game engines or other applications.</span>"  De Icaza notes that Xamarin (which was recently acquired by Microsoft) had developed several proprietary Mono modules in recent years; these will also now be released under the MIT license.
+        <p>
+        <a href="/Articles/682051/">Comments (86 posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>Thread-level control with resource groups</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Kernel] Posted Mar 16, 2016 16:24 UTC (Wed) by corbet</font>
+        <p>
+        The kernel's <a href="/Articles/604609/">control-group mechanism</a> allows
+processes to be divided into 
+groups for the purposes of tracking and resource control.  Both the API and
+underlying implementation of this mechanism have been going through
+considerable change in recent 
+years.  As part of that change, the newer control-group API has lost the
+ability to separately 
+manage threads within a process, a loss that is not welcome in some
+quarters.  Current work to replace that functionality is not finding an
+entirely warm reception either, though.
+
+        <p>
+        <a href="/Articles/679940/">Full Story</a> (<a href="/Articles/679940/#Comments">comments: 1</a>)
+<p>
+</div>
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>Thursday's security updates</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Security] Posted Mar 31, 2016 15:46 UTC (Thu) by n8willis</font>
+        <p>
+        <p><b>Debian</b> has updated <a href="/Articles/681979/">imlib2</a>
+(multiple vulnerabilities), <a href="/Articles/681980/">libebml</a> (multiple vulnerabilities), and <a
+href="/Articles/681981/">libstruts1.2-java</a> (input validation bypass). 
+
+<p><b>Fedora</b> has updated <a href="/Articles/681982/">git</a> (F22:
+multiple vulnerabilities)
+and <b>moodle</b> (<a href="/Articles/681983/">F23</a>; <a
+href="/Articles/681984/">F22</a>: multiple vulnerabilities). 
+
+<p><b>openSUSE</b> has updated <a href="/Articles/681985/">libqt4</a>
+(Leap 42.1: unsafe SSL ciphers), <a
+href="/Articles/681986/">webkitgtk</a> (13.2, Leap 42.1: multiple vulnerabilities), and <a
+href="/Articles/681987/">xen</a> (Leap 42.1: multiple vulnerabilities). 
+
+<p><b>Red Hat</b> has updated <a
+href="/Articles/681978/">openvswitch</a> (RHEL7 OSP: code execution).
+
+<p><b>SUSE</b> has updated <a href="/Articles/681988/">pidgin-otr</a>
+(SLE12: code execution).
+        <p>
+        <a href="/Articles/681989/#Comments">Comments (none posted)</a>
+<p>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-2 fp-feature">
+<div class="Headline"><b>LWN.net Weekly Edition for March 10, 2016</b></div>
+        
+        <font size="-1">Posted Mar 10, 2016 0:26 UTC (Thu)</font><p>
+        The LWN.net Weekly Edition for March 10, 2016 is available.
+<p>
+        <b>Inside this week's LWN.net Weekly Edition</b>
+        <ul>
+<li> <a href="/Articles/678564/">Front</a>: OpenShot 2.0; Outreachy: an intern's perspective.
+            <li> <a href="/Articles/678566/">Security</a>: CVE woes and alternatives; Tor Browser fingerprinting; New vulnerabilities in chromium, gimp, kernel, mozilla, ...
+            <li> <a href="/Articles/678567/">Kernel</a>: 4.5 Development statistics;  In-band deduplication for Btrfs;  Architecture emulation containers.
+            <li> <a href="/Articles/678568/">Distributions</a>: Subgraph OS, a new security-centric desktop distribution; KDE community's Distribution Outreach Program, Debian &quot;Stretch&quot; delayed, ...
+            <li> <a href="/Articles/678569/">Development</a>: Improving writing with proselint; Firefox OS IoT projects; ownCloud 9; LLVM 3.8; ...
+            <li> <a href="/Articles/678570/">Announcements</a>: Microsoft announces SQL Server for Linux, MAME is now Free and Open Source Software, ...
+            </ul>
+<a href="/Articles/678564/">Read more</a>
+<p>
+
+</div><div class="pure-u-1 pure-u-md-11-24">
+<div class="Headline"><b>MIT Media Lab defaults to free &amp; open source software (NetworkWorld)</b></div>
+        
+        <div class="BlurbListing">
+        <font size="-1">[Announcements] Posted Mar 30, 2016 18:32 UTC (Wed) by ris</font>
+        <p>
+        NetworkWorld <a
+href="http://www.networkworld.com/article/3049331/open-source-tools/mit-media-lab-defaults-to-free-open-source-software.html">reports</a>
+that software developed at MIT Media Lab will be open source by default.  "<span>This effort does away with developers having to get such licenses approved first by an internal committee, which [Lab Director Joi Ito] says "always allowed our developers to open-source their work" anyway.</span>"
+        <p>
+        <a href="/Articles/681784/">Comments (2 posted)</a>
+<p>
+</div>
+</div>
+<p><a href="/Articles/?offset=6">--&gt; More news items</a>
+       </td></tr></table>
+       
+</div> <!-- ArticleText -->
+</div>
+<div class="lwn-u-1 pure-u-md-1-6 not-print">
+<div id="azk93271_right_zone"></div>
+</div>
+</div> <!-- pure-grid -->
+
+        <br clear="all">
+        <center>
+        <P>
+        <font size="-2">
+        Copyright &copy; 2016, Eklektix, Inc.<BR>
+        
+        Comments and public postings are copyrighted by their creators.<br>
+        Linux  is a registered trademark of Linus Torvalds<br>
+        </font>
+        </center>
+        
+        </body></html>
+        
