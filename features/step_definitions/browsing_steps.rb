@@ -12,5 +12,5 @@ When(/^I click "go"$/) do
 end
 
 Then(/^the browser should visit the address$/) do
-  expect(engine).to have_received(:visit).with(@address)
+  expect(a_request(:get, @address)).to have_been_made.once
 end

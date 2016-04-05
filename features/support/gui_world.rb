@@ -4,14 +4,7 @@ require "gui_window"
 
 module GuiWorld
   def browser
-    @browser ||= begin
-      allow(engine).to receive(:visit).and_call_original
-      GuiWindow.new(engine)
-    end
-  end
-
-  def engine
-    @engine ||= Engine.new(Fetcher.new)
+    @browser ||= GuiWindow.new(Engine.new(Fetcher.new))
   end
 
   def launch_browser
