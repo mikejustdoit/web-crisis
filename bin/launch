@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative "../config/env"
+require "engine"
 require "gui_window"
 
-GuiWindow.new.show
+GuiWindow.new(Engine.new).show
