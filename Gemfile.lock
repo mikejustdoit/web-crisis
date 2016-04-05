@@ -1,7 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.4.0)
     builder (3.2.2)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     cucumber (2.3.3)
       builder (>= 2.1.2)
       cucumber-core (~> 1.4.0)
@@ -14,10 +17,21 @@ GEM
       gherkin (~> 3.2.0)
     cucumber-wire (0.0.1)
     diff-lcs (1.2.5)
+    domain_name (0.5.20160310)
+      unf (>= 0.0.5, < 1.0.0)
     gherkin (3.2.0)
     gosu (0.10.6)
+    hashdiff (0.3.0)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    mime-types (2.99.1)
     multi_json (1.11.2)
     multi_test (0.1.2)
+    netrc (0.11.0)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -31,6 +45,14 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    safe_yaml (1.0.4)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
+    webmock (1.24.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
@@ -38,7 +60,9 @@ PLATFORMS
 DEPENDENCIES
   cucumber
   gosu
+  rest-client
   rspec
+  webmock
 
 BUNDLED WITH
    1.11.2
