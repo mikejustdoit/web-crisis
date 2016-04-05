@@ -13,6 +13,10 @@ class GuiWindow < Gosu::Window
 
   attr_accessor :address
 
+  def go
+    engine.visit(address)
+  end
+
   private
 
   attr_reader :engine
