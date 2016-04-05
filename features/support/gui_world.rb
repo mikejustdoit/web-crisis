@@ -1,4 +1,5 @@
 require "engine"
+require "fetcher"
 require "gui_window"
 
 module GuiWorld
@@ -10,7 +11,7 @@ module GuiWorld
   end
 
   def engine
-    @engine ||= Engine.new
+    @engine ||= Engine.new(Fetcher.new)
   end
 
   def launch_browser

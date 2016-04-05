@@ -2,6 +2,9 @@
 
 require_relative "../config/env"
 require "engine"
+require "fetcher"
 require "gui_window"
 
-GuiWindow.new(Engine.new).show
+GuiWindow.new(
+  Engine.new(Fetcher.new)
+).show
