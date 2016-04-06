@@ -37,20 +37,4 @@ RSpec.describe Node do
       end
     end
   end
-
-  describe "counting all nodes in tree" do
-    subject(:node) { Node.new(children: children) }
-    let(:children) { [Node.new, Node.new(children: grandchildren)] }
-    let(:grandchildren) { [Node.new, Node.new] }
-
-    node_counter = ->(node) {
-      node.map_children(->(child) { node_counter.call(child) }).inject(1, :+)
-    }
-
-    it "allows walking the whole tree" do
-      expect(
-        node_counter.call(node)
-      ).to eq(1 + children.size + grandchildren.size)
-    end
-  end
 end
