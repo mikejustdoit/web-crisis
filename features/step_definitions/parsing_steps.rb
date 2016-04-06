@@ -1,9 +1,9 @@
 Given(/^the HTML input:$/) do |html|
-  pending # Write code here that turns the phrase above into concrete actions
+  @html_input = html
 end
 
 When(/^I run the parser$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @tree = parse_html(@html_input)
 end
 
 INTEGER_PATTERN = Transform(/^\d+$/) do |n|
@@ -11,5 +11,5 @@ INTEGER_PATTERN = Transform(/^\d+$/) do |n|
 end
 
 Then(/^the resulting tree should have (#{INTEGER_PATTERN}) nodes$/) do |n|
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(tree_size(@tree)).to eq(n)
 end
