@@ -8,7 +8,6 @@ Feature: parsing HTML
     When I run the parser
     Then the resulting tree should have 2 nodes
 
-  @wip
   Scenario: handling unrenderable element types
     Given the HTML input:
       """
