@@ -1,8 +1,9 @@
 require "gosu"
 
 class GuiWindow < Gosu::Window
-  def initialize(engine)
+  def initialize(engine, finished_draw = default_callback)
     @engine = engine
+    @finished_draw = finished_draw
 
     @address = ""
 
@@ -19,6 +20,8 @@ class GuiWindow < Gosu::Window
     engine.visit(address)
 
     @needs_redraw = false
+
+    finished_draw.call
   end
 
   def needs_redraw?
@@ -31,5 +34,9 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :engine, :needs_redraw
+  attr_reader :engine, :finished_draw, :needs_redraw
+
+  def default_callback
+    -> {}
+  end
 end
