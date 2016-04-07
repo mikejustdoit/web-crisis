@@ -1,4 +1,5 @@
 require "node"
+require "text_node"
 
 class NodeFactory
   def initialize(renderable_types:, parsed_element:)
@@ -7,7 +8,16 @@ class NodeFactory
   end
 
   def call
-    Node.new(children: children) if is_renderable?
+    if is_renderable?
+      case parsed_element.name
+      when "text"
+        parsed_element.content.strip.split("\n").map { |content|
+          TextNode.new(content: content)
+        }
+      else
+        Node.new(children: children)
+      end
+    end
   end
 
   private
@@ -24,6 +34,6 @@ class NodeFactory
         renderable_types: renderable_types,
         parsed_element: child,
       ).call
-    }.compact
+    }.flatten.compact
   end
 end
