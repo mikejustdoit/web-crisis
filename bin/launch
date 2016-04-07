@@ -1,10 +1,17 @@
 #!/usr/bin/env ruby
 
 require_relative "../config/env"
+require "drawing_visitor"
 require "engine"
 require "fetcher"
+require "gosu_text_renderer"
 require "gui_window"
+require "parser"
 
 GuiWindow.new(
-  Engine.new(Fetcher.new)
+  Engine.new(
+    fetcher: Fetcher.new,
+    drawing_visitor: DrawingVisitor.new(GosuTextRenderer.new),
+    parser: Parser.new,
+  )
 ).show

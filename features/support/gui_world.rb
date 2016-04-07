@@ -1,12 +1,19 @@
+require "drawing_visitor"
 require "engine"
 require "fetcher"
+require "gosu_text_renderer"
 require "gui_window"
+require "parser"
 require "thread"
 
 module GuiWorld
   def browser
     @browser ||= GuiWindow.new(
-      Engine.new(Fetcher.new),
+      Engine.new(
+        fetcher: Fetcher.new,
+        drawing_visitor: DrawingVisitor.new(text_renderer),
+        parser: Parser.new,
+      ),
       draw_callback,
     )
   end
@@ -32,11 +39,15 @@ module GuiWorld
   end
 
   def page_contains(text)
-    expect(text_rendering_thing).to have_received(:draw_text).with(/#{text}/)
+    expect(text_renderer).to have_received(:call).with(/#{text}/)
   end
 
-  def text_rendering_thing
-    double(:text_rendering_thing, :draw_text => nil)
+  def text_renderer
+    @text_renderer ||= begin
+      GosuTextRenderer.new.tap { |tr|
+        allow(tr).to receive(:call).and_call_original
+      }
+    end
   end
 end
 
