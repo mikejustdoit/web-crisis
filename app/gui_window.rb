@@ -6,6 +6,8 @@ class GuiWindow < Gosu::Window
 
     @address = ""
 
+    @needs_redraw = false
+
     super(640, 480)
 
     self.caption = "Web Crisis browser"
@@ -13,11 +15,21 @@ class GuiWindow < Gosu::Window
 
   attr_accessor :address
 
-  def go
+  def draw
     engine.visit(address)
+
+    @needs_redraw = false
+  end
+
+  def needs_redraw?
+    needs_redraw
+  end
+
+  def go
+    @needs_redraw = true
   end
 
   private
 
-  attr_reader :engine
+  attr_reader :engine, :needs_redraw
 end
