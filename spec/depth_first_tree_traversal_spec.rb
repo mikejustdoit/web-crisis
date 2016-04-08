@@ -1,3 +1,4 @@
+require "drawing_visitor"
 require "node"
 require "text_node"
 
@@ -8,7 +9,13 @@ RSpec.describe "depth-first tree traversal" do
 
   let(:all_nodes) { [root] + children + grandchildren }
 
-  let(:drawing_visitor) { double(:drawing_visitor, :draw_text => nil) }
+  let(:drawing_visitor) {
+    DrawingVisitor.new(
+      box_renderer: renderer,
+      text_renderer: renderer,
+    )
+  }
+  let(:renderer) { double(:renderer, :call => nil) }
 
   before do
     all_nodes.each do |node|
