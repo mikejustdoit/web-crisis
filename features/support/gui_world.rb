@@ -1,6 +1,7 @@
 require "drawing_visitor"
 require "engine"
 require "fetcher"
+require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
 require "parser"
@@ -11,7 +12,7 @@ module GuiWorld
     @browser ||= GuiWindow.new(
       Engine.new(
         fetcher: Fetcher.new,
-        drawing_visitor: DrawingVisitor.new(text_renderer),
+        drawing_visitor: drawing_visitor,
         parser: Parser.new,
       ),
       draw_callback,
@@ -42,12 +43,23 @@ module GuiWorld
     expect(text_renderer).to have_received(:call).with(/#{text}/)
   end
 
+  def drawing_visitor
+    DrawingVisitor.new(
+      box_renderer: box_renderer,
+      text_renderer: text_renderer,
+    )
+  end
+
   def text_renderer
     @text_renderer ||= begin
       GosuTextRenderer.new.tap { |tr|
         allow(tr).to receive(:call).and_call_original
       }
     end
+  end
+
+  def box_renderer
+    GosuBoxRenderer.new
   end
 end
 

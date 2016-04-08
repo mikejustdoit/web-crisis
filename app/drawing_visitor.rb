@@ -1,6 +1,11 @@
 class DrawingVisitor
-  def initialize(text_renderer)
+  def initialize(box_renderer:, text_renderer:)
+    @box_renderer = box_renderer
     @text_renderer = text_renderer
+  end
+
+  def draw_box(x, y, width, height)
+    box_renderer.call(x, y, width, height)
   end
 
   def draw_text(text)
@@ -9,5 +14,5 @@ class DrawingVisitor
 
   private
 
-  attr_reader :text_renderer
+  attr_reader :box_renderer, :text_renderer
 end
