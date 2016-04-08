@@ -8,7 +8,7 @@ class GosuTextRenderer
   private
 
   def font
-    Gosu::Font.new(height, {:name => name})
+    @font ||= Gosu::Font.new(height, {:name => name})
   end
 
   def height
