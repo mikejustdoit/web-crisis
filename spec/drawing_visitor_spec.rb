@@ -1,3 +1,4 @@
+require "box"
 require "drawing_visitor"
 
 RSpec.describe DrawingVisitor do
@@ -23,10 +24,11 @@ RSpec.describe DrawingVisitor do
   end
 
   describe "drawing boxes" do
+    let(:box) { Box.new(*box_attributes) }
     let(:box_attributes) { [0, 1, 2, 3] }
 
     before do
-      drawing_visitor.draw_box(*box_attributes)
+      drawing_visitor.draw_box(box)
     end
 
     it "delegates the actual drawing to the box renderer" do
