@@ -1,3 +1,4 @@
+require "box"
 require "node"
 
 RSpec.describe Node do
@@ -35,6 +36,33 @@ RSpec.describe Node do
           expect(node.map_children(->(child) { child })).to eq(children)
         end
       end
+    end
+  end
+
+  describe "working with node's box" do
+    subject(:node) { Node.new(box: box) }
+    let(:box) { Box.new(*box_attributes) }
+    let(:box_attributes) { [0, 1, 2, 3] }
+
+    let(:new_box) { double(:new_box) }
+
+    it "allows reading box through getter" do
+      expect(node.box).to eq(box)
+    end
+  end
+
+  describe "drawing its box" do
+    subject(:node) { Node.new(box: box) }
+    let(:box) { Box.new(0, 0, 10, 20) }
+
+    let(:drawing_visitor) { double(:drawing_visitor, :draw_box => nil) }
+
+    before do
+      node.draw(drawing_visitor)
+    end
+
+    it "supplies its position and dimensions to drawing visitor" do
+      expect(drawing_visitor).to have_received(:draw_box).with(box)
     end
   end
 end
