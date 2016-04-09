@@ -17,7 +17,7 @@ class GuiWindow < Gosu::Window
   attr_accessor :address
 
   def draw
-    engine.visit(address)
+    engine.request(address)
 
     @needs_redraw = false
 

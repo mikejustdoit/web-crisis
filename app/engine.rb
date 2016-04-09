@@ -5,7 +5,7 @@ class Engine
     @parser = parser
   end
 
-  def visit(uri)
+  def request(uri)
     root_node_for(uri).draw(
       drawing_visitor
     )
