@@ -7,6 +7,10 @@ class TextNode
     drawing_visitor.draw_text(content)
   end
 
+  def map_children(_mapper)
+    []
+  end
+
   private
 
   attr_reader :content
