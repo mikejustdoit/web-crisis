@@ -47,6 +47,27 @@ RSpec.describe Node do
     it "allows reading box through getter" do
       expect(node.box).to eq(box)
     end
+
+    describe "creating a new node with a new box" do
+      let(:new_box) { Box.new(10, 10, 50, 50) }
+
+      before do
+        @returned_node = node.with_box(new_box)
+      end
+
+      it "doesn't change the old node's box" do
+        expect(node.box).to eq(box)
+        expect(node.box).not_to eq(new_box)
+      end
+
+      it "returns a new node" do
+        expect(@returned_node).not_to eq(node)
+      end
+
+      it "assigns the new box to the new node" do
+        expect(@returned_node.box).to eq(new_box)
+      end
+    end
   end
 
   describe "drawing its box" do

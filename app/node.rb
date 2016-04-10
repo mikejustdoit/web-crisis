@@ -16,6 +16,13 @@ class Node
     drawing_visitor.draw_box(box)
   end
 
+  def with_box(new_box)
+    Node.new(
+      box: new_box,
+      children: children,
+    )
+  end
+
   private
 
   attr_reader :children
