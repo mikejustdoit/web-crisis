@@ -11,6 +11,10 @@ class TextNode
     []
   end
 
+  def layout(layout_visitor)
+    layout_visitor.layout_text_node(self)
+  end
+
   private
 
   attr_reader :content

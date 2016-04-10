@@ -16,6 +16,10 @@ class Node
     drawing_visitor.draw_box(box)
   end
 
+  def layout(layout_visitor)
+    layout_visitor.layout_node(self)
+  end
+
   def with_box(new_box)
     Node.new(
       box: new_box,

@@ -84,4 +84,19 @@ RSpec.describe Node do
       expect(drawing_visitor).to have_received(:draw_box).with(box)
     end
   end
+
+  describe "laying itself out" do
+    subject(:node) { Node.new(box: box) }
+    let(:box) { Box.new(0, 0, 10, 20) }
+
+    let(:layout_visitor) { double(:layout_visitor, :layout_node => nil) }
+
+    before do
+      node.layout(layout_visitor)
+    end
+
+    it "supplies itself to layout visitor" do
+      expect(layout_visitor).to have_received(:layout_node).with(node)
+    end
+  end
 end
