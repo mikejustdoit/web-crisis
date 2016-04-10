@@ -8,6 +8,7 @@ require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
 require "parser"
+require "root_node_dimensions_setter"
 
 GuiWindow.new(
   Engine.new(
@@ -16,6 +17,7 @@ GuiWindow.new(
       box_renderer: GosuBoxRenderer.new,
       text_renderer: GosuTextRenderer.new,
     ),
+    layout_visitor_factory: RootNodeDimensionsSetter.method(:new),
     parser: Parser.new,
   )
 ).show

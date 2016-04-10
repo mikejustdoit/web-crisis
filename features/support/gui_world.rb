@@ -5,6 +5,7 @@ require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
 require "parser"
+require "root_node_dimensions_setter"
 require "thread"
 
 module GuiWorld
@@ -13,6 +14,7 @@ module GuiWorld
       Engine.new(
         fetcher: Fetcher.new,
         drawing_visitor: drawing_visitor,
+        layout_visitor_factory: layout_visitor_factory,
         parser: Parser.new,
       ),
       draw_callback,
@@ -60,6 +62,10 @@ module GuiWorld
 
   def box_renderer
     GosuBoxRenderer.new
+  end
+
+  def layout_visitor_factory
+    RootNodeDimensionsSetter.method(:new)
   end
 end
 
