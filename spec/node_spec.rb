@@ -44,8 +44,6 @@ RSpec.describe Node do
     let(:box) { Box.new(*box_attributes) }
     let(:box_attributes) { [0, 1, 2, 3] }
 
-    let(:new_box) { double(:new_box) }
-
     it "allows reading box through getter" do
       expect(node.box).to eq(box)
     end
