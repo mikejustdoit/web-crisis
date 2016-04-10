@@ -22,7 +22,7 @@ RSpec.describe "depth-first tree traversal" do
       allow(node).to receive(:draw).and_call_original
     end
 
-    root.draw(drawing_visitor)
+    drawing_visitor.visit(root)
   end
 
   it "sends #draw to all nodes once in depth-first order" do

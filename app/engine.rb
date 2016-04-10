@@ -6,8 +6,8 @@ class Engine
   end
 
   def request(uri)
-    root_node_for(uri).draw(
-      drawing_visitor
+    drawing_visitor.visit(
+      root_node_for(uri)
     )
   end
 

@@ -14,19 +14,11 @@ class Node
 
   def draw(drawing_visitor)
     drawing_visitor.draw_box(box)
-
-    draw_children(drawing_visitor)
   end
 
   private
 
   attr_reader :children
-
-  def draw_children(drawing_visitor)
-    children.each do |child|
-      child.draw(drawing_visitor)
-    end
-  end
 
   def empty_box
     Box.new(0, 0, 0, 0)
