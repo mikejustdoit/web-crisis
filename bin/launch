@@ -10,7 +10,7 @@ require "gui_window"
 require "parser"
 require "root_node_dimensions_setter"
 
-GuiWindow.new(
+browser = GuiWindow.new(
   Engine.new(
     fetcher: Fetcher.new,
     drawing_visitor: DrawingVisitor.new(
@@ -20,4 +20,6 @@ GuiWindow.new(
     layout_visitor_factory: RootNodeDimensionsSetter.method(:new),
     parser: Parser.new,
   )
-).show
+)
+
+browser.show
