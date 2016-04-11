@@ -10,6 +10,13 @@ require "gui_window"
 require "parser"
 require "root_node_dimensions_setter"
 
+uri = ARGV[0]
+
+if uri.nil? || uri.empty?
+  STDERR.puts("Usage: #{$0} a_web_address")
+  exit(1)
+end
+
 browser = GuiWindow.new(
   Engine.new(
     fetcher: Fetcher.new,
@@ -22,11 +29,7 @@ browser = GuiWindow.new(
   )
 )
 
-uri = ARGV[0]
-
-if uri
-  browser.address = uri
-  browser.go
-end
+browser.address = uri
+browser.go
 
 browser.show
