@@ -22,4 +22,11 @@ browser = GuiWindow.new(
   )
 )
 
+uri = ARGV[0]
+
+if uri
+  browser.address = uri
+  browser.go
+end
+
 browser.show
