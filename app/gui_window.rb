@@ -1,4 +1,6 @@
 require "gosu"
+require "gosu_box_renderer"
+require "gosu_text_renderer"
 
 class GuiWindow < Gosu::Window
   def initialize(engine, finished_draw = default_callback)
@@ -17,7 +19,7 @@ class GuiWindow < Gosu::Window
   attr_accessor :address
 
   def draw
-    engine.request(address, width, height)
+    engine.request(address, width, height, box_renderer, text_renderer)
 
     @needs_redraw = false
 
@@ -38,5 +40,13 @@ class GuiWindow < Gosu::Window
 
   def default_callback
     -> {}
+  end
+
+  def box_renderer
+    GosuBoxRenderer.new
+  end
+
+  def text_renderer
+    GosuTextRenderer.new
   end
 end

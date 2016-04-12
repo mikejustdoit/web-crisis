@@ -5,7 +5,7 @@ RSpec.describe Engine do
     subject(:engine) {
       Engine.new(
         fetcher: fetcher,
-        drawing_visitor: drawing_visitor,
+        drawing_visitor_factory: drawing_visitor_factory,
         layout_visitor_factory: layout_visitor_factory,
         parser: parser,
       )
@@ -13,6 +13,9 @@ RSpec.describe Engine do
 
     let(:fetcher) { double(:fetcher, :call => nil) }
     let(:drawing_visitor) { double(:drawing_visitor, :visit => nil) }
+    let(:drawing_visitor_factory) {
+      double(:drawing_visitor_factory, :call => drawing_visitor)
+    }
     let(:layout_visitor) { double(:layout_visitor, :visit => nil) }
     let(:layout_visitor_factory) {
       double(:layout_visitor_factory, :call => layout_visitor)
@@ -20,7 +23,13 @@ RSpec.describe Engine do
     let(:parser) { double(:parser, :call => nil) }
 
     before do
-      engine.request("https://weworkremotely.com/", 640, 480)
+      engine.request(
+        "https://weworkremotely.com/",
+        640,
+        480,
+        double(:box_renderer),
+        double(:text_renderer),
+      )
     end
 
     it "calls its callable collaborators" do

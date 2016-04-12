@@ -1,7 +1,6 @@
 require "drawing_visitor"
 require "engine"
 require "fetcher"
-require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
 require "parser"
@@ -13,7 +12,7 @@ module GuiWorld
     @browser ||= GuiWindow.new(
       Engine.new(
         fetcher: Fetcher.new,
-        drawing_visitor: drawing_visitor,
+        drawing_visitor_factory: drawing_visitor_factory,
         layout_visitor_factory: layout_visitor_factory,
         parser: Parser.new,
       ),
@@ -27,6 +26,8 @@ module GuiWorld
 
   def launch_browser
     @browser_thread = Thread.new do
+      spy_text_renderer
+
       browser.show
     end
   end
@@ -45,23 +46,21 @@ module GuiWorld
     expect(text_renderer).to have_received(:call).with(/#{text}/)
   end
 
-  def drawing_visitor
-    DrawingVisitor.new(
-      box_renderer: box_renderer,
-      text_renderer: text_renderer,
-    )
+  def drawing_visitor_factory
+    DrawingVisitor.method(:new)
+  end
+
+  def spy_text_renderer
+    text_renderer
   end
 
   def text_renderer
     @text_renderer ||= begin
       GosuTextRenderer.new.tap { |tr|
+        allow(GosuTextRenderer).to receive(:new).and_return(tr)
         allow(tr).to receive(:call).and_call_original
       }
     end
-  end
-
-  def box_renderer
-    GosuBoxRenderer.new
   end
 
   def layout_visitor_factory

@@ -20,10 +20,7 @@ end
 browser = GuiWindow.new(
   Engine.new(
     fetcher: Fetcher.new,
-    drawing_visitor: DrawingVisitor.new(
-      box_renderer: GosuBoxRenderer.new,
-      text_renderer: GosuTextRenderer.new,
-    ),
+    drawing_visitor_factory: DrawingVisitor.method(:new),
     layout_visitor_factory: RootNodeDimensionsSetter.method(:new),
     parser: Parser.new,
   )
