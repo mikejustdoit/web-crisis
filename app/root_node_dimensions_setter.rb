@@ -1,9 +1,9 @@
 require "box"
 
 class RootNodeDimensionsSetter
-  def initialize(window_width, window_height)
-    @window_width = window_width
-    @window_height = window_height
+  def initialize(viewport_width, viewport_height)
+    @viewport_width = viewport_width
+    @viewport_height = viewport_height
   end
 
   def visit(tree)
@@ -15,13 +15,13 @@ class RootNodeDimensionsSetter
       Box.new(
         node.box.x,
         node.box.y,
-        window_width,
-        window_height,
+        viewport_width,
+        viewport_height,
       )
     )
   end
 
   private
 
-  attr_reader :window_width, :window_height
+  attr_reader :viewport_width, :viewport_height
 end

@@ -6,13 +6,13 @@ class Engine
     @parser = parser
   end
 
-  def request(uri, window_width, window_height, box_renderer, text_renderer)
+  def request(uri, viewport_width, viewport_height, box_renderer, text_renderer)
     drawing_visitor_factory.call(
       box_renderer: box_renderer,
       text_renderer: text_renderer,
     )
       .visit(
-        layout_for(uri, window_width, window_height)
+        layout_for(uri, viewport_width, viewport_height)
       )
   end
 
@@ -20,8 +20,8 @@ class Engine
 
   attr_reader :drawing_visitor_factory, :fetcher, :layout_visitor_factory, :parser
 
-  def layout_for(uri, window_width, window_height)
-    layout_visitor_factory.call(window_width, window_height)
+  def layout_for(uri, viewport_width, viewport_height)
+    layout_visitor_factory.call(viewport_width, viewport_height)
       .visit(
         root_node_for(uri)
       )

@@ -8,10 +8,10 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:grandchildren) { [TextNode.new(content: "ABC"), Node.new] }
 
   let(:layout_visitor) {
-    RootNodeDimensionsSetter.new(window_width, window_height)
+    RootNodeDimensionsSetter.new(viewport_width, viewport_height)
   }
-  let(:window_width) { 640 }
-  let(:window_height) { 480 }
+  let(:viewport_width) { 640 }
+  let(:viewport_height) { 480 }
 
   describe "not traversing the tree" do
     before do
@@ -32,9 +32,9 @@ RSpec.describe RootNodeDimensionsSetter do
       expect(returned_node).not_to eq(root)
     end
 
-    it "sets the returned root node's dimensions to window's" do
-      expect(returned_node.box.width).to eq(window_width)
-      expect(returned_node.box.height).to eq(window_height)
+    it "sets the returned root node's dimensions to viewport's" do
+      expect(returned_node.box.width).to eq(viewport_width)
+      expect(returned_node.box.height).to eq(viewport_height)
     end
   end
 end

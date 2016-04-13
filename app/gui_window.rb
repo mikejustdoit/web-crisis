@@ -19,7 +19,13 @@ class GuiWindow < Gosu::Window
   attr_accessor :address
 
   def draw
-    engine.request(address, width, height, box_renderer, text_renderer)
+    engine.request(
+      address,
+      viewport_width,
+      viewport_height,
+      box_renderer,
+      text_renderer,
+    )
 
     @needs_redraw = false
 
@@ -40,6 +46,14 @@ class GuiWindow < Gosu::Window
 
   def default_callback
     -> {}
+  end
+
+  def viewport_width
+    width
+  end
+
+  def viewport_height
+    height
   end
 
   def box_renderer
