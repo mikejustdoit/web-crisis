@@ -11,13 +11,20 @@ RSpec.describe GosuTextRenderer do
 
     describe "#call" do
       let(:text) { "OHAI" }
+      let(:implicit_text_x) { 0 }
+      let(:implicit_text_y) { 0 }
 
       before do
         gosu_text_renderer.call(text)
       end
 
       it "creates a Gosu::Font and draws the text with it" do
-        expect(gosu_font).to have_received(:draw).with(text, any_args)
+        expect(gosu_font).to have_received(:draw).with(
+          text,
+          implicit_text_x,
+          implicit_text_y,
+          any_args,
+        )
       end
     end
   end
