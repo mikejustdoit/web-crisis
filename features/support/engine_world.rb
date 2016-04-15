@@ -3,7 +3,7 @@ require "fetcher"
 require "parser"
 require "root_node_dimensions_setter"
 
-module GuiWorld
+module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
@@ -32,4 +32,4 @@ module GuiWorld
   end
 end
 
-World(GuiWorld)
+World(EngineWorld)
