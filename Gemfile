@@ -5,4 +5,5 @@ gem "rspec"
 gem "webmock"
 
 gem "gosu"
+gem "nokogiri"
 gem "rest-client"
