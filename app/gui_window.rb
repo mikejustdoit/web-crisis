@@ -3,8 +3,12 @@ require "gosu_box_renderer"
 require "gosu_text_renderer"
 
 class GuiWindow < Gosu::Window
-  def initialize(engine, finished_draw = default_callback)
+  def initialize(engine:, drawing_visitor_factory:, finished_draw: default_callback)
     @engine = engine
+    @drawing_visitor = drawing_visitor_factory.call(
+      box_renderer: box_renderer,
+      text_renderer: text_renderer,
+    )
     @finished_draw = finished_draw
 
     @address = ""
@@ -19,12 +23,12 @@ class GuiWindow < Gosu::Window
   attr_accessor :address
 
   def draw
-    engine.request(
-      address,
-      viewport_width,
-      viewport_height,
-      box_renderer,
-      text_renderer,
+    drawing_visitor.visit(
+      engine.request(
+        address,
+        viewport_width,
+        viewport_height,
+      )
     )
 
     @needs_redraw = false
@@ -42,7 +46,7 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :engine, :finished_draw, :needs_redraw
+  attr_reader :drawing_visitor, :engine, :finished_draw, :needs_redraw
 
   def default_callback
     -> {}

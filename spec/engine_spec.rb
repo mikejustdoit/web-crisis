@@ -1,34 +1,30 @@
 require "engine"
+require "node"
 
 RSpec.describe Engine do
+  subject(:engine) {
+    Engine.new(
+      fetcher: fetcher,
+      layout_visitor_factory: layout_visitor_factory,
+      parser: parser,
+    )
+  }
+
+  let(:fetcher) { double(:fetcher, :call => nil) }
+  let(:layout_visitor) { double(:layout_visitor, :visit => a_tree) }
+  let(:layout_visitor_factory) {
+    double(:layout_visitor_factory, :call => layout_visitor)
+  }
+  let(:parser) { double(:parser, :call => nil) }
+
+  let(:a_tree) { Node.new }
+
   describe "relationship with its collaborators" do
-    subject(:engine) {
-      Engine.new(
-        fetcher: fetcher,
-        drawing_visitor_factory: drawing_visitor_factory,
-        layout_visitor_factory: layout_visitor_factory,
-        parser: parser,
-      )
-    }
-
-    let(:fetcher) { double(:fetcher, :call => nil) }
-    let(:drawing_visitor) { double(:drawing_visitor, :visit => nil) }
-    let(:drawing_visitor_factory) {
-      double(:drawing_visitor_factory, :call => drawing_visitor)
-    }
-    let(:layout_visitor) { double(:layout_visitor, :visit => nil) }
-    let(:layout_visitor_factory) {
-      double(:layout_visitor_factory, :call => layout_visitor)
-    }
-    let(:parser) { double(:parser, :call => nil) }
-
     before do
       engine.request(
         "https://weworkremotely.com/",
         640,
         480,
-        double(:box_renderer),
-        double(:text_renderer),
       )
     end
 
@@ -40,7 +36,20 @@ RSpec.describe Engine do
 
     it "starts its visitors visiting" do
       expect(layout_visitor).to have_received(:visit)
-      expect(drawing_visitor).to have_received(:visit)
+    end
+  end
+
+  describe "#fetch returning a layed-out tree" do
+    let(:returned_tree) {
+      engine.request(
+        "https://weworkremotely.com/",
+        640,
+        480,
+      )
+    }
+
+    it "should return a tree alright" do
+      expect(returned_tree).to respond_to(:map_children)
     end
   end
 end

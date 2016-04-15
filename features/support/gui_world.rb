@@ -10,13 +10,13 @@ require "thread"
 module GuiWorld
   def browser
     @browser ||= GuiWindow.new(
-      Engine.new(
+      engine: Engine.new(
         fetcher: Fetcher.new,
-        drawing_visitor_factory: drawing_visitor_factory,
         layout_visitor_factory: layout_visitor_factory,
         parser: Parser.new,
       ),
-      draw_callback,
+      drawing_visitor_factory: drawing_visitor_factory,
+      finished_draw: draw_callback,
     )
   end
 
