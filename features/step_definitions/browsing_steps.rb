@@ -14,5 +14,5 @@ Then(/^the browser should visit the address$/) do
 end
 
 Then(/^the browser should render the web page$/) do
-  page_contains("Welcome to LWN.net")
+  page_displays_heading("Welcome to LWN.net")
 end

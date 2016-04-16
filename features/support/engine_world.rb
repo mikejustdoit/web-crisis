@@ -1,5 +1,6 @@
 require "engine"
 require "fetcher"
+require "inspector"
 require "parser"
 require "root_node_dimensions_setter"
 
@@ -24,7 +25,18 @@ module EngineWorld
     480
   end
 
-  def page_contains(text)
+  def page_displays_heading(text)
+    expect_text_to_be_at_top(text)
+  end
+
+  def expect_text_to_be_at_top(text)
+    node = page.find_nodes_with_text(text).first
+
+    expect(node.box.y).to be < 100
+  end
+
+  def page
+    Inspector.new(@render_tree)
   end
 
   def layout_visitor_factory
