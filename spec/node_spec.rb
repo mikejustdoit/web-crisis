@@ -99,4 +99,21 @@ RSpec.describe Node do
       expect(layout_visitor).to have_received(:layout_node).with(node)
     end
   end
+
+  describe "#content" do
+    context "with children" do
+      let(:node) { Node.new(children: children) }
+
+      let(:children) {
+        [
+          double(:first_child, :content => "first"),
+          double(:second_child, :content => "second"),
+        ]
+      }
+
+      it "concatenates content from all children" do
+        expect(node.content).to eq("firstsecond")
+      end
+    end
+  end
 end

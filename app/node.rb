@@ -8,6 +8,10 @@ class Node
 
   attr_reader :box
 
+  def content
+    map_children(:content).join
+  end
+
   def map_children(mapper)
     children.map(&mapper)
   end
