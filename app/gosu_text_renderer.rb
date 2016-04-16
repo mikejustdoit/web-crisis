@@ -1,7 +1,7 @@
 require "gosu"
 
 class GosuTextRenderer
-  def call(text)
+  def call(text, x, y)
     font.draw(text, x, y, 0, 1.0, 1.0, colour)
   end
 
@@ -9,14 +9,6 @@ class GosuTextRenderer
 
   def font
     @font ||= Gosu::Font.new(height, {:name => name})
-  end
-
-  def x
-    0
-  end
-
-  def y
-    0
   end
 
   def height
