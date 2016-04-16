@@ -3,6 +3,8 @@ class TextNode
     @content = content
   end
 
+  attr_reader :content
+
   def draw(drawing_visitor)
     drawing_visitor.draw_text(content)
   end
@@ -14,8 +16,4 @@ class TextNode
   def layout(layout_visitor)
     layout_visitor.layout_text_node(self)
   end
-
-  private
-
-  attr_reader :content
 end

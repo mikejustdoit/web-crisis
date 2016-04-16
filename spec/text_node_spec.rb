@@ -4,6 +4,12 @@ RSpec.describe TextNode do
   subject(:text_node) { TextNode.new(content: text_content) }
   let(:text_content) { "Tweet of the week" }
 
+  describe "#content" do
+    it "returns the content it was initialised with" do
+      expect(text_node.content).to eq(text_content)
+    end
+  end
+
   describe "drawing its text content" do
     let(:drawing_visitor) { double(:drawing_visitor, :draw_text => nil) }
 
