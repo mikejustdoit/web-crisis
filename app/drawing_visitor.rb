@@ -23,8 +23,6 @@ class DrawingVisitor
   attr_reader :box_renderer, :text_renderer
 
   def draw_children(parent_node)
-    parent_node.map_children(->(child) {
-      visit(child)
-    })
+    parent_node.children.map(&method(:visit))
   end
 end

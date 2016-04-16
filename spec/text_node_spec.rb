@@ -38,14 +38,12 @@ RSpec.describe TextNode do
   end
 
   describe "quacking like a Node" do
-    it "has a #map_children method" do
-      expect(text_node).to respond_to(:map_children)
+    it "has a #children method" do
+      expect(text_node).to respond_to(:children)
     end
 
     it "returns an empty array" do
-      expect(
-        text_node.map_children(->(child) { :something })
-      ).to eq([])
+      expect(text_node.children).to eq([])
     end
   end
 end

@@ -8,8 +8,8 @@ RSpec.describe Node do
     let(:first_child) { Node.new }
     let(:second_child) { Node.new }
 
-    it "exposes its collection of children through a map method" do
-      expect(node.map_children(->(child) { child })).to eq(children)
+    it "exposes its collection of children through a getter" do
+      expect(node.children).to eq(children)
     end
 
     describe "immutability" do
@@ -21,19 +21,17 @@ RSpec.describe Node do
         end
 
         it "doesn't affect the node" do
-          expect(node.map_children(->(child) { child })).to eq(
-            [first_child, second_child]
-          )
+          expect(node.children).to eq([first_child, second_child])
         end
       end
 
-      context "when collection returned from #map_children is modified" do
+      context "when collection returned from #children is modified" do
         before do
-          node.map_children(->(child) { child }).push(:oops)
+          node.children.push(:oops)
         end
 
         it "doesn't affect the node" do
-          expect(node.map_children(->(child) { child })).to eq(children)
+          expect(node.children).to eq([first_child, second_child])
         end
       end
     end

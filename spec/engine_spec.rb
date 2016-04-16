@@ -49,7 +49,7 @@ RSpec.describe Engine do
     }
 
     it "should return a tree alright" do
-      expect(returned_tree).to respond_to(:map_children)
+      expect(returned_tree).to respond_to(:children)
     end
   end
 end

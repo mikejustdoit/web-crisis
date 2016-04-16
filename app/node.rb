@@ -8,12 +8,12 @@ class Node
 
   attr_reader :box
 
-  def content
-    map_children(:content).join
+  def children
+    @children.dup
   end
 
-  def map_children(mapper)
-    children.map(&mapper)
+  def content
+    children.map(&:content).join
   end
 
   def draw(drawing_visitor)
@@ -32,8 +32,6 @@ class Node
   end
 
   private
-
-  attr_reader :children
 
   def empty_box
     Box.new(0, 0, 0, 0)
