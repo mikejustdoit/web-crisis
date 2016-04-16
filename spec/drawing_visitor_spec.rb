@@ -13,13 +13,14 @@ RSpec.describe DrawingVisitor do
 
   describe "drawing text" do
     let(:text) { "Please, make yourself at home." }
+    let(:box) { Box.new(0, 1, 2, 3) }
 
     before do
-      drawing_visitor.draw_text(text)
+      drawing_visitor.draw_text(text, box)
     end
 
     it "delegates the actual drawing to the text renderer" do
-      expect(text_renderer).to have_received(:call).with(text)
+      expect(text_renderer).to have_received(:call).with(text, box.x, box.y)
     end
   end
 

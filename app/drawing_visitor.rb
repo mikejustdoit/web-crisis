@@ -14,8 +14,8 @@ class DrawingVisitor
     box_renderer.call(box.x, box.y, box.width, box.height)
   end
 
-  def draw_text(text)
-    text_renderer.call(text)
+  def draw_text(text, box)
+    text_renderer.call(text, box.x, box.y)
   end
 
   private

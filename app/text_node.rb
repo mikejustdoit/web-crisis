@@ -1,12 +1,13 @@
 class TextNode
-  def initialize(content:)
+  def initialize(box: empty_box, content:)
+    @box = box
     @content = content
   end
 
-  attr_reader :content
+  attr_reader :box, :content
 
   def draw(drawing_visitor)
-    drawing_visitor.draw_text(content)
+    drawing_visitor.draw_text(content, box)
   end
 
   def children
@@ -15,5 +16,18 @@ class TextNode
 
   def layout(layout_visitor)
     layout_visitor.layout_text_node(self)
+  end
+
+  def with_box(new_box)
+    TextNode.new(
+      box: new_box,
+      content: content,
+    )
+  end
+
+  private
+
+  def empty_box
+    Box.new(0, 0, 0, 0)
   end
 end
