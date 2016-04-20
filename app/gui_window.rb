@@ -1,3 +1,4 @@
+require "box"
 require "gosu"
 require "gosu_box_renderer"
 require "gosu_text_renderer"
@@ -56,6 +57,14 @@ class GuiWindow < Gosu::Window
     )
   end
 
+  def viewport_x
+    0
+  end
+
+  def viewport_y
+    0
+  end
+
   def viewport_width
     width
   end
@@ -64,11 +73,15 @@ class GuiWindow < Gosu::Window
     height
   end
 
+  def viewport
+    Box.new(viewport_x, viewport_y, viewport_width, viewport_height)
+  end
+
   def box_renderer
-    GosuBoxRenderer.new
+    GosuBoxRenderer.new(viewport)
   end
 
   def text_renderer
-    GosuTextRenderer.new
+    GosuTextRenderer.new(viewport)
   end
 end
