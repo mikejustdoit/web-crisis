@@ -4,10 +4,9 @@ require "gosu_box_renderer"
 require "gosu_text_renderer"
 
 class GuiWindow < Gosu::Window
-  def initialize(engine:, drawing_visitor_factory:, finished_draw: default_callback)
+  def initialize(engine:, drawing_visitor_factory:)
     @engine = engine
     @drawing_visitor_factory = drawing_visitor_factory
-    @finished_draw = finished_draw
 
     @address = ""
 
@@ -30,8 +29,6 @@ class GuiWindow < Gosu::Window
     )
 
     @needs_redraw = false
-
-    finished_draw.call
   end
 
   def needs_redraw?
@@ -44,7 +41,7 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :drawing_visitor_factory, :engine, :finished_draw, :needs_redraw
+  attr_reader :drawing_visitor_factory, :engine, :needs_redraw
 
   def default_callback
     -> {}
