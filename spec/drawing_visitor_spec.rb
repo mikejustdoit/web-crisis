@@ -1,5 +1,6 @@
 require "box"
 require "drawing_visitor"
+require "support/gosu_renderer_stubs"
 
 RSpec.describe DrawingVisitor do
   subject(:drawing_visitor) {
@@ -8,8 +9,8 @@ RSpec.describe DrawingVisitor do
       text_renderer: text_renderer,
     )
   }
-  let(:text_renderer) { double(:text_renderer, :call => nil) }
-  let(:box_renderer) { double(:box_renderer, :call => nil) }
+  let(:text_renderer) { gosu_text_renderer_stub }
+  let(:box_renderer) { gosu_box_renderer_stub }
 
   describe "drawing text" do
     let(:text) { "Please, make yourself at home." }
