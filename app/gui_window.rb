@@ -43,10 +43,6 @@ class GuiWindow < Gosu::Window
 
   attr_reader :drawing_visitor_factory, :engine, :needs_redraw
 
-  def default_callback
-    -> {}
-  end
-
   def drawing_visitor
     drawing_visitor_factory.call(
       box_renderer: box_renderer,
