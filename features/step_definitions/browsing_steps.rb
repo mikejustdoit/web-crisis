@@ -1,11 +1,5 @@
-Given(/^I have launched the web browser$/) do
-end
-
-When(/^I enter an address$/) do
+When(/^I request an address$/) do
   @address = "https://lwn.net/"
-end
-
-When(/^I click "go"$/) do
   visit_address(@address)
 end
 
