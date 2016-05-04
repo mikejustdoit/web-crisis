@@ -1,7 +1,7 @@
 class Engine
-  def initialize(fetcher:, layout_visitor_factory:, parser:)
+  def initialize(fetcher:, layout_pipeline:, parser:)
     @fetcher = fetcher
-    @layout_visitor_factory = layout_visitor_factory
+    @layout_pipeline = layout_pipeline
     @parser = parser
   end
 
@@ -11,17 +11,14 @@ class Engine
 
   private
 
-  attr_reader :fetcher, :layout_visitor, :parser
+  attr_reader :fetcher, :layout_pipeline, :parser
 
   def layout_for(uri, viewport_width, viewport_height)
-    layout_visitor_factory
-      .call(
-        viewport_width: viewport_width,
-        viewport_height: viewport_height,
-      )
-      .visit(
-        root_node_for(uri)
-      )
+    layout_pipeline.visit(
+      root_node_for(uri),
+      viewport_width: viewport_width,
+      viewport_height: viewport_height,
+    )
   end
 
   def root_node_for(uri)

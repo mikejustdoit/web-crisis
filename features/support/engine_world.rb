@@ -1,6 +1,7 @@
 require "engine"
 require "fetcher"
 require "inspector"
+require "layout_pipeline"
 require "parser"
 require "root_node_dimensions_setter"
 
@@ -8,7 +9,11 @@ module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
-      layout_visitor_factory: layout_visitor_factory,
+      layout_pipeline: LayoutPipeline.new(
+        [
+          RootNodeDimensionsSetter.method(:new),
+        ]
+      ),
       parser: Parser.new,
     )
   end
@@ -37,10 +42,6 @@ module EngineWorld
 
   def page
     Inspector.new(@render_tree)
-  end
-
-  def layout_visitor_factory
-    RootNodeDimensionsSetter.method(:new)
   end
 end
 

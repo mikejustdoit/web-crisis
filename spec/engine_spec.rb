@@ -5,16 +5,13 @@ RSpec.describe Engine do
   subject(:engine) {
     Engine.new(
       fetcher: fetcher,
-      layout_visitor_factory: layout_visitor_factory,
+      layout_pipeline: layout_pipeline,
       parser: parser,
     )
   }
 
   let(:fetcher) { double(:fetcher, :call => nil) }
-  let(:layout_visitor) { double(:layout_visitor, :visit => a_tree) }
-  let(:layout_visitor_factory) {
-    double(:layout_visitor_factory, :call => layout_visitor)
-  }
+  let(:layout_pipeline) { double(:layout_pipeline, :visit => a_tree) }
   let(:parser) { double(:parser, :call => nil) }
 
   let(:a_tree) { Element.new }
@@ -31,11 +28,10 @@ RSpec.describe Engine do
     it "calls its callable collaborators" do
       expect(fetcher).to have_received(:call)
       expect(parser).to have_received(:call)
-      expect(layout_visitor_factory).to have_received(:call)
     end
 
     it "starts its visitors visiting" do
-      expect(layout_visitor).to have_received(:visit)
+      expect(layout_pipeline).to have_received(:visit)
     end
   end
 
