@@ -1,7 +1,7 @@
 require "box"
 
 class RootNodeDimensionsSetter
-  def initialize(viewport_width, viewport_height)
+  def initialize(viewport_width:, viewport_height:)
     @viewport_width = viewport_width
     @viewport_height = viewport_height
   end

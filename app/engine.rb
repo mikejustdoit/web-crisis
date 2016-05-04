@@ -11,10 +11,14 @@ class Engine
 
   private
 
-  attr_reader :fetcher, :layout_visitor_factory, :parser
+  attr_reader :fetcher, :layout_visitor, :parser
 
   def layout_for(uri, viewport_width, viewport_height)
-    layout_visitor_factory.call(viewport_width, viewport_height)
+    layout_visitor_factory
+      .call(
+        viewport_width: viewport_width,
+        viewport_height: viewport_height,
+      )
       .visit(
         root_node_for(uri)
       )
