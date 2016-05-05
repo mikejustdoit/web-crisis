@@ -1,6 +1,8 @@
 require "box"
 require "drawing_visitor"
+require "node"
 require "support/gosu_renderer_stubs"
+require "text_node"
 
 RSpec.describe DrawingVisitor do
   subject(:drawing_visitor) {
@@ -12,29 +14,55 @@ RSpec.describe DrawingVisitor do
   let(:text_renderer) { gosu_text_renderer_stub }
   let(:box_renderer) { gosu_box_renderer_stub }
 
-  describe "drawing text" do
-    let(:text) { "Please, make yourself at home." }
-    let(:box) { Box.new(0, 1, 2, 3) }
+  describe "delegating drawing tasks to renderers" do
+    describe "drawing text" do
+      let(:text) { "Please, make yourself at home." }
+      let(:box) { Box.new(0, 1, 2, 3) }
 
-    before do
-      drawing_visitor.draw_text(text, box)
+      before do
+        drawing_visitor.draw_text(text, box)
+      end
+
+      it "delegates the actual drawing to the text renderer" do
+        expect(text_renderer).to have_received(:call).with(text, box.x, box.y)
+      end
     end
 
-    it "delegates the actual drawing to the text renderer" do
-      expect(text_renderer).to have_received(:call).with(text, box.x, box.y)
+    describe "drawing boxes" do
+      let(:box) { Box.new(*box_attributes) }
+      let(:box_attributes) { [0, 1, 2, 3] }
+
+      before do
+        drawing_visitor.draw_box(box)
+      end
+
+      it "delegates the actual drawing to the box renderer" do
+        expect(box_renderer).to have_received(:call).with(*box_attributes)
+      end
     end
   end
 
-  describe "drawing boxes" do
-    let(:box) { Box.new(*box_attributes) }
-    let(:box_attributes) { [0, 1, 2, 3] }
+  describe "depth-first tree traversal" do
+    let(:root) { Node.new(children: children) }
+    let(:children) { [Node.new(children: grandchildren), Node.new] }
+    let(:grandchildren) { [TextNode.new(content: "ABC"), Node.new] }
+
+    let(:all_nodes) { [root] + children + grandchildren }
 
     before do
-      drawing_visitor.draw_box(box)
+      all_nodes.each do |node|
+        allow(node).to receive(:draw).and_call_original
+      end
+
+      drawing_visitor.visit(root)
     end
 
-    it "delegates the actual drawing to the box renderer" do
-      expect(box_renderer).to have_received(:call).with(*box_attributes)
+    it "sends #draw to all nodes once in depth-first order" do
+      expect(root).to have_received(:draw).ordered
+      expect(children.first).to have_received(:draw).ordered
+      expect(grandchildren.first).to have_received(:draw).ordered
+      expect(grandchildren.last).to have_received(:draw).ordered
+      expect(children.last).to have_received(:draw).ordered
     end
   end
 end
