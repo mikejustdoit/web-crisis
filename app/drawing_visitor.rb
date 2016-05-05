@@ -6,12 +6,12 @@ class DrawingVisitor
 
   def visit(tree)
     tree.draw(self)
-
-    draw_children(tree)
   end
 
   def draw_box(node)
     box_renderer.call(node.box.x, node.box.y, node.box.width, node.box.height)
+
+    draw_children(node)
   end
 
   def draw_text(node)
