@@ -1,3 +1,5 @@
+require "box"
+
 class TextNode
   def initialize(box: empty_box, content:)
     @box = box
