@@ -46,8 +46,8 @@ RSpec.describe TextNode do
       text_node.draw(drawing_visitor)
     end
 
-    it "supplies its text content to drawing visitor" do
-      expect(drawing_visitor).to have_received(:draw_text).with(text_content, box)
+    it "supplies itself to drawing visitor" do
+      expect(drawing_visitor).to have_received(:draw_text).with(text_node)
     end
   end
 

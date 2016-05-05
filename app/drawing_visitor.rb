@@ -10,12 +10,12 @@ class DrawingVisitor
     draw_children(tree)
   end
 
-  def draw_box(box)
-    box_renderer.call(box.x, box.y, box.width, box.height)
+  def draw_box(node)
+    box_renderer.call(node.box.x, node.box.y, node.box.width, node.box.height)
   end
 
-  def draw_text(text, box)
-    text_renderer.call(text, box.x, box.y)
+  def draw_text(node)
+    text_renderer.call(node.content, node.box.x, node.box.y)
   end
 
   private

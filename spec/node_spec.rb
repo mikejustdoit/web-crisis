@@ -78,8 +78,8 @@ RSpec.describe Node do
       node.draw(drawing_visitor)
     end
 
-    it "supplies its position and dimensions to drawing visitor" do
-      expect(drawing_visitor).to have_received(:draw_box).with(box)
+    it "supplies itself to drawing visitor" do
+      expect(drawing_visitor).to have_received(:draw_box).with(node)
     end
   end
 

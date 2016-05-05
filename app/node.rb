@@ -17,7 +17,7 @@ class Node
   end
 
   def draw(drawing_visitor)
-    drawing_visitor.draw_box(box)
+    drawing_visitor.draw_box(self)
   end
 
   def layout(layout_visitor)

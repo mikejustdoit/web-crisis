@@ -9,7 +9,7 @@ class TextNode
   attr_reader :box, :content
 
   def draw(drawing_visitor)
-    drawing_visitor.draw_text(content, box)
+    drawing_visitor.draw_text(self)
   end
 
   def children
