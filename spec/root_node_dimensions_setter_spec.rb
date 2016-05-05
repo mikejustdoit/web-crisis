@@ -13,6 +13,16 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:viewport_width) { 640 }
   let(:viewport_height) { 480 }
 
+  describe "layout visitor interface" do
+    it "supports Nodes" do
+      expect(layout_visitor).to respond_to(:layout_node)
+    end
+
+    it "supports TextNodes" do
+      expect(layout_visitor).to respond_to(:layout_text_node)
+    end
+  end
+
   describe "not traversing the tree" do
     before do
       allow(root).to receive(:layout).and_call_original

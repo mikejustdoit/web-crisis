@@ -14,6 +14,16 @@ RSpec.describe DrawingVisitor do
   let(:text_renderer) { gosu_text_renderer_stub }
   let(:box_renderer) { gosu_box_renderer_stub }
 
+  describe "drawing visitor interface" do
+    it "supports Nodes" do
+      expect(drawing_visitor).to respond_to(:draw_box)
+    end
+
+    it "supports TextNodes" do
+      expect(drawing_visitor).to respond_to(:draw_text)
+    end
+  end
+
   describe "delegating drawing tasks to renderers" do
     describe "drawing text" do
       let(:node) { TextNode.new(box: box, content: text) }
