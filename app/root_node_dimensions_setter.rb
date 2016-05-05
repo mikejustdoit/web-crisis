@@ -21,6 +21,8 @@ class RootNodeDimensionsSetter
     )
   end
 
+  def layout_text_node(node); end
+
   private
 
   attr_reader :viewport_width, :viewport_height
