@@ -18,7 +18,7 @@ RSpec.describe DrawingVisitor do
   it_behaves_like "a drawing visitor"
 
   describe "delegating drawing tasks to renderers" do
-    describe "drawing text" do
+    describe "drawing text nodes" do
       let(:node) { Text.new(box: box, content: text) }
       let(:text) { "Please, make yourself at home." }
       let(:box) { Box.new(0, 1, 2, 3) }
@@ -32,13 +32,13 @@ RSpec.describe DrawingVisitor do
       end
     end
 
-    describe "drawing boxes" do
+    describe "drawing element nodes" do
       let(:node) { Element.new(box: box) }
       let(:box) { Box.new(*box_attributes) }
       let(:box_attributes) { [0, 1, 2, 3] }
 
       before do
-        drawing_visitor.draw_box(node)
+        drawing_visitor.draw_element(node)
       end
 
       it "delegates the actual drawing to the box renderer" do

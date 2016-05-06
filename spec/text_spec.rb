@@ -40,7 +40,7 @@ RSpec.describe Text do
     end
   end
 
-  describe "drawing its text content" do
+  describe "drawing itself" do
     let(:drawing_visitor) { drawing_visitor_double }
 
     before do
@@ -63,7 +63,7 @@ RSpec.describe Text do
     end
 
     it "supplies itself to layout visitor" do
-      expect(layout_visitor).to have_received(:layout_text_node).with(node)
+      expect(layout_visitor).to have_received(:layout_text).with(node)
     end
   end
 

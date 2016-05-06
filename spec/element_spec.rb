@@ -69,7 +69,7 @@ RSpec.describe Element do
     end
   end
 
-  describe "drawing its box" do
+  describe "drawing itself" do
     subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(0, 0, 10, 20) }
 
@@ -80,7 +80,7 @@ RSpec.describe Element do
     end
 
     it "supplies itself to drawing visitor" do
-      expect(drawing_visitor).to have_received(:draw_box).with(node)
+      expect(drawing_visitor).to have_received(:draw_element).with(node)
     end
   end
 
@@ -95,7 +95,7 @@ RSpec.describe Element do
     end
 
     it "supplies itself to layout visitor" do
-      expect(layout_visitor).to have_received(:layout_node).with(node)
+      expect(layout_visitor).to have_received(:layout_element).with(node)
     end
   end
 

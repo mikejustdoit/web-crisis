@@ -8,7 +8,7 @@ class DrawingVisitor
     tree.draw(self)
   end
 
-  def draw_box(node)
+  def draw_element(node)
     box_renderer.call(node.box.x, node.box.y, node.box.width, node.box.height)
 
     visit_children(node)

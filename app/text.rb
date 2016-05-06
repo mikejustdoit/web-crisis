@@ -17,7 +17,7 @@ class Text
   end
 
   def layout(layout_visitor)
-    layout_visitor.layout_text_node(self)
+    layout_visitor.layout_text(self)
   end
 
   def with_box(new_box)
