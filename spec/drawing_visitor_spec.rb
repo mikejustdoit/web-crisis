@@ -2,6 +2,7 @@ require "box"
 require "drawing_visitor"
 require "element"
 require "support/gosu_renderer_stubs"
+require "support/shared_examples/visitor_double"
 require "text"
 
 RSpec.describe DrawingVisitor do
@@ -14,15 +15,7 @@ RSpec.describe DrawingVisitor do
   let(:text_renderer) { gosu_text_renderer_stub }
   let(:box_renderer) { gosu_box_renderer_stub }
 
-  describe "drawing visitor interface" do
-    it "supports Element nodes" do
-      expect(drawing_visitor).to respond_to(:draw_box)
-    end
-
-    it "supports Text nodes" do
-      expect(drawing_visitor).to respond_to(:draw_text)
-    end
-  end
+  it_behaves_like "a drawing visitor"
 
   describe "delegating drawing tasks to renderers" do
     describe "drawing text" do

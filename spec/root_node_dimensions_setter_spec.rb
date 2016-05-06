@@ -1,5 +1,6 @@
 require "element"
 require "root_node_dimensions_setter"
+require "support/shared_examples/visitor_double"
 require "text"
 
 RSpec.describe RootNodeDimensionsSetter do
@@ -13,15 +14,7 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:viewport_width) { 640 }
   let(:viewport_height) { 480 }
 
-  describe "layout visitor interface" do
-    it "supports Element nodes" do
-      expect(layout_visitor).to respond_to(:layout_node)
-    end
-
-    it "supports Text nodes" do
-      expect(layout_visitor).to respond_to(:layout_text_node)
-    end
-  end
+  it_behaves_like "a layout visitor"
 
   describe "not traversing the tree" do
     before do
