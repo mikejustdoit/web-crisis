@@ -1,5 +1,5 @@
+require "element"
 require "engine"
-require "node"
 
 RSpec.describe Engine do
   subject(:engine) {
@@ -17,7 +17,7 @@ RSpec.describe Engine do
   }
   let(:parser) { double(:parser, :call => nil) }
 
-  let(:a_tree) { Node.new }
+  let(:a_tree) { Element.new }
 
   describe "relationship with its collaborators" do
     before do

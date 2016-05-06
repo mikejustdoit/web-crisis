@@ -1,6 +1,6 @@
 require "box"
 
-class TextNode
+class Text
   def initialize(box: empty_box, content:)
     @box = box
     @content = content
@@ -21,7 +21,7 @@ class TextNode
   end
 
   def with_box(new_box)
-    TextNode.new(
+    Text.new(
       box: new_box,
       content: content,
     )

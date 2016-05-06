@@ -1,6 +1,6 @@
 require "box"
 
-class Node
+class Element
   def initialize(box: empty_box, children: [])
     @box = box
     @children = children.dup
@@ -25,7 +25,7 @@ class Node
   end
 
   def with_box(new_box)
-    Node.new(
+    Element.new(
       box: new_box,
       children: children,
     )

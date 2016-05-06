@@ -1,8 +1,8 @@
 require "box"
 require "drawing_visitor"
-require "node"
+require "element"
 require "support/gosu_renderer_stubs"
-require "text_node"
+require "text"
 
 RSpec.describe DrawingVisitor do
   subject(:drawing_visitor) {
@@ -15,18 +15,18 @@ RSpec.describe DrawingVisitor do
   let(:box_renderer) { gosu_box_renderer_stub }
 
   describe "drawing visitor interface" do
-    it "supports Nodes" do
+    it "supports Element nodes" do
       expect(drawing_visitor).to respond_to(:draw_box)
     end
 
-    it "supports TextNodes" do
+    it "supports Text nodes" do
       expect(drawing_visitor).to respond_to(:draw_text)
     end
   end
 
   describe "delegating drawing tasks to renderers" do
     describe "drawing text" do
-      let(:node) { TextNode.new(box: box, content: text) }
+      let(:node) { Text.new(box: box, content: text) }
       let(:text) { "Please, make yourself at home." }
       let(:box) { Box.new(0, 1, 2, 3) }
 
@@ -40,7 +40,7 @@ RSpec.describe DrawingVisitor do
     end
 
     describe "drawing boxes" do
-      let(:node) { Node.new(box: box) }
+      let(:node) { Element.new(box: box) }
       let(:box) { Box.new(*box_attributes) }
       let(:box_attributes) { [0, 1, 2, 3] }
 
@@ -55,9 +55,9 @@ RSpec.describe DrawingVisitor do
   end
 
   describe "depth-first tree traversal" do
-    let(:root) { Node.new(children: children) }
-    let(:children) { [Node.new(children: grandchildren), Node.new] }
-    let(:grandchildren) { [TextNode.new(content: "ABC"), Node.new] }
+    let(:root) { Element.new(children: children) }
+    let(:children) { [Element.new(children: grandchildren), Element.new] }
+    let(:grandchildren) { [Text.new(content: "ABC"), Element.new] }
 
     let(:all_nodes) { [root] + children + grandchildren }
 

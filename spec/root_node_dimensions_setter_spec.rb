@@ -1,11 +1,11 @@
+require "element"
 require "root_node_dimensions_setter"
-require "node"
-require "text_node"
+require "text"
 
 RSpec.describe RootNodeDimensionsSetter do
-  let(:root) { Node.new(children: children) }
-  let(:children) { [Node.new(children: grandchildren), Node.new] }
-  let(:grandchildren) { [TextNode.new(content: "ABC"), Node.new] }
+  let(:root) { Element.new(children: children) }
+  let(:children) { [Element.new(children: grandchildren), Element.new] }
+  let(:grandchildren) { [Text.new(content: "ABC"), Element.new] }
 
   let(:layout_visitor) {
     RootNodeDimensionsSetter.new(viewport_width, viewport_height)
@@ -14,11 +14,11 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:viewport_height) { 480 }
 
   describe "layout visitor interface" do
-    it "supports Nodes" do
+    it "supports Element nodes" do
       expect(layout_visitor).to respond_to(:layout_node)
     end
 
-    it "supports TextNodes" do
+    it "supports Text nodes" do
       expect(layout_visitor).to respond_to(:layout_text_node)
     end
   end

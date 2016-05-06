@@ -1,5 +1,5 @@
-require "node"
-require "text_node"
+require "element"
+require "text"
 
 class NodeFactory
   def initialize(renderable_types:, parsed_element:)
@@ -12,10 +12,10 @@ class NodeFactory
       case parsed_element.name
       when "text"
         parsed_element.content.strip.split("\n").map { |content|
-          TextNode.new(content: content)
+          Text.new(content: content)
         }
       else
-        Node.new(children: children)
+        Element.new(children: children)
       end
     end
   end

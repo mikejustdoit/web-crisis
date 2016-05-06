@@ -1,12 +1,12 @@
 require "box"
-require "node"
+require "element"
 
-RSpec.describe Node do
+RSpec.describe Element do
   describe "working with node's children" do
-    subject(:node) { Node.new(children: children) }
+    subject(:node) { Element.new(children: children) }
     let(:children) { [first_child, second_child] }
-    let(:first_child) { Node.new }
-    let(:second_child) { Node.new }
+    let(:first_child) { Element.new }
+    let(:second_child) { Element.new }
 
     it "exposes its collection of children through a getter" do
       expect(node.children).to eq(children)
@@ -38,7 +38,7 @@ RSpec.describe Node do
   end
 
   describe "working with node's box" do
-    subject(:node) { Node.new(box: box) }
+    subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(*box_attributes) }
     let(:box_attributes) { [0, 1, 2, 3] }
 
@@ -69,7 +69,7 @@ RSpec.describe Node do
   end
 
   describe "drawing its box" do
-    subject(:node) { Node.new(box: box) }
+    subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(0, 0, 10, 20) }
 
     let(:drawing_visitor) { double(:drawing_visitor, :draw_box => nil) }
@@ -84,7 +84,7 @@ RSpec.describe Node do
   end
 
   describe "laying itself out" do
-    subject(:node) { Node.new(box: box) }
+    subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(0, 0, 10, 20) }
 
     let(:layout_visitor) { double(:layout_visitor, :layout_node => nil) }
@@ -100,7 +100,7 @@ RSpec.describe Node do
 
   describe "#content" do
     context "with children" do
-      let(:node) { Node.new(children: children) }
+      let(:node) { Element.new(children: children) }
 
       let(:children) {
         [

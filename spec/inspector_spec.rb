@@ -1,6 +1,6 @@
+require "element"
 require "inspector"
-require "node"
-require "text_node"
+require "text"
 
 RSpec.describe Inspector do
   subject(:inspector) { Inspector.new(tree) }
@@ -10,7 +10,7 @@ RSpec.describe Inspector do
       let(:tree) { root_node }
 
       context "and the tree contains the search text" do
-        let(:root_node) { TextNode.new(content: "search string") }
+        let(:root_node) { Text.new(content: "search string") }
 
         it "returns the root node" do
           expect(inspector.find_nodes_with_text("search")).to eq([root_node])
@@ -18,7 +18,7 @@ RSpec.describe Inspector do
       end
 
       context "and the text is not in the tree" do
-        let(:root_node) { TextNode.new(content: "other things") }
+        let(:root_node) { Text.new(content: "other things") }
 
         it "returns an empty array" do
           expect(inspector.find_nodes_with_text("search")).to eq([])
@@ -27,21 +27,21 @@ RSpec.describe Inspector do
     end
 
     context "when the tree has some nodes" do
-      let(:root_node) { Node.new(children: children) }
+      let(:root_node) { Element.new(children: children) }
       let(:children) {
         [
-          Node.new(children: grandchildren),
-          Node.new(children: other_grandchildren),
+          Element.new(children: grandchildren),
+          Element.new(children: other_grandchildren),
         ]
       }
       let(:grandchildren) {
         [
-          TextNode.new(content: "not very "),
-          Node.new,
-          TextNode.new(content: "interesting stuff"),
+          Text.new(content: "not very "),
+          Element.new,
+          Text.new(content: "interesting stuff"),
         ]
       }
-      let(:other_grandchildren) { [TextNode.new(content: "things of interest")] }
+      let(:other_grandchildren) { [Text.new(content: "things of interest")] }
 
       let(:tree) { root_node }
 
