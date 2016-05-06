@@ -1,6 +1,6 @@
 require "box"
 require "element"
-require "support/visitor_doubles"
+require "support/visitor_double"
 
 RSpec.describe Element do
   describe "working with node's children" do
@@ -69,33 +69,18 @@ RSpec.describe Element do
     end
   end
 
-  describe "drawing itself" do
+  describe "accepting visitors" do
     subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(0, 0, 10, 20) }
 
-    let(:drawing_visitor) { drawing_visitor_double }
+    let(:visitor) { visitor_double }
 
     before do
-      node.accept_visit(drawing_visitor)
+      node.accept_visit(visitor)
     end
 
-    it "supplies itself to drawing visitor" do
-      expect(drawing_visitor).to have_received(:visit_element).with(node)
-    end
-  end
-
-  describe "laying itself out" do
-    subject(:node) { Element.new(box: box) }
-    let(:box) { Box.new(0, 0, 10, 20) }
-
-    let(:layout_visitor) { layout_visitor_double }
-
-    before do
-      node.accept_visit(layout_visitor)
-    end
-
-    it "supplies itself to layout visitor" do
-      expect(layout_visitor).to have_received(:visit_element).with(node)
+    it "supplies itself to the visitor's callback" do
+      expect(visitor).to have_received(:visit_element).with(node)
     end
   end
 

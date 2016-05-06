@@ -1,5 +1,5 @@
 require "box"
-require "support/visitor_doubles"
+require "support/visitor_double"
 require "text"
 
 RSpec.describe Text do
@@ -40,30 +40,18 @@ RSpec.describe Text do
     end
   end
 
-  describe "drawing itself" do
-    let(:drawing_visitor) { drawing_visitor_double }
-
-    before do
-      node.accept_visit(drawing_visitor)
-    end
-
-    it "supplies itself to drawing visitor" do
-      expect(drawing_visitor).to have_received(:visit_text).with(node)
-    end
-  end
-
-  describe "laying itself out" do
+  describe "accepting visitors" do
     subject(:node) { Text.new(content: text_content) }
     let(:text_content) { "Tweet of the week" }
 
-    let(:layout_visitor) { layout_visitor_double }
+    let(:visitor) { visitor_double }
 
     before do
-      node.accept_visit(layout_visitor)
+      node.accept_visit(visitor)
     end
 
-    it "supplies itself to layout visitor" do
-      expect(layout_visitor).to have_received(:visit_text).with(node)
+    it "supplies itself to the visitor's callback" do
+      expect(visitor).to have_received(:visit_text).with(node)
     end
   end
 
