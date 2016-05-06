@@ -14,7 +14,8 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:viewport_width) { 640 }
   let(:viewport_height) { 480 }
 
-  it_behaves_like "a layout visitor"
+  let(:visitor) { layout_visitor }
+  it_behaves_like "a visitor"
 
   describe "not traversing the tree" do
     before do

@@ -15,7 +15,8 @@ RSpec.describe DrawingVisitor do
   let(:text_renderer) { gosu_text_renderer_stub }
   let(:box_renderer) { gosu_box_renderer_stub }
 
-  it_behaves_like "a drawing visitor"
+  let(:visitor) { drawing_visitor }
+  it_behaves_like "a visitor"
 
   describe "delegating drawing tasks to renderers" do
     describe "drawing text nodes" do

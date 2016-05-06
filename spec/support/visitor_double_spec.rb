@@ -2,13 +2,13 @@ require "support/shared_examples/visitor"
 require "support/visitor_doubles"
 
 RSpec.describe "drawing_visitor_double" do
-  let(:drawing_visitor) { drawing_visitor_double }
+  let(:visitor) { drawing_visitor_double }
 
-  it_behaves_like "a drawing visitor"
+  it_behaves_like "a visitor"
 end
 
 RSpec.describe "layout_visitor_double" do
-  let(:layout_visitor) { layout_visitor_double }
+  let(:visitor) { layout_visitor_double }
 
-  it_behaves_like "a layout visitor"
+  it_behaves_like "a visitor"
 end
