@@ -1,6 +1,6 @@
 require "element"
 require "root_node_dimensions_setter"
-require "support/shared_examples/visitor_double"
+require "support/shared_examples/visitor"
 require "text"
 
 RSpec.describe RootNodeDimensionsSetter do

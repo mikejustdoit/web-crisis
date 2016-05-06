@@ -1,4 +1,4 @@
-require "support/shared_examples/visitor_double"
+require "support/shared_examples/visitor"
 require "support/visitor_doubles"
 
 RSpec.describe "drawing_visitor_double" do
