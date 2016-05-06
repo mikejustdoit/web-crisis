@@ -76,7 +76,7 @@ RSpec.describe Element do
     let(:drawing_visitor) { drawing_visitor_double }
 
     before do
-      node.draw(drawing_visitor)
+      node.accept_visit(drawing_visitor)
     end
 
     it "supplies itself to drawing visitor" do
@@ -91,7 +91,7 @@ RSpec.describe Element do
     let(:layout_visitor) { layout_visitor_double }
 
     before do
-      node.layout(layout_visitor)
+      node.accept_visit(layout_visitor)
     end
 
     it "supplies itself to layout visitor" do

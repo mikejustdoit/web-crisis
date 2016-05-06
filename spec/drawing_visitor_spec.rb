@@ -56,18 +56,23 @@ RSpec.describe DrawingVisitor do
 
     before do
       all_nodes.each do |node|
-        allow(node).to receive(:draw).and_call_original
+        allow(node).to receive(:accept_visit).and_call_original
       end
 
       drawing_visitor.visit(root)
     end
 
-    it "sends #draw to all nodes once in depth-first order" do
-      expect(root).to have_received(:draw).ordered
-      expect(children.first).to have_received(:draw).ordered
-      expect(grandchildren.first).to have_received(:draw).ordered
-      expect(grandchildren.last).to have_received(:draw).ordered
-      expect(children.last).to have_received(:draw).ordered
+    it "visits all nodes once in depth-first order" do
+      expect(root).to have_received(:accept_visit)
+        .with(drawing_visitor).ordered
+      expect(children.first).to have_received(:accept_visit)
+        .with(drawing_visitor).ordered
+      expect(grandchildren.first).to have_received(:accept_visit)
+        .with(drawing_visitor).ordered
+      expect(grandchildren.last).to have_received(:accept_visit)
+        .with(drawing_visitor).ordered
+      expect(children.last).to have_received(:accept_visit)
+        .with(drawing_visitor).ordered
     end
   end
 end

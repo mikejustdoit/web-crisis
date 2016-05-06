@@ -5,7 +5,7 @@ class DrawingVisitor
   end
 
   def visit(tree)
-    tree.draw(self)
+    tree.accept_visit(self)
   end
 
   def visit_element(node)

@@ -16,12 +16,8 @@ class Element
     children.map(&:content).join
   end
 
-  def draw(drawing_visitor)
-    drawing_visitor.visit_element(self)
-  end
-
-  def layout(layout_visitor)
-    layout_visitor.visit_element(self)
+  def accept_visit(visitor)
+    visitor.visit_element(self)
   end
 
   def with_box(new_box)

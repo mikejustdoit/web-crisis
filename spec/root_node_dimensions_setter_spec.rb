@@ -18,13 +18,13 @@ RSpec.describe RootNodeDimensionsSetter do
 
   describe "not traversing the tree" do
     before do
-      allow(root).to receive(:layout).and_call_original
+      allow(root).to receive(:accept_visit).and_call_original
 
       layout_visitor.visit(root)
     end
 
-    it "sends #layout to root node only" do
-      expect(root).to have_received(:layout)
+    it "visits the root node only" do
+      expect(root).to have_received(:accept_visit).with(layout_visitor)
     end
   end
 

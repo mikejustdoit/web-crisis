@@ -7,7 +7,7 @@ class RootNodeDimensionsSetter
   end
 
   def visit(tree)
-    tree.layout(self)
+    tree.accept_visit(self)
   end
 
   def visit_element(node)
