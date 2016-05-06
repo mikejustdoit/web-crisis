@@ -1,4 +1,5 @@
 require "box"
+require "support/visitor_doubles"
 require "text"
 
 RSpec.describe Text do
@@ -40,7 +41,7 @@ RSpec.describe Text do
   end
 
   describe "drawing its text content" do
-    let(:drawing_visitor) { double(:drawing_visitor, :draw_text => nil) }
+    let(:drawing_visitor) { drawing_visitor_double }
 
     before do
       node.draw(drawing_visitor)
@@ -55,7 +56,7 @@ RSpec.describe Text do
     subject(:node) { Text.new(content: text_content) }
     let(:text_content) { "Tweet of the week" }
 
-    let(:layout_visitor) { double(:layout_visitor, :layout_text_node => nil) }
+    let(:layout_visitor) { layout_visitor_double }
 
     before do
       node.layout(layout_visitor)

@@ -1,5 +1,6 @@
 require "box"
 require "element"
+require "support/visitor_doubles"
 
 RSpec.describe Element do
   describe "working with node's children" do
@@ -72,7 +73,7 @@ RSpec.describe Element do
     subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(0, 0, 10, 20) }
 
-    let(:drawing_visitor) { double(:drawing_visitor, :draw_box => nil) }
+    let(:drawing_visitor) { drawing_visitor_double }
 
     before do
       node.draw(drawing_visitor)
@@ -87,7 +88,7 @@ RSpec.describe Element do
     subject(:node) { Element.new(box: box) }
     let(:box) { Box.new(0, 0, 10, 20) }
 
-    let(:layout_visitor) { double(:layout_visitor, :layout_node => nil) }
+    let(:layout_visitor) { layout_visitor_double }
 
     before do
       node.layout(layout_visitor)
