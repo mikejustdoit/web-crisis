@@ -17,11 +17,11 @@ class Element
   end
 
   def draw(drawing_visitor)
-    drawing_visitor.draw_element(self)
+    drawing_visitor.visit_element(self)
   end
 
   def layout(layout_visitor)
-    layout_visitor.layout_element(self)
+    layout_visitor.visit_element(self)
   end
 
   def with_box(new_box)

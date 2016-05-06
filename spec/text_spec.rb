@@ -48,7 +48,7 @@ RSpec.describe Text do
     end
 
     it "supplies itself to drawing visitor" do
-      expect(drawing_visitor).to have_received(:draw_text).with(node)
+      expect(drawing_visitor).to have_received(:visit_text).with(node)
     end
   end
 
@@ -63,7 +63,7 @@ RSpec.describe Text do
     end
 
     it "supplies itself to layout visitor" do
-      expect(layout_visitor).to have_received(:layout_text).with(node)
+      expect(layout_visitor).to have_received(:visit_text).with(node)
     end
   end
 

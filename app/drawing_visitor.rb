@@ -8,13 +8,13 @@ class DrawingVisitor
     tree.draw(self)
   end
 
-  def draw_element(node)
+  def visit_element(node)
     box_renderer.call(node.box.x, node.box.y, node.box.width, node.box.height)
 
     visit_children(node)
   end
 
-  def draw_text(node)
+  def visit_text(node)
     text_renderer.call(node.content, node.box.x, node.box.y)
   end
 

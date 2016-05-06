@@ -9,7 +9,7 @@ class Text
   attr_reader :box, :content
 
   def draw(drawing_visitor)
-    drawing_visitor.draw_text(self)
+    drawing_visitor.visit_text(self)
   end
 
   def children
@@ -17,7 +17,7 @@ class Text
   end
 
   def layout(layout_visitor)
-    layout_visitor.layout_text(self)
+    layout_visitor.visit_text(self)
   end
 
   def with_box(new_box)

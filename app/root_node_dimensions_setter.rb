@@ -10,7 +10,7 @@ class RootNodeDimensionsSetter
     tree.layout(self)
   end
 
-  def layout_element(node)
+  def visit_element(node)
     node.with_box(
       Box.new(
         node.box.x,
@@ -21,7 +21,7 @@ class RootNodeDimensionsSetter
     )
   end
 
-  def layout_text(node); end
+  def visit_text(node); end
 
   private
 

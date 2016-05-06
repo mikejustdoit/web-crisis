@@ -1,11 +1,11 @@
 RSpec.shared_examples "a drawing visitor" do
   describe "callback interface" do
     it "supports Element nodes" do
-      expect(drawing_visitor).to respond_to(:draw_element)
+      expect(drawing_visitor).to respond_to(:visit_element)
     end
 
     it "supports Text nodes" do
-      expect(drawing_visitor).to respond_to(:draw_text)
+      expect(drawing_visitor).to respond_to(:visit_text)
     end
   end
 end
@@ -13,11 +13,11 @@ end
 RSpec.shared_examples "a layout visitor" do
   describe "callback interface" do
     it "supports Element nodes" do
-      expect(layout_visitor).to respond_to(:layout_element)
+      expect(layout_visitor).to respond_to(:visit_element)
     end
 
     it "supports Text nodes" do
-      expect(layout_visitor).to respond_to(:layout_text)
+      expect(layout_visitor).to respond_to(:visit_text)
     end
   end
 end

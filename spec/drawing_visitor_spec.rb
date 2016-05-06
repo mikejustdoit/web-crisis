@@ -24,7 +24,7 @@ RSpec.describe DrawingVisitor do
       let(:box) { Box.new(0, 1, 2, 3) }
 
       before do
-        drawing_visitor.draw_text(node)
+        drawing_visitor.visit_text(node)
       end
 
       it "delegates the actual drawing to the text renderer" do
@@ -38,7 +38,7 @@ RSpec.describe DrawingVisitor do
       let(:box_attributes) { [0, 1, 2, 3] }
 
       before do
-        drawing_visitor.draw_element(node)
+        drawing_visitor.visit_element(node)
       end
 
       it "delegates the actual drawing to the box renderer" do
