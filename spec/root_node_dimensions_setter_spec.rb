@@ -8,7 +8,7 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:children) { [Element.new(children: grandchildren), Element.new] }
   let(:grandchildren) { [Text.new(content: "ABC"), Element.new] }
 
-  let(:visitor) {
+  subject(:visitor) {
     RootNodeDimensionsSetter.new(
       viewport_width: viewport_width,
       viewport_height: viewport_height,

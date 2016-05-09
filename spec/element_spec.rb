@@ -86,7 +86,7 @@ RSpec.describe Element do
 
   describe "#content" do
     context "with children" do
-      let(:node) { Element.new(children: children) }
+      subject(:node) { Element.new(children: children) }
 
       let(:children) {
         [

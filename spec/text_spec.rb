@@ -41,9 +41,6 @@ RSpec.describe Text do
   end
 
   describe "accepting visitors" do
-    subject(:node) { Text.new(content: text_content) }
-    let(:text_content) { "Tweet of the week" }
-
     let(:visitor) { visitor_double }
 
     before do

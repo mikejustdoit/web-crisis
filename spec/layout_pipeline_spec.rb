@@ -18,7 +18,7 @@ RSpec.describe LayoutPipeline do
         .and_return(final_tree)
     end
 
-    let(:layout_pipeline) {
+    subject(:layout_pipeline) {
       LayoutPipeline.new(
         [
           first_visitor_factory,
