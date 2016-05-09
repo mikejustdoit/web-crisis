@@ -4,6 +4,7 @@ require "height_calculator"
 require "inspector"
 require "layout_pipeline"
 require "parser"
+require "position_calculator"
 require "root_node_dimensions_setter"
 
 module EngineWorld
@@ -14,6 +15,7 @@ module EngineWorld
         [
           RootNodeDimensionsSetter.method(:new),
           HeightCalculator.method(:new),
+          PositionCalculator.method(:new),
         ]
       ),
       parser: Parser.new,

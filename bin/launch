@@ -10,6 +10,7 @@ require "gui_window"
 require "height_calculator"
 require "layout_pipeline"
 require "parser"
+require "position_calculator"
 require "root_node_dimensions_setter"
 
 uri = ARGV[0]
@@ -26,6 +27,7 @@ browser = GuiWindow.new(
       [
         RootNodeDimensionsSetter.method(:new),
         HeightCalculator.method(:new),
+        PositionCalculator.method(:new),
       ]
     ),
     parser: Parser.new,
