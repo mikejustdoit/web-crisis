@@ -12,6 +12,13 @@ class Element
     @children.dup
   end
 
+  def with_children(new_children)
+    Element.new(
+      box: box,
+      children: new_children,
+    )
+  end
+
   def content
     children.map(&:content).join
   end

@@ -13,6 +13,27 @@ RSpec.describe Element do
       expect(node.children).to eq(children)
     end
 
+    describe "#with_children convenience method" do
+      let(:new_children) { [Element.new] }
+
+      before do
+        @returned_node = node.with_children(new_children)
+      end
+
+      it "doesn't change the old node's children" do
+        expect(node.children).to eq(children)
+        expect(node.children).not_to eq(new_children)
+      end
+
+      it "returns a new node" do
+        expect(@returned_node).not_to eq(node)
+      end
+
+      it "assigns the new children to the new node" do
+        expect(@returned_node.children).to eq(new_children)
+      end
+    end
+
     describe "immutability" do
       context "when collection supplied to #initialize is modified" do
         before do
