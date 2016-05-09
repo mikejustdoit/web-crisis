@@ -6,7 +6,7 @@ require "support/shared_examples/visitor"
 require "text"
 
 RSpec.describe DrawingVisitor do
-  subject(:drawing_visitor) {
+  subject(:visitor) {
     DrawingVisitor.new(
       box_renderer: box_renderer,
       text_renderer: text_renderer,
@@ -15,7 +15,6 @@ RSpec.describe DrawingVisitor do
   let(:text_renderer) { gosu_text_renderer_stub }
   let(:box_renderer) { gosu_box_renderer_stub }
 
-  let(:visitor) { drawing_visitor }
   it_behaves_like "a visitor"
 
   describe "delegating drawing tasks to renderers" do
@@ -25,7 +24,7 @@ RSpec.describe DrawingVisitor do
       let(:box) { Box.new(0, 1, 2, 3) }
 
       before do
-        drawing_visitor.visit_text(node)
+        visitor.visit_text(node)
       end
 
       it "delegates the actual drawing to the text renderer" do
@@ -39,7 +38,7 @@ RSpec.describe DrawingVisitor do
       let(:box_attributes) { [0, 1, 2, 3] }
 
       before do
-        drawing_visitor.visit_element(node)
+        visitor.visit_element(node)
       end
 
       it "delegates the actual drawing to the box renderer" do
@@ -60,20 +59,15 @@ RSpec.describe DrawingVisitor do
         allow(node).to receive(:accept_visit).and_call_original
       end
 
-      drawing_visitor.visit(root)
+      visitor.visit(root)
     end
 
     it "visits all nodes once in depth-first order" do
-      expect(root).to have_received(:accept_visit)
-        .with(drawing_visitor).ordered
-      expect(children.first).to have_received(:accept_visit)
-        .with(drawing_visitor).ordered
-      expect(grandchildren.first).to have_received(:accept_visit)
-        .with(drawing_visitor).ordered
-      expect(grandchildren.last).to have_received(:accept_visit)
-        .with(drawing_visitor).ordered
-      expect(children.last).to have_received(:accept_visit)
-        .with(drawing_visitor).ordered
+      expect(root).to have_received(:accept_visit).with(visitor).ordered
+      expect(children.first).to have_received(:accept_visit).with(visitor).ordered
+      expect(grandchildren.first).to have_received(:accept_visit).with(visitor).ordered
+      expect(grandchildren.last).to have_received(:accept_visit).with(visitor).ordered
+      expect(children.last).to have_received(:accept_visit).with(visitor).ordered
     end
   end
 end

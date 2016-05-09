@@ -8,7 +8,7 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:children) { [Element.new(children: grandchildren), Element.new] }
   let(:grandchildren) { [Text.new(content: "ABC"), Element.new] }
 
-  let(:layout_visitor) {
+  let(:visitor) {
     RootNodeDimensionsSetter.new(
       viewport_width: viewport_width,
       viewport_height: viewport_height,
@@ -17,23 +17,22 @@ RSpec.describe RootNodeDimensionsSetter do
   let(:viewport_width) { 640 }
   let(:viewport_height) { 480 }
 
-  let(:visitor) { layout_visitor }
   it_behaves_like "a visitor"
 
   describe "not traversing the tree" do
     before do
       allow(root).to receive(:accept_visit).and_call_original
 
-      layout_visitor.visit(root)
+      visitor.visit(root)
     end
 
     it "visits the root node only" do
-      expect(root).to have_received(:accept_visit).with(layout_visitor)
+      expect(root).to have_received(:accept_visit).with(visitor)
     end
   end
 
   describe "the returned tree" do
-    let(:returned_node) { layout_visitor.visit(root) }
+    let(:returned_node) { visitor.visit(root) }
 
     it "returns a new tree" do
       expect(returned_node).not_to eq(root)
