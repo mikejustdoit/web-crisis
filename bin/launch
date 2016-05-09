@@ -7,6 +7,7 @@ require "fetcher"
 require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
+require "height_calculator"
 require "layout_pipeline"
 require "parser"
 require "root_node_dimensions_setter"
@@ -24,6 +25,7 @@ browser = GuiWindow.new(
     layout_pipeline: LayoutPipeline.new(
       [
         RootNodeDimensionsSetter.method(:new),
+        HeightCalculator.method(:new),
       ]
     ),
     parser: Parser.new,

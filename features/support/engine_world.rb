@@ -1,5 +1,6 @@
 require "engine"
 require "fetcher"
+require "height_calculator"
 require "inspector"
 require "layout_pipeline"
 require "parser"
@@ -12,6 +13,7 @@ module EngineWorld
       layout_pipeline: LayoutPipeline.new(
         [
           RootNodeDimensionsSetter.method(:new),
+          HeightCalculator.method(:new),
         ]
       ),
       parser: Parser.new,
