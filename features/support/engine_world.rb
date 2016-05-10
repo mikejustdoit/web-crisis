@@ -41,7 +41,7 @@ module EngineWorld
   def expect_text_to_be_at_top(text)
     node = page.find_nodes_with_text(text).first
 
-    expect(node.box.y).to be < 100
+    expect(node.box.y).to be < viewport_height / 2
   end
 
   def page
