@@ -22,7 +22,7 @@ RSpec.describe Text do
       let(:new_box) { Box.new(10, 10, 50, 50) }
 
       before do
-        @returned_node = node.with_box(new_box)
+        @returned_node = node.clone_with(box: new_box)
       end
 
       it "doesn't change the old node's box" do

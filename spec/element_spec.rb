@@ -13,11 +13,11 @@ RSpec.describe Element do
       expect(node.children).to eq(children)
     end
 
-    describe "#with_children convenience method" do
+    describe "cloning a node but with different children" do
       let(:new_children) { [Element.new] }
 
       before do
-        @returned_node = node.with_children(new_children)
+        @returned_node = node.clone_with(children: new_children)
       end
 
       it "doesn't change the old node's children" do
@@ -72,7 +72,7 @@ RSpec.describe Element do
       let(:new_box) { Box.new(10, 10, 50, 50) }
 
       before do
-        @returned_node = node.with_box(new_box)
+        @returned_node = node.clone_with(box: new_box)
       end
 
       it "doesn't change the old node's box" do

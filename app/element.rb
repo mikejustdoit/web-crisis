@@ -12,20 +12,12 @@ class Element
     @children.dup
   end
 
-  def with_children(new_children)
-    clone_with(children: new_children)
-  end
-
   def content
     children.map(&:content).join
   end
 
   def accept_visit(visitor)
     visitor.visit_element(self)
-  end
-
-  def with_box(new_box)
-    clone_with(box: new_box)
   end
 
   def clone_with(**attributes)

@@ -12,20 +12,20 @@ class HeightCalculator
       child.accept_visit(self)
     }
 
-    node.with_children(new_children)
-      .with_box(
-        Box.new(
-          node.box.x,
-          node.box.y,
-          node.box.width,
-          new_children.map { |child| child.box.height }.inject(0, &:+),
-        )
-      )
+    node.clone_with(
+      box: Box.new(
+        node.box.x,
+        node.box.y,
+        node.box.width,
+        new_children.map { |child| child.box.height }.inject(0, &:+),
+      ),
+      children: new_children,
+    )
   end
 
   def visit_text(node)
-    node.with_box(
-      Box.new(
+    node.clone_with(
+      box: Box.new(
         node.box.x,
         node.box.y,
         node.box.width,

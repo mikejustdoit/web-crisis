@@ -24,7 +24,7 @@ class PositionCalculator
         ]
       }
 
-    node.with_children(new_children)
+    node.clone_with(children: new_children)
   end
 
   def visit_text(node)
@@ -62,8 +62,8 @@ class PositionCalculator
     attr_reader :delegate_visitor, :parent_node
 
     def positioned_node(node)
-      node.with_box(
-        Box.new(
+      node.clone_with(
+        box: Box.new(
           node.box.x,
           parent_node.box.y,
           node.box.width,
@@ -96,8 +96,8 @@ class PositionCalculator
     attr_reader :delegate_visitor, :preceding_sibling_node
 
     def positioned_node(node)
-      node.with_box(
-        Box.new(
+      node.clone_with(
+        box: Box.new(
           node.box.x,
           preceding_sibling_node.box.y + preceding_sibling_node.box.height,
           node.box.width,
