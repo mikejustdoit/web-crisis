@@ -60,7 +60,7 @@ RSpec.describe Element do
   end
 
   describe "working with node's box" do
-    subject(:node) { Element.new(box: box) }
+    subject(:node) { Element.new(box: box, children: [Element.new]) }
     let(:box) { Box.new(*box_attributes) }
     let(:box_attributes) { [0, 1, 2, 3] }
 
@@ -82,6 +82,10 @@ RSpec.describe Element do
 
       it "returns a new node" do
         expect(@returned_node).not_to eq(node)
+      end
+
+      it "copies over old node's other attributes" do
+        expect(@returned_node.children).to match(node.children)
       end
 
       it "assigns the new box to the new node" do

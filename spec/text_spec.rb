@@ -34,6 +34,10 @@ RSpec.describe Text do
         expect(@returned_node).not_to eq(node)
       end
 
+      it "copies over old node's other attributes" do
+        expect(@returned_node.content).to match(node.content)
+      end
+
       it "assigns the new box to the new node" do
         expect(@returned_node.box).to eq(new_box)
       end
