@@ -17,9 +17,13 @@ class Text
   end
 
   def with_box(new_box)
+    clone_with(box: new_box)
+  end
+
+  def clone_with(**attributes)
     Text.new(
-      box: new_box,
-      content: content,
+      box: attributes.fetch(:box, box),
+      content: attributes.fetch(:content, content),
     )
   end
 

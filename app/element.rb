@@ -13,10 +13,7 @@ class Element
   end
 
   def with_children(new_children)
-    Element.new(
-      box: box,
-      children: new_children,
-    )
+    clone_with(children: new_children)
   end
 
   def content
@@ -28,9 +25,13 @@ class Element
   end
 
   def with_box(new_box)
+    clone_with(box: new_box)
+  end
+
+  def clone_with(**attributes)
     Element.new(
-      box: new_box,
-      children: children,
+      box: attributes.fetch(:box, box),
+      children: attributes.fetch(:children, children),
     )
   end
 
