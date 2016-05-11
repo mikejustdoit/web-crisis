@@ -14,4 +14,13 @@ class Box
         self.send(attribute_name) == other_box.send(attribute_name)
       }
   end
+
+  def clone_with(**attributes)
+    Box.new(
+      attributes.fetch(:x, x),
+      attributes.fetch(:y, y),
+      attributes.fetch(:width, width),
+      attributes.fetch(:height, height),
+    )
+  end
 end
