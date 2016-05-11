@@ -10,7 +10,7 @@ RSpec.describe GosuTextRenderer do
   end
 
   describe "adapting Gosu::Font" do
-    let(:viewport) { Box.new(0, 0, 200, 100) }
+    let(:viewport) { Box.new(x: 0, y: 0, width: 200, height: 100) }
 
     describe "#call" do
       let(:text) { "OHAI" }
@@ -34,7 +34,12 @@ RSpec.describe GosuTextRenderer do
 
   describe "translating for window" do
     let(:viewport) {
-      Box.new(viewport_x, viewport_y, viewport_width, viewport_height)
+      Box.new(
+        x: viewport_x,
+        y: viewport_y,
+        width: viewport_width,
+        height: viewport_height,
+      )
     }
     let(:viewport_x) { 10 }
     let(:viewport_y) { 10 }

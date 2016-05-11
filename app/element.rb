@@ -30,6 +30,6 @@ class Element
   private
 
   def empty_box
-    Box.new(0, 0, 0, 0)
+    Box.new(x: 0, y: 0, width: 0, height: 0)
   end
 end

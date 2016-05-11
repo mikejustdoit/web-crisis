@@ -1,5 +1,5 @@
 class Box
-  def initialize(x, y, width, height)
+  def initialize(x:, y:, width:, height:)
     @x = x
     @y = y
     @width = width
@@ -17,10 +17,10 @@ class Box
 
   def clone_with(**attributes)
     Box.new(
-      attributes.fetch(:x, x),
-      attributes.fetch(:y, y),
-      attributes.fetch(:width, width),
-      attributes.fetch(:height, height),
+      x: attributes.fetch(:x, x),
+      y: attributes.fetch(:y, y),
+      width: attributes.fetch(:width, width),
+      height: attributes.fetch(:height, height),
     )
   end
 end

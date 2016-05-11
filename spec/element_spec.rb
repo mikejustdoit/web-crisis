@@ -61,15 +61,14 @@ RSpec.describe Element do
 
   describe "working with node's box" do
     subject(:node) { Element.new(box: box, children: [Element.new]) }
-    let(:box) { Box.new(*box_attributes) }
-    let(:box_attributes) { [0, 1, 2, 3] }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
     it "allows reading box through getter" do
       expect(node.box).to eq(box)
     end
 
     describe "creating a new node with a new box" do
-      let(:new_box) { Box.new(10, 10, 50, 50) }
+      let(:new_box) { Box.new(x: 10, y: 10, width: 50, height: 50) }
 
       before do
         @returned_node = node.clone_with(box: new_box)
@@ -96,7 +95,7 @@ RSpec.describe Element do
 
   describe "accepting visitors" do
     subject(:node) { Element.new(box: box) }
-    let(:box) { Box.new(0, 0, 10, 20) }
+    let(:box) { Box.new(x: 0, y: 0, width: 10, height: 20) }
 
     let(:visitor) { visitor_double }
 

@@ -23,7 +23,7 @@ RSpec.describe DrawingVisitor do
     describe "drawing text nodes" do
       let(:node) { Text.new(box: box, content: text) }
       let(:text) { "Please, make yourself at home." }
-      let(:box) { Box.new(0, 1, 2, 3) }
+      let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
       before do
         visitor.visit_text(node)
@@ -36,15 +36,15 @@ RSpec.describe DrawingVisitor do
 
     describe "drawing element nodes" do
       let(:node) { Element.new(box: box) }
-      let(:box) { Box.new(*box_attributes) }
-      let(:box_attributes) { [0, 1, 2, 3] }
+      let(:box) { Box.new(**box_attributes) }
+      let(:box_attributes) { {:x => 0, :y => 1, :width => 2, :height => 3} }
 
       before do
         visitor.visit_element(node)
       end
 
       it "delegates the actual drawing to the box renderer" do
-        expect(box_renderer).to have_received(:call).with(*box_attributes)
+        expect(box_renderer).to have_received(:call).with(*box_attributes.values)
       end
     end
   end

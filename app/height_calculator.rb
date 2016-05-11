@@ -14,10 +14,10 @@ class HeightCalculator
 
     node.clone_with(
       box: Box.new(
-        node.box.x,
-        node.box.y,
-        node.box.width,
-        new_children.map { |child| child.box.height }.inject(0, &:+),
+        x: node.box.x,
+        y: node.box.y,
+        width: node.box.width,
+        height: new_children.map { |child| child.box.height }.inject(0, &:+),
       ),
       children: new_children,
     )
@@ -26,10 +26,10 @@ class HeightCalculator
   def visit_text(node)
     node.clone_with(
       box: Box.new(
-        node.box.x,
-        node.box.y,
-        node.box.width,
-        text_node_height,
+        x: node.box.x,
+        y: node.box.y,
+        width: node.box.width,
+        height: text_node_height,
       )
     )
   end

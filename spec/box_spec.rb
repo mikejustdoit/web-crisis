@@ -2,7 +2,7 @@ require "box"
 
 RSpec.describe Box do
   describe "its position and dimensions" do
-    subject(:box) { Box.new(x, y, width, height) }
+    subject(:box) { Box.new(x: x, y: y, width: width, height: height) }
     let(:x) { 0 }
     let(:y) { 1 }
     let(:width) { 2 }
@@ -26,12 +26,10 @@ RSpec.describe Box do
   end
 
   describe "it behaving like a value object" do
-    let(:box) { Box.new(*box_attributes) }
-    let(:box_attributes) { [0, 1, 2, 3] }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
     context "comparing to another box with different position and dimensions" do
-      let(:other_box) { Box.new(*other_box_attributes) }
-      let(:other_box_attributes) { [10, 10, 20, 20] }
+      let(:other_box) { Box.new(x: 10, y: 10, width: 20, height: 20) }
 
       it "does not equal other box" do
         expect( box == other_box ).not_to be true
@@ -39,8 +37,7 @@ RSpec.describe Box do
     end
 
     context "comparing to another box with identical position and dimensions" do
-      let(:other_box) { Box.new(*other_box_attributes) }
-      let(:other_box_attributes) { [0, 1, 2, 3] }
+      let(:other_box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
       it "does equal other box" do
         expect( box == other_box ).to be true
@@ -49,7 +46,7 @@ RSpec.describe Box do
   end
 
   describe "cloning with different attributes" do
-    subject(:box) { Box.new(x, y, width, height) }
+    subject(:box) { Box.new(x: x, y: y, width: width, height: height) }
     let(:x) { 0 }
     let(:y) { 1 }
     let(:width) { 2 }

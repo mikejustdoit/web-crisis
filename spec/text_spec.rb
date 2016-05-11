@@ -5,7 +5,7 @@ require "text"
 RSpec.describe Text do
   subject(:node) { Text.new(box: box, content: text_content) }
   let(:text_content) { "Tweet of the week" }
-  let(:box) { Box.new(0, 1, 2, 3) }
+  let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
   describe "#content" do
     it "returns the content it was initialised with" do
@@ -19,7 +19,7 @@ RSpec.describe Text do
     end
 
     describe "creating a new node with a new box" do
-      let(:new_box) { Box.new(10, 10, 50, 50) }
+      let(:new_box) { Box.new(x: 10, y: 10, width: 50, height: 50) }
 
       before do
         @returned_node = node.clone_with(box: new_box)

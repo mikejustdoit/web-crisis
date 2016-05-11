@@ -67,7 +67,12 @@ class GuiWindow < Gosu::Window
   end
 
   def viewport
-    Box.new(viewport_x, viewport_y, viewport_width, viewport_height)
+    Box.new(
+      x: viewport_x,
+      y: viewport_y,
+      width: viewport_width,
+      height: viewport_height,
+    )
   end
 
   def box_renderer

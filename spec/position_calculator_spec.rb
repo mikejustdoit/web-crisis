@@ -43,7 +43,7 @@ RSpec.describe PositionCalculator do
     let(:last_grandchild) { Element.new }
     let(:last_child) { Element.new }
 
-    let(:a_box_of_height) { Box.new(0, 0, 0, 11) }
+    let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 0, height: 11) }
 
     let(:returned_root) { visitor.visit(root) }
     let(:returned_first_child) { returned_root.children.first }
