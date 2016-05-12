@@ -1,12 +1,17 @@
 require "box"
+require "forwardable"
 
 class Element
+  extend Forwardable
+
   def initialize(box: empty_box, children: [])
     @box = box
     @children = children.dup
   end
 
   attr_reader :box
+
+  def_delegators :box, :x, :y, :width, :height
 
   def children
     @children.dup

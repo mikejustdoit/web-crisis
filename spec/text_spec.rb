@@ -5,7 +5,11 @@ require "text"
 RSpec.describe Text do
   subject(:node) { Text.new(box: box, content: text_content) }
   let(:text_content) { "Tweet of the week" }
-  let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
+  let(:box) { Box.new(x: x, y: y, width: width, height: height) }
+  let(:x) { 0 }
+  let(:y) { 1 }
+  let(:width) { 2 }
+  let(:height) { 3 }
 
   describe "#content" do
     it "returns the content it was initialised with" do
@@ -16,6 +20,13 @@ RSpec.describe Text do
   describe "working with node's box" do
     it "allows reading box through getter" do
       expect(node.box).to eq(box)
+    end
+
+    it "exposes delegated getters for box's attributes" do
+      expect(node.x).to eq(x)
+      expect(node.y).to eq(y)
+      expect(node.width).to eq(width)
+      expect(node.height).to eq(height)
     end
 
     describe "creating a new node with a new box" do

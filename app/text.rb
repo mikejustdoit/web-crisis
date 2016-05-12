@@ -1,12 +1,17 @@
 require "box"
+require "forwardable"
 
 class Text
+  extend Forwardable
+
   def initialize(box: empty_box, content:)
     @box = box
     @content = content
   end
 
   attr_reader :box, :content
+
+  def_delegators :box, :x, :y, :width, :height
 
   def accept_visit(visitor)
     visitor.visit_text(self)
