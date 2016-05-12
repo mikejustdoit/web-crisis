@@ -23,7 +23,7 @@ class Text
 
   def clone_with(**attributes)
     Text.new(
-      box: attributes.fetch(:box, box),
+      box: box.clone_with(**attributes),
       content: attributes.fetch(:content, content),
     )
   end

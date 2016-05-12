@@ -27,7 +27,7 @@ class Element
 
   def clone_with(**attributes)
     Element.new(
-      box: attributes.fetch(:box, box),
+      box: box.clone_with(**attributes),
       children: attributes.fetch(:children, children),
     )
   end

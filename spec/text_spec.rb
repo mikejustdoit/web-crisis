@@ -29,11 +29,12 @@ RSpec.describe Text do
       expect(node.height).to eq(height)
     end
 
-    describe "creating a new node with a new box" do
-      let(:new_box) { Box.new(x: 10, y: 10, width: 50, height: 50) }
+    describe "creating a new node with new box attributes" do
+      let(:new_box) { Box.new(**new_box_attributes) }
+      let(:new_box_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
       before do
-        @returned_node = node.clone_with(box: new_box)
+        @returned_node = node.clone_with(new_box_attributes)
       end
 
       it "doesn't change the old node's box" do
@@ -49,7 +50,7 @@ RSpec.describe Text do
         expect(@returned_node.content).to match(node.content)
       end
 
-      it "assigns the new box to the new node" do
+      it "assigns the new node a new box with the specified attributes" do
         expect(@returned_node.box).to eq(new_box)
       end
     end
