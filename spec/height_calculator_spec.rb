@@ -34,7 +34,7 @@ RSpec.describe HeightCalculator do
         [last_child,       returned_last_child],
       ]
       .map { |original_node, new_node|
-        new_node.box.height != original_node.box.height
+        new_node.height != original_node.height
       }
       .select { |x| x }
       .size
@@ -43,11 +43,11 @@ RSpec.describe HeightCalculator do
     end
 
     it "ensures children fit inside their parent nodes" do
-      expect(returned_root.box.height).to be >=
-        returned_first_child.box.height + returned_last_child.box.height
+      expect(returned_root.height).to be >=
+        returned_first_child.height + returned_last_child.height
 
-      expect(returned_first_child.box.height).to be >=
-        returned_first_grandchild.box.height + returned_last_grandchild.box.height
+      expect(returned_first_child.height).to be >=
+        returned_first_grandchild.height + returned_last_grandchild.height
     end
   end
 end

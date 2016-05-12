@@ -9,13 +9,13 @@ class DrawingVisitor
   end
 
   def visit_element(node)
-    box_renderer.call(node.box.x, node.box.y, node.box.width, node.box.height)
+    box_renderer.call(node.x, node.y, node.width, node.height)
 
     visit_children(node)
   end
 
   def visit_text(node)
-    text_renderer.call(node.content, node.box.x, node.box.y)
+    text_renderer.call(node.content, node.x, node.y)
   end
 
   private

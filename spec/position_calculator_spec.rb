@@ -64,7 +64,7 @@ RSpec.describe PositionCalculator do
         [last_child,       returned_last_child],
       ]
       .map { |original_node, new_node|
-        new_node.box.y != original_node.box.y
+        new_node.y != original_node.y
       }
       .select { |x| x }
       .size
@@ -73,19 +73,19 @@ RSpec.describe PositionCalculator do
     end
 
     it "positions nodes below their preceding siblings" do
-      expect(returned_last_grandchild.box.y).to be >=
-        returned_first_grandchild.box.y + returned_first_grandchild.box.height
+      expect(returned_last_grandchild.y).to be >=
+        returned_first_grandchild.y + returned_first_grandchild.height
 
-      expect(returned_last_child.box.y).to be >=
-        returned_first_child.box.y + returned_first_child.box.height
+      expect(returned_last_child.y).to be >=
+        returned_first_child.y + returned_first_child.height
     end
 
     it "doesn't position nodes above their parents" do
-      expect(returned_first_child.box.y).to be >= returned_root.box.y
-      expect(returned_last_child.box.y).to be >= returned_root.box.y
+      expect(returned_first_child.y).to be >= returned_root.y
+      expect(returned_last_child.y).to be >= returned_root.y
 
-      expect(returned_first_grandchild.box.y).to be >= returned_first_child.box.y
-      expect(returned_last_grandchild.box.y).to be >= returned_first_child.box.y
+      expect(returned_first_grandchild.y).to be >= returned_first_child.y
+      expect(returned_last_grandchild.y).to be >= returned_first_child.y
     end
   end
 end

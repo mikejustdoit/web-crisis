@@ -12,7 +12,7 @@ class HeightCalculator
 
     node.clone_with(
       box: node.box.clone_with(
-        height: new_children.map { |child| child.box.height }.inject(0, &:+),
+        height: new_children.map { |child| child.height }.inject(0, &:+),
       ),
       children: new_children,
     )
