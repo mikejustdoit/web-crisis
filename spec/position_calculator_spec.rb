@@ -36,20 +36,24 @@ RSpec.describe PositionCalculator do
     let(:first_child) {
       Element.new(
         box: a_box_of_height,
-        children: [first_grandchild, last_grandchild],
+        children: [first_grandchild],
       )
     }
     let(:first_grandchild) { Text.new(box: a_box_of_height, content: "ABC") }
+    let(:last_child) {
+      Element.new(
+        children: [last_grandchild],
+      )
+    }
     let(:last_grandchild) { Element.new }
-    let(:last_child) { Element.new }
 
     let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 0, height: 11) }
 
     let(:returned_root) { visitor.visit(root) }
     let(:returned_first_child) { returned_root.children.first }
     let(:returned_first_grandchild) { returned_first_child.children.first }
-    let(:returned_last_grandchild) { returned_first_child.children.last }
     let(:returned_last_child) { returned_root.children.last }
+    let(:returned_last_grandchild) { returned_last_child.children.first }
 
     it "returns a new tree" do
       expect(returned_root).not_to eq(root)
@@ -60,8 +64,8 @@ RSpec.describe PositionCalculator do
         [root,             returned_root],
         [first_child,      returned_first_child],
         [first_grandchild, returned_first_grandchild],
-        [last_grandchild,  returned_last_grandchild],
         [last_child,       returned_last_child],
+        [last_grandchild,  returned_last_grandchild],
       ]
       .map { |original_node, new_node|
         new_node.y != original_node.y
@@ -73,9 +77,6 @@ RSpec.describe PositionCalculator do
     end
 
     it "positions nodes below their preceding siblings" do
-      expect(returned_last_grandchild.y).to be >=
-        returned_first_grandchild.y + returned_first_grandchild.height
-
       expect(returned_last_child.y).to be >=
         returned_first_child.y + returned_first_child.height
     end
@@ -85,7 +86,7 @@ RSpec.describe PositionCalculator do
       expect(returned_last_child.y).to be >= returned_root.y
 
       expect(returned_first_grandchild.y).to be >= returned_first_child.y
-      expect(returned_last_grandchild.y).to be >= returned_first_child.y
+      expect(returned_last_grandchild.y).to be >= returned_last_child.y
     end
   end
 end
