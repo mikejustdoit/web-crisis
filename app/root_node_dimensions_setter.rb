@@ -1,5 +1,3 @@
-require "box"
-
 class RootNodeDimensionsSetter
   def initialize(viewport_width:, viewport_height:)
     @viewport_width = viewport_width
@@ -12,9 +10,7 @@ class RootNodeDimensionsSetter
 
   def visit_element(node)
     node.clone_with(
-      box: Box.new(
-        x: node.box.x,
-        y: node.box.y,
+      box: node.box.clone_with(
         width: viewport_width,
         height: viewport_height,
       )

@@ -1,5 +1,3 @@
-require "box"
-
 class PositionCalculator
   def initialize(**_); end
 
@@ -63,11 +61,8 @@ class PositionCalculator
 
     def positioned_node(node)
       node.clone_with(
-        box: Box.new(
-          x: node.box.x,
+        box: node.box.clone_with(
           y: parent_node.box.y,
-          width: node.box.width,
-          height: node.box.height,
         )
       )
     end
@@ -97,11 +92,8 @@ class PositionCalculator
 
     def positioned_node(node)
       node.clone_with(
-        box: Box.new(
-          x: node.box.x,
+        box: node.box.clone_with(
           y: preceding_sibling_node.box.y + preceding_sibling_node.box.height,
-          width: node.box.width,
-          height: node.box.height,
         )
       )
     end
