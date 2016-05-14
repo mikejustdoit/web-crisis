@@ -19,6 +19,28 @@ RSpec.describe DrawingVisitor do
 
   it_behaves_like "a depth-first tree traverser"
 
+  describe "the returned tree" do
+    let(:root) { Element.new(children: [first_child, last_child]) }
+    let(:first_child) { Element.new(children: [first_grandchild, last_grandchild]) }
+    let(:first_grandchild) { Text.new(content: "ABC") }
+    let(:last_grandchild) { Element.new }
+    let(:last_child) { Element.new }
+
+    let(:returned_root) { root.accept_visit(visitor) }
+    let(:returned_first_child) { returned_root.children.first }
+    let(:returned_first_grandchild) { returned_first_child.children.first }
+    let(:returned_last_grandchild) { returned_first_child.children.last }
+    let(:returned_last_child) { returned_root.children.last }
+
+    it "returns the original tree" do
+      expect(returned_root).to eq(root)
+      expect(returned_first_child).to eq(first_child)
+      expect(returned_first_grandchild).to eq(first_grandchild)
+      expect(returned_last_grandchild).to eq(last_grandchild)
+      expect(returned_last_child).to eq(last_child)
+    end
+  end
+
   describe "delegating drawing tasks to renderers" do
     describe "drawing text nodes" do
       let(:node) { Text.new(box: box, content: text) }
