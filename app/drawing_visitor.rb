@@ -4,10 +4,6 @@ class DrawingVisitor
     @text_renderer = text_renderer
   end
 
-  def visit(tree)
-    tree.accept_visit(self)
-  end
-
   def visit_element(node)
     box_renderer.call(node.x, node.y, node.width, node.height)
 
@@ -23,6 +19,6 @@ class DrawingVisitor
   attr_reader :box_renderer, :text_renderer
 
   def visit_children(parent_node)
-    parent_node.children.map(&method(:visit))
+    parent_node.children.map { |child| child.accept_visit(self) }
   end
 end

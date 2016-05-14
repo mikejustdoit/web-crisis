@@ -4,10 +4,6 @@ class RootNodeDimensionsSetter
     @viewport_height = viewport_height
   end
 
-  def visit(tree)
-    tree.accept_visit(self)
-  end
-
   def visit_element(node)
     node.clone_with(
       width: viewport_width,

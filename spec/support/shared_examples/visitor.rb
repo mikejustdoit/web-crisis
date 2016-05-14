@@ -26,7 +26,7 @@ RSpec.shared_examples "a depth-first tree traverser" do
         allow(node).to receive(:accept_visit).and_call_original
       end
 
-      visitor.visit(root)
+      root.accept_visit(visitor)
     end
 
     it "visits all nodes once in depth-first order" do

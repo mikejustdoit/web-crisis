@@ -1,10 +1,6 @@
 class PositionCalculator
   def initialize(**_); end
 
-  def visit(tree)
-    tree.accept_visit(self)
-  end
-
   def visit_element(node)
     new_children = node.children.first(1)
       .map { |first_child|

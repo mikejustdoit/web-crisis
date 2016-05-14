@@ -19,7 +19,7 @@ RSpec.describe PositionCalculator do
         allow(node).to receive(:accept_visit).and_call_original
       end
 
-      visitor.visit(root)
+      root.accept_visit(visitor)
     end
 
     it "visits all nodes once in depth-first order" do
@@ -49,7 +49,7 @@ RSpec.describe PositionCalculator do
 
     let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 0, height: 11) }
 
-    let(:returned_root) { visitor.visit(root) }
+    let(:returned_root) { root.accept_visit(visitor) }
     let(:returned_first_child) { returned_root.children.first }
     let(:returned_first_grandchild) { returned_first_child.children.first }
     let(:returned_last_child) { returned_root.children.last }

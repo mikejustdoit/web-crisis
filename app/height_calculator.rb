@@ -1,10 +1,6 @@
 class HeightCalculator
   def initialize(**_); end
 
-  def visit(tree)
-    tree.accept_visit(self)
-  end
-
   def visit_element(node)
     new_children = node.children.map { |child|
       child.accept_visit(self)

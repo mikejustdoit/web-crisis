@@ -5,8 +5,12 @@ require "text"
 
 RSpec.describe RootNodeDimensionsSetter do
   let(:root) { Element.new(children: children) }
-  let(:children) { [Element.new(children: grandchildren), Element.new] }
-  let(:grandchildren) { [Text.new(content: "ABC"), Element.new] }
+  let(:children) { [first_child, last_child] }
+  let(:first_child) { Element.new(children: grandchildren) }
+  let(:last_child) { Element.new }
+  let(:grandchildren) { [first_grandchild, last_grandchild] }
+  let(:first_grandchild) { Text.new(content: "ABC") }
+  let(:last_grandchild) { Element.new }
 
   subject(:visitor) {
     RootNodeDimensionsSetter.new(
@@ -21,18 +25,24 @@ RSpec.describe RootNodeDimensionsSetter do
 
   describe "not traversing the tree" do
     before do
-      allow(root).to receive(:accept_visit).and_call_original
+      allow(first_child).to receive(:accept_visit).and_call_original
+      allow(last_child).to receive(:accept_visit).and_call_original
+      allow(first_grandchild).to receive(:accept_visit).and_call_original
+      allow(last_grandchild).to receive(:accept_visit).and_call_original
 
-      visitor.visit(root)
+      root.accept_visit(visitor)
     end
 
     it "visits the root node only" do
-      expect(root).to have_received(:accept_visit).with(visitor)
+      expect(first_child).not_to have_received(:accept_visit)
+      expect(last_child).not_to have_received(:accept_visit)
+      expect(first_grandchild).not_to have_received(:accept_visit)
+      expect(last_grandchild).not_to have_received(:accept_visit)
     end
   end
 
   describe "the returned tree" do
-    let(:returned_node) { visitor.visit(root) }
+    let(:returned_node) { root.accept_visit(visitor) }
 
     it "returns a new tree" do
       expect(returned_node).not_to eq(root)

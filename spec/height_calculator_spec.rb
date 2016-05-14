@@ -15,7 +15,7 @@ RSpec.describe HeightCalculator do
     let(:last_grandchild) { Element.new }
     let(:last_child) { Element.new }
 
-    let(:returned_root) { visitor.visit(root) }
+    let(:returned_root) { root.accept_visit(visitor) }
     let(:returned_first_child) { returned_root.children.first }
     let(:returned_first_grandchild) { returned_first_child.children.first }
     let(:returned_last_grandchild) { returned_first_child.children.last }
