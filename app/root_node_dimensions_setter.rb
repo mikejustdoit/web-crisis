@@ -11,7 +11,9 @@ class RootNodeDimensionsSetter
     )
   end
 
-  def visit_text(node); end
+  def visit_text(node)
+    node
+  end
 
   private
 
