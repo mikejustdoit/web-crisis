@@ -6,22 +6,18 @@ class Engine
   end
 
   def request(uri, viewport_width, viewport_height)
-    layout_for(uri, viewport_width, viewport_height)
+    layout_pipeline.visit(
+      parse(uri),
+      viewport_width: viewport_width,
+      viewport_height: viewport_height,
+    )
   end
 
   private
 
   attr_reader :fetcher, :layout_pipeline, :parser
 
-  def layout_for(uri, viewport_width, viewport_height)
-    layout_pipeline.visit(
-      root_node_for(uri),
-      viewport_width: viewport_width,
-      viewport_height: viewport_height,
-    )
-  end
-
-  def root_node_for(uri)
+  def parse(uri)
     parser.call(fetch(uri))
   end
 
