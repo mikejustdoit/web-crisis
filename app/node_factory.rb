@@ -2,8 +2,14 @@ require "element"
 require "text"
 
 class NodeFactory
-  def initialize(renderable_types:, parsed_element:)
-    @renderable_types = renderable_types
+  ELEMENT_TYPES = %w{
+    a body blockquote code del div em h1 h2 h3 h4
+    h5 h6 html li ol p pre strong table td tr ul
+  }
+
+  OTHER_NODE_TYPES = %w{ text }
+
+  def initialize(parsed_element)
     @parsed_element = parsed_element
   end
 
@@ -22,7 +28,7 @@ class NodeFactory
 
   private
 
-  attr_reader :renderable_types, :parsed_element
+  attr_reader :parsed_element
 
   def is_renderable?
     renderable_types.include?(parsed_element.name)
@@ -30,10 +36,11 @@ class NodeFactory
 
   def children
     parsed_element.children.map { |child|
-      NodeFactory.new(
-        renderable_types: renderable_types,
-        parsed_element: child,
-      ).call
+      NodeFactory.new(child).call
     }.flatten.compact
+  end
+
+  def renderable_types
+    ELEMENT_TYPES + OTHER_NODE_TYPES
   end
 end
