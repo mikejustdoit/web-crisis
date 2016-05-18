@@ -22,7 +22,7 @@ class SubsequentChildPositionCalculator
 
   def position_node(node)
     node.clone_with(
-      y: preceding_sibling_node.y + preceding_sibling_node.height,
+      y: preceding_sibling_node.bottom,
     )
   end
 end

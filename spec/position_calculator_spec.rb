@@ -55,8 +55,7 @@ RSpec.describe PositionCalculator do
     end
 
     it "positions nodes below their preceding siblings" do
-      expect(returned_last_child.y).to be >=
-        returned_first_child.y + returned_first_child.height
+      expect(returned_last_child.y).to be >= returned_first_child.bottom
     end
 
     it "doesn't position nodes above their parents" do
