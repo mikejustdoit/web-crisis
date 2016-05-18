@@ -34,26 +34,26 @@ class PositionCalculator
   end
 
   class FirstChildPositionCalculator
-    def initialize(delegate_visitor, parent_node)
-      @delegate_visitor = delegate_visitor
+    def initialize(decorated_visitor, parent_node)
+      @decorated_visitor = decorated_visitor
       @parent_node = parent_node
     end
 
     def visit_element(node)
-      delegate_visitor.visit_element(
+      decorated_visitor.visit_element(
         positioned_node(node)
       )
     end
 
     def visit_text(node)
-      delegate_visitor.visit_text(
+      decorated_visitor.visit_text(
         positioned_node(node)
       )
     end
 
     private
 
-    attr_reader :delegate_visitor, :parent_node
+    attr_reader :decorated_visitor, :parent_node
 
     def positioned_node(node)
       node.clone_with(
@@ -63,26 +63,26 @@ class PositionCalculator
   end
 
   class SubsequentChildPositionCalculator
-    def initialize(delegate_visitor, preceding_sibling_node)
-      @delegate_visitor = delegate_visitor
+    def initialize(decorated_visitor, preceding_sibling_node)
+      @decorated_visitor = decorated_visitor
       @preceding_sibling_node = preceding_sibling_node
     end
 
     def visit_element(node)
-      delegate_visitor.visit_element(
+      decorated_visitor.visit_element(
         positioned_node(node)
       )
     end
 
     def visit_text(node)
-      delegate_visitor.visit_text(
+      decorated_visitor.visit_text(
         positioned_node(node)
       )
     end
 
     private
 
-    attr_reader :delegate_visitor, :preceding_sibling_node
+    attr_reader :decorated_visitor, :preceding_sibling_node
 
     def positioned_node(node)
       node.clone_with(
