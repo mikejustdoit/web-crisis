@@ -1,4 +1,5 @@
 require "box"
+require "support/shared_examples/node"
 require "support/visitor_double"
 require "text"
 
@@ -18,16 +19,7 @@ RSpec.describe Text do
   end
 
   describe "working with node's box" do
-    it "allows reading box through getter" do
-      expect(node.box).to eq(box)
-    end
-
-    it "exposes delegated getters for box's attributes" do
-      expect(node.x).to eq(x)
-      expect(node.y).to eq(y)
-      expect(node.width).to eq(width)
-      expect(node.height).to eq(height)
-    end
+    it_behaves_like "a node with a box"
 
     describe "creating a new node with new box attributes" do
       let(:new_box) { Box.new(**new_box_attributes) }
@@ -37,21 +29,8 @@ RSpec.describe Text do
         @returned_node = node.clone_with(new_box_attributes)
       end
 
-      it "doesn't change the old node's box" do
-        expect(node.box).to eq(box)
-        expect(node.box).not_to eq(new_box)
-      end
-
-      it "returns a new node" do
-        expect(@returned_node).not_to eq(node)
-      end
-
       it "copies over old node's other attributes" do
         expect(@returned_node.content).to match(node.content)
-      end
-
-      it "assigns the new node a new box with the specified attributes" do
-        expect(@returned_node.box).to eq(new_box)
       end
     end
   end
