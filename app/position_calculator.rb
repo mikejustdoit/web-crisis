@@ -1,3 +1,6 @@
+require "first_child_position_calculator"
+require "subsequent_child_position_calculator"
+
 class PositionCalculator
   def initialize(**_); end
 
@@ -37,63 +40,5 @@ class PositionCalculator
       decorated_visitor: self,
       preceding_sibling_node: preceding_sibling_node,
     )
-  end
-
-  class FirstChildPositionCalculator
-    def initialize(decorated_visitor:, parent_node:)
-      @decorated_visitor = decorated_visitor
-      @parent_node = parent_node
-    end
-
-    def visit_element(node)
-      decorated_visitor.visit_element(
-        positioned_node(node)
-      )
-    end
-
-    def visit_text(node)
-      decorated_visitor.visit_text(
-        positioned_node(node)
-      )
-    end
-
-    private
-
-    attr_reader :decorated_visitor, :parent_node
-
-    def positioned_node(node)
-      node.clone_with(
-        y: parent_node.y,
-      )
-    end
-  end
-
-  class SubsequentChildPositionCalculator
-    def initialize(decorated_visitor:, preceding_sibling_node:)
-      @decorated_visitor = decorated_visitor
-      @preceding_sibling_node = preceding_sibling_node
-    end
-
-    def visit_element(node)
-      decorated_visitor.visit_element(
-        positioned_node(node)
-      )
-    end
-
-    def visit_text(node)
-      decorated_visitor.visit_text(
-        positioned_node(node)
-      )
-    end
-
-    private
-
-    attr_reader :decorated_visitor, :preceding_sibling_node
-
-    def positioned_node(node)
-      node.clone_with(
-        y: preceding_sibling_node.y + preceding_sibling_node.height,
-      )
-    end
   end
 end
