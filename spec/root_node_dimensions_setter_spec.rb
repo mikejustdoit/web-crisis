@@ -51,8 +51,8 @@ RSpec.describe RootNodeDimensionsSetter do
       end
 
       it "sets the returned root node's dimensions to viewport's" do
-        expect(returned_node.box.width).to eq(viewport_width)
-        expect(returned_node.box.height).to eq(viewport_height)
+        expect(returned_node.width).to eq(viewport_width)
+        expect(returned_node.height).to eq(viewport_height)
       end
     end
   end
