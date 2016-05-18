@@ -1,6 +1,8 @@
 def visitor_double
-  double(:visitor,
-    :visit_element => nil,
-    :visit_text => nil,
-  )
+  visitor = double(:visitor_double)
+
+  allow(visitor).to receive(:visit_element) { |node| node }
+  allow(visitor).to receive(:visit_text) { |node| node }
+
+  visitor
 end
