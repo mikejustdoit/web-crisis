@@ -8,6 +8,14 @@ class Box
 
   attr_reader :x, :y, :width, :height
 
+  def right
+    x + width
+  end
+
+  def bottom
+    y + height
+  end
+
   def ==(other_box)
     [:x, :y, :width, :height]
       .all? { |attribute_name|

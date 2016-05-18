@@ -23,6 +23,16 @@ RSpec.describe Box do
     it "has a getter for its height dimension" do
       expect(box.height).to eq(height)
     end
+
+    describe "calculated attributes" do
+      it "has a getter for its right edge" do
+        expect(box.right).to eq(x + width)
+      end
+
+      it "has a getter for its bottom edge" do
+        expect(box.bottom).to eq(y + height)
+      end
+    end
   end
 
   describe "it behaving like a value object" do
