@@ -6,13 +6,13 @@ class SubsequentChildPositionCalculator
 
   def visit_element(node)
     decorated_visitor.visit_element(
-      positioned_node(node)
+      position_node(node)
     )
   end
 
   def visit_text(node)
     decorated_visitor.visit_text(
-      positioned_node(node)
+      position_node(node)
     )
   end
 
@@ -20,7 +20,7 @@ class SubsequentChildPositionCalculator
 
   attr_reader :decorated_visitor, :preceding_sibling_node
 
-  def positioned_node(node)
+  def position_node(node)
     node.clone_with(
       y: preceding_sibling_node.y + preceding_sibling_node.height,
     )
