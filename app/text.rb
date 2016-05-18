@@ -9,7 +9,7 @@ class Text
     @content = content
   end
 
-  attr_reader :box, :content
+  attr_reader :content
 
   def_delegators :box, :x, :y, :width, :height
 
@@ -29,6 +29,8 @@ class Text
   end
 
   private
+
+  attr_reader :box
 
   def empty_box
     Box.new(x: 0, y: 0, width: 0, height: 0)

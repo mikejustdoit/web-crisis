@@ -14,14 +14,14 @@ RSpec.describe Text do
     end
   end
 
-  describe "working with node's box" do
-    it_behaves_like "a node with a box"
+  describe "working with node's position and dimensions" do
+    it_behaves_like "a node with position and dimensions"
 
-    describe "creating a new node with new box attributes" do
-      let(:new_box_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
+    describe "creating a new node with new attributes" do
+      let(:new_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
       before do
-        @returned_node = node.clone_with(new_box_attributes)
+        @returned_node = node.clone_with(new_attributes)
       end
 
       it "copies over old node's other attributes" do

@@ -9,8 +9,6 @@ class Element
     @children = children.dup
   end
 
-  attr_reader :box
-
   def_delegators :box, :x, :y, :width, :height
 
   def children
@@ -33,6 +31,8 @@ class Element
   end
 
   private
+
+  attr_reader :box
 
   def empty_box
     Box.new(x: 0, y: 0, width: 0, height: 0)

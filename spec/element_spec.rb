@@ -60,17 +60,17 @@ RSpec.describe Element do
     end
   end
 
-  describe "working with node's box" do
+  describe "working with node's position and dimensions" do
     subject(:node) { Element.new(box: box, children: [Element.new]) }
     let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
-    it_behaves_like "a node with a box"
+    it_behaves_like "a node with position and dimensions"
 
-    describe "creating a new node with new box attributes" do
-      let(:new_box_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
+    describe "creating a new node with new attributes" do
+      let(:new_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
       before do
-        @returned_node = node.clone_with(new_box_attributes)
+        @returned_node = node.clone_with(new_attributes)
       end
 
       it "copies over old node's other attributes" do
