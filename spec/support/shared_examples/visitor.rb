@@ -30,11 +30,11 @@ RSpec.shared_examples "a depth-first tree traverser" do
     end
 
     it "visits all nodes once in depth-first order" do
-      expect(root).to have_received(:accept_visit).with(visitor).ordered
-      expect(children.first).to have_received(:accept_visit).with(visitor).ordered
-      expect(grandchildren.first).to have_received(:accept_visit).with(visitor).ordered
-      expect(grandchildren.last).to have_received(:accept_visit).with(visitor).ordered
-      expect(children.last).to have_received(:accept_visit).with(visitor).ordered
+      expect(root).to have_received(:accept_visit).ordered
+      expect(children.first).to have_received(:accept_visit).ordered
+      expect(grandchildren.first).to have_received(:accept_visit).ordered
+      expect(grandchildren.last).to have_received(:accept_visit).ordered
+      expect(children.last).to have_received(:accept_visit).ordered
     end
   end
 end
