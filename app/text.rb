@@ -11,7 +11,7 @@ class Text
 
   attr_reader :content
 
-  def_delegators :box, :x, :y, :width, :height
+  def_delegators :box, :x, :y, :width, :height, :right, :bottom
 
   def accept_visit(visitor)
     visitor.visit_text(self)

@@ -4,6 +4,8 @@ RSpec.shared_examples "a node with position and dimensions" do
     expect(node.y).to eq(box.y)
     expect(node.width).to eq(box.width)
     expect(node.height).to eq(box.height)
+    expect(node.right).to eq(box.right)
+    expect(node.bottom).to eq(box.bottom)
   end
 
   describe "creating a new node with new attributes" do

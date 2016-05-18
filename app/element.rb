@@ -9,7 +9,7 @@ class Element
     @children = children.dup
   end
 
-  def_delegators :box, :x, :y, :width, :height
+  def_delegators :box, :x, :y, :width, :height, :right, :bottom
 
   def children
     @children.dup
