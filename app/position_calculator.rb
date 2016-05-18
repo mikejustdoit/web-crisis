@@ -26,15 +26,21 @@ class PositionCalculator
   end
 
   def first_child_position_calculator(parent_node)
-    FirstChildPositionCalculator.new(self, parent_node)
+    FirstChildPositionCalculator.new(
+      decorated_visitor: self,
+      parent_node: parent_node,
+    )
   end
 
   def subsequent_child_position_calculator(preceding_sibling_node)
-    SubsequentChildPositionCalculator.new(self, preceding_sibling_node)
+    SubsequentChildPositionCalculator.new(
+      decorated_visitor: self,
+      preceding_sibling_node: preceding_sibling_node,
+    )
   end
 
   class FirstChildPositionCalculator
-    def initialize(decorated_visitor, parent_node)
+    def initialize(decorated_visitor:, parent_node:)
       @decorated_visitor = decorated_visitor
       @parent_node = parent_node
     end
@@ -63,7 +69,7 @@ class PositionCalculator
   end
 
   class SubsequentChildPositionCalculator
-    def initialize(decorated_visitor, preceding_sibling_node)
+    def initialize(decorated_visitor:, preceding_sibling_node:)
       @decorated_visitor = decorated_visitor
       @preceding_sibling_node = preceding_sibling_node
     end
