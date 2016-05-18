@@ -6,11 +6,7 @@ require "text"
 RSpec.describe Text do
   subject(:node) { Text.new(box: box, content: text_content) }
   let(:text_content) { "Tweet of the week" }
-  let(:box) { Box.new(x: x, y: y, width: width, height: height) }
-  let(:x) { 0 }
-  let(:y) { 1 }
-  let(:width) { 2 }
-  let(:height) { 3 }
+  let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
   describe "#content" do
     it "returns the content it was initialised with" do
@@ -22,7 +18,6 @@ RSpec.describe Text do
     it_behaves_like "a node with a box"
 
     describe "creating a new node with new box attributes" do
-      let(:new_box) { Box.new(**new_box_attributes) }
       let(:new_box_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
       before do

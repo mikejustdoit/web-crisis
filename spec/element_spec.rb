@@ -62,16 +62,11 @@ RSpec.describe Element do
 
   describe "working with node's box" do
     subject(:node) { Element.new(box: box, children: [Element.new]) }
-    let(:box) { Box.new(x: x, y: y, width: width, height: height) }
-    let(:x) { 0 }
-    let(:y) { 1 }
-    let(:width) { 2 }
-    let(:height) { 3 }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
     it_behaves_like "a node with a box"
 
     describe "creating a new node with new box attributes" do
-      let(:new_box) { Box.new(**new_box_attributes) }
       let(:new_box_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
       before do
