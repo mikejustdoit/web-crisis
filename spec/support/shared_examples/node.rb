@@ -11,9 +11,7 @@ RSpec.shared_examples "a node with position and dimensions" do
   describe "creating a new node with new attributes" do
     let(:new_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
-    before do
-      @returned_node = node.clone_with(new_attributes)
-    end
+    let(:clone_of_node) { node.clone_with(new_attributes) }
 
     it "doesn't change the old node's attributes" do
       expect(node.x).to eq(box.x)
@@ -22,15 +20,27 @@ RSpec.shared_examples "a node with position and dimensions" do
       expect(node.height).to eq(box.height)
     end
 
-    it "returns a new node" do
-      expect(@returned_node).not_to eq(node)
-    end
-
     it "assigns the new node the specified attributes" do
-      expect(@returned_node.x).to eq(new_attributes.fetch(:x))
-      expect(@returned_node.y).to eq(new_attributes.fetch(:y))
-      expect(@returned_node.width).to eq(new_attributes.fetch(:width))
-      expect(@returned_node.height).to eq(new_attributes.fetch(:height))
+      expect(clone_of_node.x).to eq(new_attributes.fetch(:x))
+      expect(clone_of_node.y).to eq(new_attributes.fetch(:y))
+      expect(clone_of_node.width).to eq(new_attributes.fetch(:width))
+      expect(clone_of_node.height).to eq(new_attributes.fetch(:height))
     end
+  end
+end
+
+RSpec.shared_examples "a clonable node" do
+  let(:clone_of_node) { node.clone_with({}) }
+
+  it "returns a new node" do
+    expect(clone_of_node).not_to eq(node)
+  end
+
+  it "copies over original node's attributes" do
+    expect(
+      clone_of_node.send(node_specific_attribute)
+    ).to match(
+      node.send(node_specific_attribute)
+    )
   end
 end

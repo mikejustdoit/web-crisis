@@ -16,18 +16,12 @@ RSpec.describe Text do
 
   describe "working with node's position and dimensions" do
     it_behaves_like "a node with position and dimensions"
+  end
 
-    describe "creating a new node with new attributes" do
-      let(:new_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
+  describe "cloning" do
+    let(:node_specific_attribute) { :content }
 
-      before do
-        @returned_node = node.clone_with(new_attributes)
-      end
-
-      it "copies over old node's other attributes" do
-        expect(@returned_node.content).to match(node.content)
-      end
-    end
+    it_behaves_like "a clonable node"
   end
 
   describe "accepting visitors" do
