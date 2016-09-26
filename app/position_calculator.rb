@@ -1,3 +1,4 @@
+require "children_positioner"
 require "first_child_position_calculator"
 require "subsequent_child_position_calculator"
 
@@ -5,23 +6,7 @@ class PositionCalculator
   def initialize(**_); end
 
   def visit_element(positioned_node)
-    new_children = positioned_node.children.first(1)
-      .map { |first_child|
-        position_first_child(
-          first_child,
-          parent_node: positioned_node,
-        )
-      }
-
-    new_children = positioned_node.children.drop(1)
-      .inject(new_children) { |preceding_children, child|
-        preceding_children + [
-          position_subsequent_child(
-            child,
-            preceding_sibling_node: preceding_children.last,
-          )
-        ]
-      }
+    new_children = position_children(positioned_node)
 
     positioned_node.clone_with(
       children: new_children.map { |positioned_child|
@@ -36,15 +21,27 @@ class PositionCalculator
 
   private
 
-  def position_first_child(first_child, parent_node:)
-    FirstChildPositionCalculator
-      .new(parent_node: parent_node)
-      .call(first_child)
+  def position_children(parent_node)
+    ChildrenPositioner.new(
+      first_child_position_calculator: first_child_position_calculator,
+      subsequent_child_position_calculator: subsequent_child_position_calculator,
+    )
+    .call(parent_node)
   end
 
-  def position_subsequent_child(subsequent_child, preceding_sibling_node:)
-    SubsequentChildPositionCalculator
-      .new(preceding_sibling_node: preceding_sibling_node)
-      .call(subsequent_child)
+  def first_child_position_calculator
+    ->(first_child, parent_node:) {
+      FirstChildPositionCalculator
+        .new(parent_node: parent_node)
+        .call(first_child)
+    }
+  end
+
+  def subsequent_child_position_calculator
+    ->(subsequent_child, preceding_sibling_node:) {
+      SubsequentChildPositionCalculator
+        .new(preceding_sibling_node: preceding_sibling_node)
+        .call(subsequent_child)
+    }
   end
 end
