@@ -7,38 +7,44 @@ class PositionCalculator
   def visit_element(positioned_node)
     new_children = positioned_node.children.first(1)
       .map { |first_child|
-        first_child.accept_visit(
-          first_child_position_calculator(positioned_node)
+        position_first_child(
+          first_child,
+          parent_node: positioned_node,
         )
       }
 
     new_children = positioned_node.children.drop(1)
       .inject(new_children) { |preceding_children, child|
         preceding_children + [
-          child.accept_visit(
-            subsequent_child_position_calculator(preceding_children.last)
+          position_subsequent_child(
+            child,
+            preceding_sibling_node: preceding_children.last,
           )
         ]
       }
 
-    positioned_node.clone_with(children: new_children)
+    positioned_node.clone_with(
+      children: new_children.map { |positioned_child|
+        positioned_child.accept_visit(self)
+      }
+    )
   end
 
   def visit_text(positioned_node)
     positioned_node
   end
 
-  def first_child_position_calculator(parent_node)
-    FirstChildPositionCalculator.new(
-      decorated_visitor: self,
-      parent_node: parent_node,
-    )
+  private
+
+  def position_first_child(first_child, parent_node:)
+    FirstChildPositionCalculator
+      .new(parent_node: parent_node)
+      .call(first_child)
   end
 
-  def subsequent_child_position_calculator(preceding_sibling_node)
-    SubsequentChildPositionCalculator.new(
-      decorated_visitor: self,
-      preceding_sibling_node: preceding_sibling_node,
-    )
+  def position_subsequent_child(subsequent_child, preceding_sibling_node:)
+    SubsequentChildPositionCalculator
+      .new(preceding_sibling_node: preceding_sibling_node)
+      .call(subsequent_child)
   end
 end

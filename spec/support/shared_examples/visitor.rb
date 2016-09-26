@@ -39,36 +39,3 @@ RSpec.shared_examples "a depth-first tree traverser" do
     end
   end
 end
-
-RSpec.shared_examples "a visitor decorator" do
-  subject(:visitor_decorator) {
-    visitor_decorator_class.new(
-      decorated_visitor: its_decorated_visitor,
-      **other_arguments,
-    )
-  }
-  let(:its_decorated_visitor) { visitor_double }
-
-  let(:element) { Element.new }
-  let(:text) { Text.new(content: "srsly") }
-
-  describe "ultimately delegating #visit_element" do
-    before do
-      visitor_decorator.visit_element(element)
-    end
-
-    it "delegates #visit_element" do
-      expect(its_decorated_visitor).to have_received(:visit_element)
-    end
-  end
-
-  describe "ultimately delegating #visit_text" do
-    before do
-      visitor_decorator.visit_text(text)
-    end
-
-    it "delegates #visit_text" do
-      expect(its_decorated_visitor).to have_received(:visit_text)
-    end
-  end
-end
