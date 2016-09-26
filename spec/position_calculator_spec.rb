@@ -7,8 +7,6 @@ RSpec.describe PositionCalculator do
 
   it_behaves_like "a visitor"
 
-  it_behaves_like "a depth-first tree traverser"
-
   describe "the returned tree" do
     let(:root) { Element.new(children: [first_child, last_child]) }
     let(:first_child) {
