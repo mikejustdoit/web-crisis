@@ -1,7 +1,7 @@
 class ChildrenPositioner
-  def initialize(first_child_position_calculator:, subsequent_child_position_calculator:)
-    @first_child_position_calculator = first_child_position_calculator
-    @subsequent_child_position_calculator = subsequent_child_position_calculator
+  def initialize(first_child_positioner:, subsequent_child_positioner:)
+    @first_child_positioner = first_child_positioner
+    @subsequent_child_positioner = subsequent_child_positioner
   end
 
   def call(node)
@@ -28,18 +28,17 @@ class ChildrenPositioner
 
   private
 
-  attr_reader :first_child_position_calculator,
-    :subsequent_child_position_calculator
+  attr_reader :first_child_positioner, :subsequent_child_positioner
 
   def position_first_child(first_child, parent_node:)
-    first_child_position_calculator.call(
+    first_child_positioner.call(
       first_child,
       parent_node: parent_node,
     )
   end
 
   def position_subsequent_child(subsequent_child, preceding_sibling_node:)
-    subsequent_child_position_calculator.call(
+    subsequent_child_positioner.call(
       subsequent_child,
       preceding_sibling_node: preceding_sibling_node,
     )

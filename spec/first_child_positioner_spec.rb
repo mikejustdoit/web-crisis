@@ -1,11 +1,11 @@
 require "box"
 require "element"
-require "first_child_position_calculator"
+require "first_child_positioner"
 
-RSpec.describe FirstChildPositionCalculator do
+RSpec.describe FirstChildPositioner do
   describe "positioning" do
     subject(:calculator) {
-      FirstChildPositionCalculator.new(parent_node: parent_node)
+      FirstChildPositioner.new(parent_node: parent_node)
     }
     let(:first_child) { Element.new }
     let(:parent_node) { Element.new(box: parent_node_box, children: [first_child]) }

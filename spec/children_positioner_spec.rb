@@ -4,20 +4,16 @@ require "children_positioner"
 RSpec.describe ChildrenPositioner do
   subject(:positioner) {
     ChildrenPositioner.new(
-      first_child_position_calculator: first_child_position_calculator,
-      subsequent_child_position_calculator: subsequent_child_position_calculator,
+      first_child_positioner: first_child_positioner,
+      subsequent_child_positioner: subsequent_child_positioner,
     )
   }
-  let(:first_child_position_calculator) {
-    double(:first_child_position_calculator)
-  }
-  let(:subsequent_child_position_calculator) {
-    double(:subsequent_child_position_calculator)
-  }
+  let(:first_child_positioner) { double(:first_child_positioner) }
+  let(:subsequent_child_positioner) { double(:subsequent_child_positioner) }
 
   before do
-    allow(first_child_position_calculator).to receive(:call) { |node, _| node }
-    allow(subsequent_child_position_calculator).to receive(:call) { |node, _| node }
+    allow(first_child_positioner).to receive(:call) { |node, _| node }
+    allow(subsequent_child_positioner).to receive(:call) { |node, _| node }
   end
 
   describe "its collaboration" do
@@ -31,8 +27,8 @@ RSpec.describe ChildrenPositioner do
     end
 
     it "positions first child and subsequent children differently" do
-      expect(first_child_position_calculator).to have_received(:call).ordered
-      expect(subsequent_child_position_calculator).to have_received(:call)
+      expect(first_child_positioner).to have_received(:call).ordered
+      expect(subsequent_child_positioner).to have_received(:call)
         .twice.ordered
     end
   end

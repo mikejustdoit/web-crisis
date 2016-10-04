@@ -1,4 +1,4 @@
-class FirstChildPositionCalculator
+class FirstChildPositioner
   def initialize(parent_node:)
     @parent_node = parent_node
   end

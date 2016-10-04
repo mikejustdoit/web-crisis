@@ -1,4 +1,4 @@
-class SubsequentChildPositionCalculator
+class SubsequentChildPositioner
   def initialize(preceding_sibling_node:)
     @preceding_sibling_node = preceding_sibling_node
   end

@@ -1,11 +1,11 @@
 require "box"
 require "element"
-require "subsequent_child_position_calculator"
+require "subsequent_child_positioner"
 
-RSpec.describe SubsequentChildPositionCalculator do
+RSpec.describe SubsequentChildPositioner do
   describe "positioning" do
     subject(:calculator) {
-      SubsequentChildPositionCalculator.new(preceding_sibling_node: preceding_sibling_node)
+      SubsequentChildPositioner.new(preceding_sibling_node: preceding_sibling_node)
     }
     let(:subsequent_child) { Element.new }
     let(:preceding_sibling_node) { Element.new(box: preceding_sibling_node_box) }
