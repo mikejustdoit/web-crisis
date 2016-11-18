@@ -24,35 +24,27 @@ RSpec.describe RootNodeDimensionsSetter do
     let(:first_grandchild) { Text.new(content: "ABC") }
     let(:last_grandchild) { Element.new }
 
-
-    describe "not traversing the tree" do
-      before do
-        allow(first_child).to receive(:accept_visit).and_call_original
-        allow(last_child).to receive(:accept_visit).and_call_original
-        allow(first_grandchild).to receive(:accept_visit).and_call_original
-        allow(last_grandchild).to receive(:accept_visit).and_call_original
-
-        root.accept_visit(visitor)
-      end
-
-      it "visits the root node only" do
-        expect(first_child).not_to have_received(:accept_visit)
-        expect(last_child).not_to have_received(:accept_visit)
-        expect(first_grandchild).not_to have_received(:accept_visit)
-        expect(last_grandchild).not_to have_received(:accept_visit)
-      end
-    end
-
     describe "the returned tree" do
-      let(:returned_node) { root.accept_visit(visitor) }
+      let(:returned_root) { visitor.call(root) }
+      let(:returned_first_child) { returned_root.children.first }
+      let(:returned_last_child) { returned_root.children.last }
+      let(:returned_first_grandchild) { returned_first_child.children.first }
+      let(:returned_last_grandchild) { returned_first_child.children.last }
 
       it "returns a new tree" do
-        expect(returned_node).not_to eq(root)
+        expect(returned_root).not_to eq(root)
       end
 
       it "sets the returned root node's dimensions to viewport's" do
-        expect(returned_node.width).to eq(viewport_width)
-        expect(returned_node.height).to eq(viewport_height)
+        expect(returned_root.width).to eq(viewport_width)
+        expect(returned_root.height).to eq(viewport_height)
+      end
+
+      it "doesn't affect the rest of the tree" do
+        expect(returned_first_child).to eq(first_child)
+        expect(returned_last_child).to eq(last_child)
+        expect(returned_first_grandchild).to eq(first_grandchild)
+        expect(returned_last_grandchild).to eq(last_grandchild)
       end
     end
   end
@@ -61,7 +53,7 @@ RSpec.describe RootNodeDimensionsSetter do
     let(:root) { Text.new(content: "ABC") }
 
     describe "the returned tree" do
-      let(:returned_node) { root.accept_visit(visitor) }
+      let(:returned_node) { visitor.call(root) }
 
       it "returns the 'tree' unchanged" do
         expect(returned_node).to eq(root)

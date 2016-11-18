@@ -76,21 +76,6 @@ RSpec.describe Element do
     it_behaves_like "a clonable node"
   end
 
-  describe "accepting visitors" do
-    subject(:node) { Element.new(box: box) }
-    let(:box) { Box.new(x: 0, y: 0, width: 10, height: 20) }
-
-    let(:visitor) { visitor_double }
-
-    before do
-      node.accept_visit(visitor)
-    end
-
-    it "supplies itself to the visitor's callback" do
-      expect(visitor).to have_received(:visit_element).with(node)
-    end
-  end
-
   describe "#content" do
     context "with children" do
       subject(:node) { Element.new(children: children) }

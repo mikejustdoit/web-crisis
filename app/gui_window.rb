@@ -20,12 +20,13 @@ class GuiWindow < Gosu::Window
   attr_accessor :address
 
   def draw
-    engine.request(
-      address,
-      viewport_width,
-      viewport_height,
+    drawing_visitor.call(
+      engine.request(
+        address,
+        viewport_width,
+        viewport_height,
+      )
     )
-    .accept_visit(drawing_visitor)
 
     @needs_redraw = false
   end

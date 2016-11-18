@@ -26,7 +26,7 @@ RSpec.describe DrawingVisitor do
     let(:last_grandchild) { Element.new }
     let(:last_child) { Element.new }
 
-    let(:returned_root) { root.accept_visit(visitor) }
+    let(:returned_root) { visitor.call(root) }
     let(:returned_first_child) { returned_root.children.first }
     let(:returned_first_grandchild) { returned_first_child.children.first }
     let(:returned_last_grandchild) { returned_first_child.children.last }
@@ -48,7 +48,7 @@ RSpec.describe DrawingVisitor do
       let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
       before do
-        visitor.visit_text(node)
+        visitor.call(node)
       end
 
       it "delegates the actual drawing to the text renderer" do
@@ -62,7 +62,7 @@ RSpec.describe DrawingVisitor do
       let(:box_attributes) { {:x => 0, :y => 1, :width => 2, :height => 3} }
 
       before do
-        visitor.visit_element(node)
+        visitor.call(node)
       end
 
       it "delegates the actual drawing to the box renderer" do

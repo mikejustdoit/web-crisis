@@ -24,18 +24,6 @@ RSpec.describe Text do
     it_behaves_like "a clonable node"
   end
 
-  describe "accepting visitors" do
-    let(:visitor) { visitor_double }
-
-    before do
-      node.accept_visit(visitor)
-    end
-
-    it "supplies itself to the visitor's callback" do
-      expect(visitor).to have_received(:visit_text).with(node)
-    end
-  end
-
   describe "quacking like an Element" do
     it "has a #children method" do
       expect(node).to respond_to(:children)

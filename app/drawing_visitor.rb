@@ -4,10 +4,21 @@ class DrawingVisitor
     @text_renderer = text_renderer
   end
 
+  def call(node)
+    case node
+    when Element
+      visit_element(node)
+    when Text
+      visit_text(node)
+    end
+  end
+
+  private
+
   def visit_element(node)
     box_renderer.call(node.x, node.y, node.width, node.height)
 
-    node.children.each { |child| child.accept_visit(self) }
+    node.children.each { |child| call(child) }
 
     node
   end
@@ -17,8 +28,6 @@ class DrawingVisitor
 
     node
   end
-
-  private
 
   attr_reader :box_renderer, :text_renderer
 end

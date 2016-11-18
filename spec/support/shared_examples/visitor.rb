@@ -3,13 +3,21 @@ require "support/visitor_double"
 require "text"
 
 RSpec.shared_examples "a visitor" do
-  describe "callback interface" do
+  describe "public interface" do
+    let(:element) { Element.new(box: box, children: []) }
+    let(:text) { Text.new(box: box, content: "Just passing.") }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
+
     it "supports Element nodes" do
-      expect(visitor).to respond_to(:visit_element)
+      expect(
+        visitor.call(element)
+      ).not_to be_nil
     end
 
     it "supports Text nodes" do
-      expect(visitor).to respond_to(:visit_text)
+      expect(
+        visitor.call(text)
+      ).not_to be_nil
     end
   end
 end
@@ -23,19 +31,17 @@ RSpec.shared_examples "a depth-first tree traverser" do
     let(:all_nodes) { [root] + children + grandchildren }
 
     before do
-      all_nodes.each do |node|
-        allow(node).to receive(:accept_visit).and_call_original
-      end
+      allow(visitor).to receive(:call).and_call_original
 
-      root.accept_visit(visitor)
+      visitor.call(root)
     end
 
     it "visits all nodes once in depth-first order" do
-      expect(root).to have_received(:accept_visit).ordered
-      expect(children.first).to have_received(:accept_visit).ordered
-      expect(grandchildren.first).to have_received(:accept_visit).ordered
-      expect(grandchildren.last).to have_received(:accept_visit).ordered
-      expect(children.last).to have_received(:accept_visit).ordered
+      expect(visitor).to have_received(:call).with(root).ordered
+      expect(visitor).to have_received(:call).with(children.first).ordered
+      expect(visitor).to have_received(:call).with(grandchildren.first).ordered
+      expect(visitor).to have_received(:call).with(grandchildren.last).ordered
+      expect(visitor).to have_received(:call).with(children.last).ordered
     end
   end
 end

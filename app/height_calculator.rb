@@ -1,9 +1,20 @@
 class HeightCalculator
   def initialize(**_); end
 
+  def call(node)
+    case node
+    when Element
+      visit_element(node)
+    when Text
+      visit_text(node)
+    end
+  end
+
+  private
+
   def visit_element(node)
     new_children = node.children.map { |child|
-      child.accept_visit(self)
+      call(child)
     }
 
     node.clone_with(
@@ -17,8 +28,6 @@ class HeightCalculator
       height: text_node_height,
     )
   end
-
-  private
 
   def text_node_height
     18

@@ -4,6 +4,17 @@ class RootNodeDimensionsSetter
     @viewport_height = viewport_height
   end
 
+  def call(node)
+    case node
+    when Element
+      visit_element(node)
+    when Text
+      visit_text(node)
+    end
+  end
+
+  private
+
   def visit_element(node)
     node.clone_with(
       width: viewport_width,
@@ -14,8 +25,6 @@ class RootNodeDimensionsSetter
   def visit_text(node)
     node
   end
-
-  private
 
   attr_reader :viewport_width, :viewport_height
 end

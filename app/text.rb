@@ -13,10 +13,6 @@ class Text
 
   def_delegators :box, :x, :y, :width, :height, :right, :bottom
 
-  def accept_visit(visitor)
-    visitor.visit_text(self)
-  end
-
   def children
     []
   end

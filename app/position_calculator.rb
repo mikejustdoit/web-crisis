@@ -5,12 +5,23 @@ require "subsequent_child_positioner"
 class PositionCalculator
   def initialize(**_); end
 
+  def call(node)
+    case node
+    when Element
+      visit_element(node)
+    when Text
+      visit_text(node)
+    end
+  end
+
+  private
+
   def visit_element(positioned_node)
     new_children = position_children(positioned_node)
 
     positioned_node.clone_with(
       children: new_children.map { |positioned_child|
-        positioned_child.accept_visit(self)
+        call(positioned_child)
       }
     )
   end
@@ -18,8 +29,6 @@ class PositionCalculator
   def visit_text(positioned_node)
     positioned_node
   end
-
-  private
 
   def position_children(parent_node)
     ChildrenPositioner.new(

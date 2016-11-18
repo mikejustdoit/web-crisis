@@ -9,7 +9,7 @@ class LayoutPipeline
         factory.call(**viewport_dimensions)
       }
       .reduce(tree) { |root_node, visitor|
-        root_node.accept_visit(visitor)
+        visitor.call(root_node)
       }
   end
 

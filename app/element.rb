@@ -19,10 +19,6 @@ class Element
     children.map(&:content).join
   end
 
-  def accept_visit(visitor)
-    visitor.visit_element(self)
-  end
-
   def clone_with(**attributes)
     Element.new(
       box: box.clone_with(**attributes),

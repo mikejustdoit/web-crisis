@@ -7,14 +7,16 @@ RSpec.describe "visitor_double" do
   it_behaves_like "a visitor"
 
   describe "return values from visit methods" do
-    let(:node) { double(:node) }
+    let(:element) { Element.new(box: box, children: []) }
+    let(:text) { Text.new(box: box, content: "Just passing.") }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
     it "passes element nodes straight through" do
-      expect(visitor.visit_element(node)).to eq(node)
+      expect(visitor.call(element)).to eq(element)
     end
 
     it "passes text nodes straight through" do
-      expect(visitor.visit_text(node)).to eq(node)
+      expect(visitor.call(text)).to eq(text)
     end
   end
 end

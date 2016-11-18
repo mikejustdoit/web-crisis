@@ -12,9 +12,9 @@ RSpec.describe LayoutPipeline do
     let(:final_tree) { double(:final_tree) }
 
     before do
-      allow(initial_tree).to receive(:accept_visit).with(first_visitor)
+      allow(first_visitor).to receive(:call).with(initial_tree)
         .and_return(intermediate_tree)
-      allow(intermediate_tree).to receive(:accept_visit).with(second_visitor)
+      allow(second_visitor).to receive(:call).with(intermediate_tree)
         .and_return(final_tree)
     end
 
