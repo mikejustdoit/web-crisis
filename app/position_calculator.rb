@@ -28,25 +28,9 @@ class PositionCalculator
 
   def position_children(parent_node)
     ChildrenPositioner.new(
-      first_child_positioner: first_child_positioner,
-      subsequent_child_positioner: subsequent_child_positioner,
+      first_child_positioner: FirstChildPositioner.new,
+      subsequent_child_positioner: SubsequentChildPositioner.new,
     )
     .call(parent_node)
-  end
-
-  def first_child_positioner
-    ->(first_child, parent_node:) {
-      FirstChildPositioner
-        .new(parent_node: parent_node)
-        .call(first_child)
-    }
-  end
-
-  def subsequent_child_positioner
-    ->(subsequent_child, preceding_sibling_node:) {
-      SubsequentChildPositioner
-        .new(preceding_sibling_node: preceding_sibling_node)
-        .call(subsequent_child)
-    }
   end
 end
