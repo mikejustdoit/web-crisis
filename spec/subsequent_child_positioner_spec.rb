@@ -18,7 +18,7 @@ RSpec.describe SubsequentChildPositioner do
       )
     }
 
-    it "positions subsequent child at bottom of its preceding sibling" do
+    it "positions subsequent child below its preceding sibling" do
       expect(positioned_subsequent_child.y).to eq(preceding_sibling_node.bottom)
     end
   end
