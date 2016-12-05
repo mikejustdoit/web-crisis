@@ -9,7 +9,7 @@ class RootNodeDimensionsSetter
     when Element
       visit_element(node)
     when Text
-      visit_text(node)
+      node
     end
   end
 
@@ -20,10 +20,6 @@ class RootNodeDimensionsSetter
       width: viewport_width,
       height: viewport_height,
     )
-  end
-
-  def visit_text(node)
-    node
   end
 
   attr_reader :viewport_width, :viewport_height

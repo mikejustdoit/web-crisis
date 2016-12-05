@@ -10,7 +10,7 @@ class PositionCalculator
     when Element
       visit_element(node)
     when Text
-      visit_text(node)
+      node
     end
   end
 
@@ -24,10 +24,6 @@ class PositionCalculator
         call(positioned_child)
       }
     )
-  end
-
-  def visit_text(positioned_node)
-    positioned_node
   end
 
   def position_children(parent_node)
