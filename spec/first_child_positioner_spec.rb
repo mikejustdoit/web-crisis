@@ -15,6 +15,10 @@ RSpec.describe FirstChildPositioner do
       calculator.call(first_child, parent_node: parent_node)
     }
 
+    it "positions first child at left edge of its parent_node" do
+      expect(positioned_first_child.x).to eq(parent_node.x)
+    end
+
     it "positions first child at top of its parent_node" do
       expect(positioned_first_child.y).to eq(parent_node.y)
     end
