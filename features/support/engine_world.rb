@@ -50,3 +50,60 @@ module EngineWorld
 end
 
 World(EngineWorld)
+
+module OfflineHtmlWorld
+  class OfflineHtmlFetcher
+    def initialize(body)
+      @body = body
+    end
+
+    def call(uri)
+      body
+    end
+
+    private
+
+    attr_reader :body
+  end
+
+  def offline_html_engine(html_input)
+    Engine.new(
+      fetcher: OfflineHtmlFetcher.new(html_input),
+      layout_pipeline: LayoutPipeline.new(
+        [
+          RootNodeDimensionsSetter.method(:new),
+          HeightCalculator.method(:new),
+          PositionCalculator.method(:new),
+        ]
+      ),
+      parser: Parser.new,
+    )
+  end
+
+  def render_in_browser(html_input)
+    @render_tree = offline_html_engine(html_input)
+      .request("https://dummy.address", viewport_width, viewport_height)
+  end
+
+  def elements_are_positioned_left_to_right
+    first_node = page.find_nodes_with_text("Your").first
+    second_node = page.find_nodes_with_text("ad").first
+    third_node = page.find_nodes_with_text("here").first
+
+    expect(second_node.x).to be >= first_node.right
+    expect(third_node.x).to be >= second_node.right
+  end
+
+  def root_node_is_at_least_as_wide_as_all_of_its_chilren
+    parent_node = @render_tree
+
+    first_child_node = page.find_nodes_with_text("Your").first
+    second_child_node = page.find_nodes_with_text("ad").first
+    third_child_node = page.find_nodes_with_text("here").first
+
+    expect(parent_node.width).to be >=
+      first_child_node.width + second_child_node.width + third_child_node.width
+  end
+end
+
+World(OfflineHtmlWorld)
