@@ -1,4 +1,5 @@
 require "box"
+require "inline_element"
 require "position_calculator"
 require "support/shared_examples/visitor"
 
@@ -12,10 +13,13 @@ RSpec.describe PositionCalculator do
     let(:first_child) {
       Element.new(
         box: a_box_of_height,
-        children: [first_grandchild],
+        children: [first_grandchild, middle_grandchild],
       )
     }
     let(:first_grandchild) { Text.new(box: a_box_of_height, content: "ABC") }
+    let(:middle_grandchild) {
+      InlineElement.new(Element.new(box: a_box_of_height, children: []))
+    }
     let(:last_child) {
       Element.new(
         children: [last_grandchild],
@@ -23,11 +27,12 @@ RSpec.describe PositionCalculator do
     }
     let(:last_grandchild) { Element.new }
 
-    let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 0, height: 11) }
+    let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 51, height: 11) }
 
     let(:returned_root) { visitor.call(root) }
     let(:returned_first_child) { returned_root.children.first }
     let(:returned_first_grandchild) { returned_first_child.children.first }
+    let(:returned_middle_grandchild) { returned_first_child.children.last }
     let(:returned_last_child) { returned_root.children.last }
     let(:returned_last_grandchild) { returned_last_child.children.first }
 
@@ -40,6 +45,7 @@ RSpec.describe PositionCalculator do
         [root,             returned_root],
         [first_child,      returned_first_child],
         [first_grandchild, returned_first_grandchild],
+        [middle_grandchild, returned_middle_grandchild],
         [last_child,       returned_last_child],
         [last_grandchild,  returned_last_grandchild],
       ]
