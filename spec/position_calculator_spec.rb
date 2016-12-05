@@ -51,17 +51,5 @@ RSpec.describe PositionCalculator do
 
       expect(number_of_nodes_with_adjusted_y_positions).to be > 1
     end
-
-    it "positions nodes below their preceding siblings" do
-      expect(returned_last_child.y).to be >= returned_first_child.bottom
-    end
-
-    it "doesn't position nodes above their parents" do
-      expect(returned_first_child.y).to be >= returned_root.y
-      expect(returned_last_child.y).to be >= returned_root.y
-
-      expect(returned_first_grandchild.y).to be >= returned_first_child.y
-      expect(returned_last_grandchild.y).to be >= returned_last_child.y
-    end
   end
 end
