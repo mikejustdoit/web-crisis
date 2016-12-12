@@ -1,3 +1,5 @@
+require "element_types"
+
 class DrawingVisitor
   def initialize(box_renderer:, text_renderer:)
     @box_renderer = box_renderer
@@ -6,7 +8,7 @@ class DrawingVisitor
 
   def call(node)
     case node
-    when Element
+    when *ELEMENTS
       visit_element(node)
     when Text
       visit_text(node)

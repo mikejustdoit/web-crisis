@@ -1,5 +1,6 @@
 require "children_positioner"
 require "first_child_positioner"
+require "element_types"
 require "subsequent_child_positioner"
 
 class PositionCalculator
@@ -7,7 +8,7 @@ class PositionCalculator
 
   def call(node)
     case node
-    when Element
+    when *ELEMENTS
       visit_element(node)
     when Text
       node

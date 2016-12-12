@@ -1,9 +1,11 @@
+require "element_types"
+
 class HeightCalculator
   def initialize(**_); end
 
   def call(node)
     case node
-    when Element
+    when *ELEMENTS
       visit_element(node)
     when Text
       visit_text(node)

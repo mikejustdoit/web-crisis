@@ -1,3 +1,5 @@
+require "element_types"
+
 class RootNodeDimensionsSetter
   def initialize(viewport_width:, viewport_height:)
     @viewport_width = viewport_width
@@ -6,7 +8,7 @@ class RootNodeDimensionsSetter
 
   def call(node)
     case node
-    when Element
+    when *ELEMENTS
       visit_element(node)
     when Text
       node
