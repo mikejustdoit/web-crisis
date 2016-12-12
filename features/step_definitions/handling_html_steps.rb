@@ -7,5 +7,6 @@ INTEGER_PATTERN = Transform(/^\d+$/) do |n|
 end
 
 Then(/^the resulting tree should have (#{INTEGER_PATTERN}) nodes$/) do |n|
+  expect(@render_tree).not_to be_nil
   expect(tree_size(@render_tree)).to eq(n)
 end
