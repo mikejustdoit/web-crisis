@@ -1,6 +1,6 @@
 require "children_positioner"
 require "first_child_positioner"
-require "element_types"
+require "node_types"
 require "subsequent_child_positioner"
 
 class PositionCalculator

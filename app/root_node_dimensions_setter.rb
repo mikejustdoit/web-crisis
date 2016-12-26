@@ -1,4 +1,4 @@
-require "element_types"
+require "node_types"
 
 class RootNodeDimensionsSetter
   def initialize(viewport_width:, viewport_height:)

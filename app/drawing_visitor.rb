@@ -1,4 +1,4 @@
-require "element_types"
+require "node_types"
 
 class DrawingVisitor
   def initialize(box_renderer:, text_renderer:)
