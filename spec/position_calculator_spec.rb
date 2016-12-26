@@ -40,6 +40,24 @@ RSpec.describe PositionCalculator do
       expect(returned_root).not_to eq(root)
     end
 
+    it "adjusts left positions for at least some of the new tree" do
+      number_of_nodes_with_adjusted_y_positions = [
+        [root,             returned_root],
+        [first_child,      returned_first_child],
+        [first_grandchild, returned_first_grandchild],
+        [middle_grandchild, returned_middle_grandchild],
+        [last_child,       returned_last_child],
+        [last_grandchild,  returned_last_grandchild],
+      ]
+      .map { |original_node, new_node|
+        new_node.x != original_node.x
+      }
+      .select { |x| x }
+      .size
+
+      expect(number_of_nodes_with_adjusted_y_positions).to be > 0
+    end
+
     it "adjusts top positions for at least some of the new tree" do
       number_of_nodes_with_adjusted_y_positions = [
         [root,             returned_root],
