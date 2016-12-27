@@ -2,6 +2,7 @@ require "box"
 require "gosu"
 require "gosu_box_renderer"
 require "gosu_text_renderer"
+require "gosu_text_width_calculator"
 
 class GuiWindow < Gosu::Window
   def initialize(engine:, drawing_visitor_factory:)
@@ -25,6 +26,7 @@ class GuiWindow < Gosu::Window
         address,
         viewport_width,
         viewport_height,
+        GosuTextWidthCalculator.new,
       )
     )
 

@@ -5,11 +5,12 @@ class Engine
     @parser = parser
   end
 
-  def request(uri, viewport_width, viewport_height)
+  def request(uri, viewport_width, viewport_height, text_width_calculator)
     layout_pipeline.visit(
       parse(uri),
       viewport_width: viewport_width,
       viewport_height: viewport_height,
+      text_width_calculator: text_width_calculator,
     )
   end
 

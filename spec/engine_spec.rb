@@ -22,6 +22,7 @@ RSpec.describe Engine do
         "https://weworkremotely.com/",
         640,
         480,
+        double(:text_width_calculator),
       )
     end
 
@@ -41,6 +42,7 @@ RSpec.describe Engine do
         "https://weworkremotely.com/",
         640,
         480,
+        double(:text_width_calculator),
       )
     }
 

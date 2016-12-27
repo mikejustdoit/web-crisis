@@ -1,5 +1,6 @@
 require "engine"
 require "fetcher"
+require "gosu_adapter_stubs"
 require "height_calculator"
 require "inspector"
 require "layout_pipeline"
@@ -23,7 +24,12 @@ module EngineWorld
   end
 
   def visit_address(new_address)
-    @render_tree = engine.request(new_address, viewport_width, viewport_height)
+    @render_tree = engine.request(
+      new_address,
+      viewport_width,
+      viewport_height,
+      gosu_text_width_calculator_stub,
+    )
   end
 
   def viewport_width
@@ -82,7 +88,12 @@ module OfflineHtmlWorld
 
   def render_in_browser(html_input)
     @render_tree = offline_html_engine(html_input)
-      .request("https://dummy.address", viewport_width, viewport_height)
+      .request(
+        "https://dummy.address",
+        viewport_width,
+        viewport_height,
+        gosu_text_width_calculator_stub,
+      )
   end
 
   def elements_are_positioned_left_to_right
