@@ -3,8 +3,8 @@ require "gosu_text_renderer"
 
 def gosu_box_renderer_stub
   GosuBoxRenderer.new(double(:viewport))
-    .tap { |tr|
-      allow(tr).to receive(:call).and_return(nil)
+    .tap { |br|
+      allow(br).to receive(:call).and_return(nil)
     }
 end
 
