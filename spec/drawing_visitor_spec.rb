@@ -1,7 +1,7 @@
 require "box"
 require "drawing_visitor"
 require "element"
-require "support/gosu_renderer_stubs"
+require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"
 require "text"
 
