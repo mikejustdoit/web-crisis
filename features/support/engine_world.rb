@@ -8,6 +8,7 @@ require "layout_pipeline"
 require "parser"
 require "position_calculator"
 require "root_node_dimensions_setter"
+require "width_calculator"
 
 module EngineWorld
   def engine
@@ -17,6 +18,7 @@ module EngineWorld
         [
           RootNodeDimensionsSetter.method(:new),
           IntrinsicWidthSetter.method(:new),
+          WidthCalculator.method(:new),
           HeightCalculator.method(:new),
           PositionCalculator.method(:new),
         ]
@@ -81,6 +83,7 @@ module OfflineHtmlWorld
         [
           RootNodeDimensionsSetter.method(:new),
           IntrinsicWidthSetter.method(:new),
+          WidthCalculator.method(:new),
           HeightCalculator.method(:new),
           PositionCalculator.method(:new),
         ]

@@ -1,6 +1,5 @@
 Feature: laying out a web page
 
-  @wip
   Scenario: inline nodes
     Given the HTML input:
       """
