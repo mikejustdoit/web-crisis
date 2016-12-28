@@ -118,6 +118,26 @@ module OfflineHtmlWorld
     expect(third_node.y).to be >= second_node.bottom
   end
 
+  def elements_are_positioned_over_four_rows
+    first_node = page.find_nodes_with_text("Firstly.").first
+
+    second_node = page.find_nodes_with_text("Secondly.").first
+
+    third_node = page.find_nodes_with_text("Your").first
+    fourth_node = page.find_nodes_with_text("ad").first
+    fifth_node = page.find_nodes_with_text("here").first
+
+    last_node = page.find_nodes_with_text("Lastly.").first
+
+    expect(second_node.y).to be >= first_node.bottom
+
+    expect(third_node.y).to be >= second_node.bottom
+    expect(fourth_node.y).to eq(third_node.y)
+    expect(fifth_node.y).to eq(third_node.y)
+
+    expect(last_node.y).to be >= fifth_node.bottom
+  end
+
   def root_node_is_at_least_as_wide_as_all_of_its_chilren
     parent_node = @render_tree
 
@@ -138,6 +158,58 @@ module OfflineHtmlWorld
 
     expect(parent_node.height).to be >=
       first_child_node.height + second_child_node.height + third_child_node.height
+  end
+
+  def root_node_is_about_as_tall_as_four_rows
+    parent_node = @render_tree
+
+    first_node = page.find_nodes_with_text("Firstly.").first
+
+    second_node = page.find_nodes_with_text("Secondly.").first
+
+    third_node = page.find_nodes_with_text("Your").first
+    fourth_node = page.find_nodes_with_text("ad").first
+    fifth_node = page.find_nodes_with_text("here").first
+
+    last_node = page.find_nodes_with_text("Lastly.").first
+
+
+    height_of_all_four_rows =
+      first_node.height + second_node.height +
+      third_node.height + last_node.height
+
+    height_of_all_children =
+      first_node.height + second_node.height +
+      third_node.height + fourth_node.height +
+      fifth_node.height + last_node.height
+
+    expect(parent_node.height).to be >= height_of_all_four_rows
+    expect(parent_node.height).to be < height_of_all_children
+  end
+
+  def root_node_is_about_as_wide_as_its_longest_row_of_chilren
+    parent_node = @render_tree
+
+    first_child_node = page.find_nodes_with_text("Firstly.").first
+
+    second_child_node = page.find_nodes_with_text("Secondly.").first
+
+    third_child_node = page.find_nodes_with_text("Your").first
+    fourth_child_node = page.find_nodes_with_text("ad").first
+    fifth_child_node = page.find_nodes_with_text("here").first
+
+    last_child_node = page.find_nodes_with_text("Lastly.").first
+
+    width_of_longest_row =
+      third_child_node.width + fourth_child_node.width + fifth_child_node.width
+
+    width_of_all_children =
+      first_child_node.width + second_child_node.width +
+      third_child_node.width + fourth_child_node.width +
+      fifth_child_node.width + last_child_node.width
+
+    expect(parent_node.width).to be >= width_of_longest_row
+    expect(parent_node.width).to be < width_of_all_children
   end
 end
 
