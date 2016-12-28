@@ -1,5 +1,16 @@
 Feature: laying out a web page
 
+  Scenario: block-level nodes
+    Given the HTML input:
+      """
+      <div>
+        <h1>Firstly.</h1> <h2>Secondly.</h2> <h3>Lastly.</h3>
+      </div>
+      """
+    When I render it in the browser
+    Then each element appears below its predecessor
+    And their parent fits them all heightwise
+
   Scenario: inline nodes
     Given the HTML input:
       """

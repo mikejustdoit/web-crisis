@@ -109,6 +109,15 @@ module OfflineHtmlWorld
     expect(third_node.x).to be >= second_node.right
   end
 
+  def elements_are_positioned_on_their_own_rows
+    first_node = page.find_nodes_with_text("Firstly.").first
+    second_node = page.find_nodes_with_text("Secondly.").first
+    third_node = page.find_nodes_with_text("Lastly.").first
+
+    expect(second_node.y).to be >= first_node.bottom
+    expect(third_node.y).to be >= second_node.bottom
+  end
+
   def root_node_is_at_least_as_wide_as_all_of_its_chilren
     parent_node = @render_tree
 
@@ -118,6 +127,17 @@ module OfflineHtmlWorld
 
     expect(parent_node.width).to be >=
       first_child_node.width + second_child_node.width + third_child_node.width
+  end
+
+  def root_node_is_at_least_as_tall_as_all_of_its_chilren
+    parent_node = @render_tree
+
+    first_child_node = page.find_nodes_with_text("Firstly.").first
+    second_child_node = page.find_nodes_with_text("Secondly.").first
+    third_child_node = page.find_nodes_with_text("Lastly.").first
+
+    expect(parent_node.height).to be >=
+      first_child_node.height + second_child_node.height + third_child_node.height
   end
 end
 
