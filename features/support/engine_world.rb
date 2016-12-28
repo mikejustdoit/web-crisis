@@ -15,17 +15,21 @@ module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
-      layout_pipeline: LayoutPipeline.new(
-        [
-          RootNodeDimensionsSetter.method(:new),
-          IntrinsicWidthSetter.method(:new),
-          WidthCalculator.method(:new),
-          IntrinsicHeightSetter.method(:new),
-          HeightCalculator.method(:new),
-          PositionCalculator.method(:new),
-        ]
-      ),
+      layout_pipeline: layout_pipeline,
       parser: Parser.new,
+    )
+  end
+
+  def layout_pipeline
+    LayoutPipeline.new(
+      [
+        RootNodeDimensionsSetter.method(:new),
+        IntrinsicWidthSetter.method(:new),
+        WidthCalculator.method(:new),
+        IntrinsicHeightSetter.method(:new),
+        HeightCalculator.method(:new),
+        PositionCalculator.method(:new),
+      ]
     )
   end
 
@@ -81,16 +85,7 @@ module OfflineHtmlWorld
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
-      layout_pipeline: LayoutPipeline.new(
-        [
-          RootNodeDimensionsSetter.method(:new),
-          IntrinsicWidthSetter.method(:new),
-          WidthCalculator.method(:new),
-          IntrinsicHeightSetter.method(:new),
-          HeightCalculator.method(:new),
-          PositionCalculator.method(:new),
-        ]
-      ),
+      layout_pipeline: layout_pipeline,
       parser: Parser.new,
     )
   end
