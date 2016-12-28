@@ -3,6 +3,7 @@ require "fetcher"
 require "gosu_adapter_stubs"
 require "height_calculator"
 require "inspector"
+require "intrinsic_height_setter"
 require "intrinsic_width_setter"
 require "layout_pipeline"
 require "parser"
@@ -19,6 +20,7 @@ module EngineWorld
           RootNodeDimensionsSetter.method(:new),
           IntrinsicWidthSetter.method(:new),
           WidthCalculator.method(:new),
+          IntrinsicHeightSetter.method(:new),
           HeightCalculator.method(:new),
           PositionCalculator.method(:new),
         ]
@@ -84,6 +86,7 @@ module OfflineHtmlWorld
           RootNodeDimensionsSetter.method(:new),
           IntrinsicWidthSetter.method(:new),
           WidthCalculator.method(:new),
+          IntrinsicHeightSetter.method(:new),
           HeightCalculator.method(:new),
           PositionCalculator.method(:new),
         ]

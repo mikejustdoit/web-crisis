@@ -1,5 +1,8 @@
+require "box"
+require "element"
 require "height_calculator"
 require "support/shared_examples/visitor"
+require "text"
 
 RSpec.describe HeightCalculator do
   subject(:visitor) { HeightCalculator.new }
@@ -11,9 +14,11 @@ RSpec.describe HeightCalculator do
   describe "the returned tree" do
     let(:root) { Element.new(children: [first_child, last_child]) }
     let(:first_child) { Element.new(children: [first_grandchild, last_grandchild]) }
-    let(:first_grandchild) { Text.new(content: "ABC") }
+    let(:first_grandchild) { Text.new(content: "ABC", box: tall_characters) }
     let(:last_grandchild) { Element.new }
     let(:last_child) { Element.new }
+
+    let(:tall_characters) { Box.new(x: 0, y: 0, width: 60, height: 24) }
 
     let(:returned_root) { visitor.call(root) }
     let(:returned_first_child) { returned_root.children.first }

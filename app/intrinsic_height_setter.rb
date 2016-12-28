@@ -1,6 +1,6 @@
 require "node_types"
 
-class HeightCalculator
+class IntrinsicHeightSetter
   def initialize(**_); end
 
   def call(node)
@@ -8,7 +8,7 @@ class HeightCalculator
     when *ELEMENTS
       visit_element(node)
     when Text
-      node
+      visit_text(node)
     end
   end
 
@@ -20,8 +20,17 @@ class HeightCalculator
     }
 
     node.clone_with(
-      height: new_children.map { |child| child.height }.inject(0, &:+),
       children: new_children,
     )
+  end
+
+  def visit_text(node)
+    node.clone_with(
+      height: text_node_height,
+    )
+  end
+
+  def text_node_height
+    18
   end
 end
