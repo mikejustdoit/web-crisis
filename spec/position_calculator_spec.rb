@@ -73,7 +73,7 @@ RSpec.describe PositionCalculator do
       .select { |x| x }
       .size
 
-      expect(number_of_nodes_with_adjusted_y_positions).to be > 1
+      expect(number_of_nodes_with_adjusted_y_positions).to be > 0
     end
   end
 end
