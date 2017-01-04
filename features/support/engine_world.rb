@@ -3,6 +3,7 @@ require "fetcher"
 require "gosu_adapter_stubs"
 require "inspector"
 require "layout_visitors"
+require "offline_html_fetcher"
 require "parser"
 
 module EngineWorld
@@ -49,20 +50,6 @@ end
 World(EngineWorld)
 
 module OfflineHtmlWorld
-  class OfflineHtmlFetcher
-    def initialize(body)
-      @body = body
-    end
-
-    def call(uri)
-      body
-    end
-
-    private
-
-    attr_reader :body
-  end
-
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
