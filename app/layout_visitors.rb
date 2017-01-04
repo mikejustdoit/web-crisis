@@ -1,3 +1,4 @@
+require "absolute_position_adder_upper"
 require "height_calculator"
 require "intrinsic_height_setter"
 require "intrinsic_width_setter"
@@ -14,5 +15,6 @@ LAYOUT_VISITORS = LayoutPipeline.new(
     IntrinsicHeightSetter.method(:new),
     HeightCalculator.method(:new),
     PositionCalculator.method(:new),
+    AbsolutePositionAdderUpper.method(:new),
   ]
 )

@@ -7,10 +7,7 @@ class ChildrenPositioner
   def call(node)
     new_children = node.children.first(1)
       .map { |first_child|
-        position_first_child(
-          first_child,
-          parent_node: node,
-        )
+        position_first_child(first_child)
       }
 
     new_children = node.children.drop(1)
@@ -30,10 +27,9 @@ class ChildrenPositioner
 
   attr_reader :first_child_positioner, :subsequent_child_positioner
 
-  def position_first_child(first_child, parent_node:)
+  def position_first_child(first_child)
     first_child_positioner.call(
       first_child,
-      parent_node: parent_node,
     )
   end
 

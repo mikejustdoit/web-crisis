@@ -1,4 +1,3 @@
-require "box"
 require "element"
 require "first_child_positioner"
 
@@ -8,19 +7,17 @@ RSpec.describe FirstChildPositioner do
       FirstChildPositioner.new
     }
     let(:first_child) { Element.new }
-    let(:parent_node) { Element.new(box: parent_node_box, children: [first_child]) }
-    let(:parent_node_box) { Box.new(x: 100, y: 200, width: 300, height: 400) }
 
     let(:positioned_first_child) {
-      calculator.call(first_child, parent_node: parent_node)
+      calculator.call(first_child)
     }
 
-    it "positions first child at left edge of its parent_node" do
-      expect(positioned_first_child.x).to eq(parent_node.x)
+    it "positions first child relatively at left edge of its parent_node" do
+      expect(positioned_first_child.x).to eq(0)
     end
 
-    it "positions first child at top of its parent_node" do
-      expect(positioned_first_child.y).to eq(parent_node.y)
+    it "positions first child relatively at top of its parent_node" do
+      expect(positioned_first_child.y).to eq(0)
     end
   end
 end
