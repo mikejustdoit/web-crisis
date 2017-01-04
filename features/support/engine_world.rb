@@ -1,35 +1,16 @@
 require "engine"
 require "fetcher"
 require "gosu_adapter_stubs"
-require "height_calculator"
 require "inspector"
-require "intrinsic_height_setter"
-require "intrinsic_width_setter"
-require "layout_pipeline"
+require "layout_visitors"
 require "parser"
-require "position_calculator"
-require "root_node_dimensions_setter"
-require "width_calculator"
 
 module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
-      layout_pipeline: layout_pipeline,
+      layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
-    )
-  end
-
-  def layout_pipeline
-    LayoutPipeline.new(
-      [
-        RootNodeDimensionsSetter.method(:new),
-        IntrinsicWidthSetter.method(:new),
-        WidthCalculator.method(:new),
-        IntrinsicHeightSetter.method(:new),
-        HeightCalculator.method(:new),
-        PositionCalculator.method(:new),
-      ]
     )
   end
 
@@ -85,7 +66,7 @@ module OfflineHtmlWorld
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
-      layout_pipeline: layout_pipeline,
+      layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )
   end
