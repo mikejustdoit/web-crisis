@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require_relative "../config/env"
+require "drawing_visitor"
+require "engine"
+require "gosu_box_renderer"
+require "gosu_text_renderer"
+require "gui_window"
+require "layout_visitors"
+require "offline_html_fetcher"
+require "parser"
+
+# "Usage: echo '<html></html>' | #{$0}"
+
+html = STDIN.gets
+
+browser = GuiWindow.new(
+  engine: Engine.new(
+    fetcher: OfflineHtmlFetcher.new(html),
+    layout_pipeline: LAYOUT_VISITORS,
+    parser: Parser.new,
+  ),
+  drawing_visitor_factory: DrawingVisitor.method(:new),
+)
+
+browser.address = "offline"
+browser.go
+
+browser.show
