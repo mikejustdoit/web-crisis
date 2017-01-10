@@ -1,7 +1,5 @@
 require "children_positioner"
-require "first_child_positioner"
 require "node_types"
-require "subsequent_child_positioner"
 
 class PositionCalculator
   def initialize(**_); end
@@ -28,10 +26,6 @@ class PositionCalculator
   end
 
   def position_children(parent_node)
-    ChildrenPositioner.new(
-      first_child_positioner: FirstChildPositioner.new,
-      subsequent_child_positioner: SubsequentChildPositioner.new,
-    )
-    .call(parent_node)
+    ChildrenPositioner.new.call(parent_node)
   end
 end
