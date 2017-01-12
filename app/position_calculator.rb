@@ -1,5 +1,5 @@
-require "children_positioner"
 require "node_types"
+require "siblings_arranger"
 
 class PositionCalculator
   def initialize(**_); end
@@ -16,7 +16,7 @@ class PositionCalculator
   private
 
   def visit_element(positioned_node)
-    new_children = position_children(positioned_node)
+    new_children = position_children(positioned_node.children)
 
     positioned_node.clone_with(
       children: new_children.map { |positioned_child|
@@ -25,7 +25,7 @@ class PositionCalculator
     )
   end
 
-  def position_children(parent_node)
-    ChildrenPositioner.new.call(parent_node)
+  def position_children(children)
+    SiblingsArranger.new.call(children)
   end
 end
