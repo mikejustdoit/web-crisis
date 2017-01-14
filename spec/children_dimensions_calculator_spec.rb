@@ -15,17 +15,13 @@ RSpec.describe ChildrenDimensionsCalculator do
   }
   let(:last_row) { [ Box.new(x: 100, y: 160, width: 10, height: 20) ] }
 
-  let(:parent_node) {
-    double(:parent_node,
-      children: first_row + second_row + third_row + last_row,
-    )
-  }
+  let(:children) { first_row + second_row + third_row + last_row }
 
   describe "calculating the total width" do
     let(:total_width_of_third_row) { third_row.map(&:width).reduce(0, &:+) }
 
     before do
-      @width, _ = calculator.call(parent_node)
+      @width, _ = calculator.call(children)
     end
 
     it "takes the width of the longest row" do
@@ -40,7 +36,7 @@ RSpec.describe ChildrenDimensionsCalculator do
     }
 
     before do
-      _, @height = calculator.call(parent_node)
+      _, @height = calculator.call(children)
     end
 
     it "takes the height of all the rows" do
@@ -49,10 +45,10 @@ RSpec.describe ChildrenDimensionsCalculator do
   end
 
   describe "handling leaf nodes" do
-    let(:node) { double(:parent_node, children: []) }
+    let(:children) { [] }
 
     before do
-      @width, @height = calculator.call(node)
+      @width, @height = calculator.call(children)
     end
 
     it "defaults to 0 width" do

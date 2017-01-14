@@ -1,6 +1,6 @@
 class ChildrenDimensionsCalculator
-  def call(node)
-    return total_width(node.children), total_height(node.children)
+  def call(children)
+    return total_width(children), total_height(children)
   end
 
   private
