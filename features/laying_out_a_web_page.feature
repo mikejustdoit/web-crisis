@@ -22,7 +22,6 @@ Feature: laying out a web page
     Then each element appears to the right of its predecessor
     And their parent fits them all widthwise
 
-  @wip
   Scenario: mixed block-level and inline nodes
     Given the HTML input:
       """
