@@ -23,17 +23,20 @@ class NodeFactory
   end
 
   def call
-    if is_renderable?
-      case parsed_element.name
-      when "text"
-        parsed_element.content.strip.split("\n").map { |content|
-          Text.new(content: content)
-        }
-      when *BLOCK_LEVEL_ELEMENT_TYPES
-        BlockLevelElement.new(Element.new(children: children))
-      else
-        InlineElement.new(Element.new(children: children))
-      end
+    if !is_renderable?
+      logger.call("NodeFactory not rendering #{parsed_element.name}")
+      return
+    end
+
+    case parsed_element.name
+    when "text"
+      parsed_element.content.strip.split("\n").map { |content|
+        Text.new(content: content)
+      }
+    when *BLOCK_LEVEL_ELEMENT_TYPES
+      BlockLevelElement.new(Element.new(children: children))
+    else
+      InlineElement.new(Element.new(children: children))
     end
   end
 
