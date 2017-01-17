@@ -11,7 +11,7 @@ module EngineWorld
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
       layout_pipeline: LAYOUT_VISITORS,
-      parser: Parser.new,
+      parser: Parser.new(logger: ->(_) {}),
     )
   end
 
@@ -54,7 +54,7 @@ module OfflineHtmlWorld
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
       layout_pipeline: LAYOUT_VISITORS,
-      parser: Parser.new,
+      parser: Parser.new(logger: ->(_) {}),
     )
   end
 

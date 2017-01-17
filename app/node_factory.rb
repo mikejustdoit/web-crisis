@@ -17,8 +17,9 @@ class NodeFactory
 
   OTHER_NODE_TYPES = %w{ text }
 
-  def initialize(parsed_element)
+  def initialize(parsed_element, logger:)
     @parsed_element = parsed_element
+    @logger = logger
   end
 
   def call
@@ -38,7 +39,7 @@ class NodeFactory
 
   private
 
-  attr_reader :parsed_element
+  attr_reader :logger, :parsed_element
 
   def is_renderable?
     renderable_types.include?(parsed_element.name)
@@ -46,7 +47,10 @@ class NodeFactory
 
   def children
     parsed_element.children.map { |child|
-      NodeFactory.new(child).call
+      NodeFactory.new(
+        child,
+        logger: logger,
+      ).call
     }.flatten.compact
   end
 

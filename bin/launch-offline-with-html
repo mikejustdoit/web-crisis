@@ -18,7 +18,7 @@ browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: OfflineHtmlFetcher.new(html),
     layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new,
+    parser: Parser.new(logger: ->(message) { puts(message) }),
   ),
   drawing_visitor_factory: DrawingVisitor.method(:new),
 )
