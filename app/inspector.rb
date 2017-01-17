@@ -9,6 +9,8 @@ class Inspector
 
   private
 
+  attr_reader :render_tree
+
   def deepest_matches(parent_node, text)
     return [] unless parent_node.content.include?(text)
 
@@ -22,6 +24,4 @@ class Inspector
 
     [parent_node]
   end
-
-  attr_reader :render_tree
 end

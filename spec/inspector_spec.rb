@@ -3,12 +3,10 @@ require "inspector"
 require "text"
 
 RSpec.describe Inspector do
-  subject(:inspector) { Inspector.new(tree) }
+  subject(:inspector) { Inspector.new(root_node) }
 
   describe "#find_nodes_with_text" do
     context "when tree has a single node" do
-      let(:tree) { root_node }
-
       context "and the tree contains the search text" do
         let(:root_node) { Text.new(content: "search string") }
 
@@ -42,8 +40,6 @@ RSpec.describe Inspector do
         ]
       }
       let(:other_grandchildren) { [Text.new(content: "things of interest")] }
-
-      let(:tree) { root_node }
 
       context "and a leaf node contains the search text" do
         it "returns the deepest node with the text" do
