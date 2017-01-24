@@ -1,4 +1,4 @@
-require "children_dimensions_calculator"
+require "children_measurer"
 require "node_types"
 require "siblings_arranger"
 
@@ -35,6 +35,6 @@ class PositionCalculator
   end
 
   def measure_children_dimensions(children)
-    ChildrenDimensionsCalculator.new.call(children)
+    ChildrenMeasurer.new.call(children)
   end
 end

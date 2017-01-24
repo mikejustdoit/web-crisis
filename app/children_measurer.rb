@@ -1,4 +1,4 @@
-class ChildrenDimensionsCalculator
+class ChildrenMeasurer
   def call(children)
     return total_width(children), total_height(children)
   end

@@ -1,8 +1,8 @@
 require "box"
-require "children_dimensions_calculator"
+require "children_measurer"
 
-RSpec.describe ChildrenDimensionsCalculator do
-  subject(:calculator) { ChildrenDimensionsCalculator.new }
+RSpec.describe ChildrenMeasurer do
+  subject(:measurer) { ChildrenMeasurer.new }
 
   let(:first_row) { [ Box.new(x: 100, y: 100, width: 10, height: 20) ] }
   let(:second_row) { [ Box.new(x: 100, y: 120, width: 10, height: 20) ] }
@@ -17,11 +17,11 @@ RSpec.describe ChildrenDimensionsCalculator do
 
   let(:children) { first_row + second_row + third_row + last_row }
 
-  describe "calculating the total width" do
+  describe "measuring the total width" do
     let(:total_width_of_third_row) { third_row.map(&:width).reduce(0, &:+) }
 
     before do
-      @width, _ = calculator.call(children)
+      @width, _ = measurer.call(children)
     end
 
     it "takes the width of the longest row" do
@@ -29,14 +29,14 @@ RSpec.describe ChildrenDimensionsCalculator do
     end
   end
 
-  describe "calculating the total height" do
+  describe "measuring the total height" do
     let(:total_height_of_all_rows) {
       first_row.first.height + second_row.first.height +
       third_row.first.height + last_row.first.height
     }
 
     before do
-      _, @height = calculator.call(children)
+      _, @height = measurer.call(children)
     end
 
     it "takes the height of all the rows" do
@@ -48,7 +48,7 @@ RSpec.describe ChildrenDimensionsCalculator do
     let(:children) { [] }
 
     before do
-      @width, @height = calculator.call(children)
+      @width, @height = measurer.call(children)
     end
 
     it "defaults to 0 width" do
