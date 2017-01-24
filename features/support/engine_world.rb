@@ -179,6 +179,18 @@ module OfflineHtmlWorld
     expect(parent_node.width).to be >= width_of_longest_row
     expect(parent_node.width).to be < width_of_all_children
   end
+
+  def text_is_split_across_multiple_nodes
+    entire_text_content = "The web-development community was briefly thrown into chaos in late March when a lone Node.js developer suddenly unpublished a short but widely used package from the Node Package Manager (npm) repository. The events leading up to that developer's withdrawal are controversial in their own right, but the chaotic effects raise even more serious questions for the Node.js and npm user communities."
+    containing_parent = page.find_nodes_with_text(entire_text_content).first
+    text_nodes = containing_parent.children.select { |child| child.is_a?(Text) }
+    expect(text_nodes.size).to be > 1
+  end
+
+  def text_width_is_within_viewport_width
+    first_text = page.find_nodes_with_text("The web-development community").first
+    expect(first_text.right).to be <= viewport_width
+  end
 end
 
 World(OfflineHtmlWorld)

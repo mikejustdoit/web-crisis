@@ -39,3 +39,8 @@ end
 Then(/^their parent fits the longest row of chilren$/) do
   root_node_is_about_as_wide_as_its_longest_row_of_chilren
 end
+
+Then(/^the text is wrapped at the edge of the viewport$/) do
+  text_is_split_across_multiple_nodes
+  text_width_is_within_viewport_width
+end
