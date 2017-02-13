@@ -1,6 +1,6 @@
+require "children_arranger"
 require "children_measurer"
 require "node_types"
-require "siblings_arranger"
 
 class PositionCalculator
   def initialize(**_); end
@@ -31,7 +31,7 @@ class PositionCalculator
   end
 
   def position_children(children)
-    SiblingsArranger.new.call(children)
+    ChildrenArranger.new.call(children)
   end
 
   def measure_children_dimensions(children)

@@ -1,11 +1,11 @@
 require "block_level_element"
 require "box"
+require "children_arranger"
 require "element"
 require "inline_element"
-require "siblings_arranger"
 
-RSpec.describe SiblingsArranger do
-  subject(:arranger) { SiblingsArranger.new }
+RSpec.describe ChildrenArranger do
+  subject(:arranger) { ChildrenArranger.new }
 
   describe "positioning the first node in the group" do
     let(:first_node) { Element.new(box: offset_from_edges) }

@@ -1,6 +1,6 @@
 require "node_types"
 
-class SiblingsArranger
+class ChildrenArranger
   def call(nodes)
     new_nodes = nodes.first(1)
       .map { |first_node|
