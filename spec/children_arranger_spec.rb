@@ -5,13 +5,11 @@ require "element"
 require "inline_element"
 
 RSpec.describe ChildrenArranger do
-  subject(:arranger) { ChildrenArranger.new }
-
   describe "positioning the first node in the group" do
     let(:first_node) { Element.new(box: offset_from_edges) }
     let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
 
-    let(:arranged_nodes) { arranger.call([first_node]) }
+    let(:arranged_nodes) { ChildrenArranger.new([first_node]).call }
     let(:arranged_first_node) { arranged_nodes.first }
 
     it "positions first node relatively at left edge of its parent" do
@@ -32,7 +30,7 @@ RSpec.describe ChildrenArranger do
       let(:last_node) { BlockLevelElement.new(Element.new(box: box_of_some_size)) }
 
       let(:arranged_nodes) {
-        arranger.call([first_node, middle_node, last_node])
+        ChildrenArranger.new([first_node, middle_node, last_node]).call
       }
       let(:arranged_first_node) { arranged_nodes.first }
       let(:arranged_middle_node) { arranged_nodes[1] }
@@ -67,7 +65,7 @@ RSpec.describe ChildrenArranger do
       let(:last_node) { InlineElement.new(Element.new(box: box_of_some_size)) }
 
       let(:arranged_nodes) {
-        arranger.call([first_node, middle_node, last_node])
+        ChildrenArranger.new([first_node, middle_node, last_node]).call
       }
       let(:arranged_first_node) { arranged_nodes.first }
       let(:arranged_middle_node) { arranged_nodes[1] }

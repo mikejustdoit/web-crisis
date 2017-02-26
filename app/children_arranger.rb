@@ -1,59 +1,57 @@
+require "children_consecutor"
 require "node_types"
 
 class ChildrenArranger
-  def call(nodes)
-    new_nodes = nodes.first(1)
-      .map { |first_node|
-        position_first_node(first_node)
-      }
+  def initialize(children)
+    @children = children
+  end
 
-    new_nodes = nodes.drop(1)
-      .inject(new_nodes) { |preceding_nodes, node|
-        preceding_nodes + [
-          position_a_subsequent_node(
-            node,
-            preceding_sibling: preceding_nodes.last,
-          )
-        ]
-      }
+  def call
+    return [] if children.empty?
 
-    new_nodes
+    consecutive_groups.inject([]) { |arranged_children, group|
+      preceding_sibling = arranged_children.last
+
+      if preceding_sibling.nil?
+        arranged_children + position_group(group, y: 0)
+      else
+        arranged_children + position_group(group, y: preceding_sibling.bottom)
+      end
+    }
   end
 
   private
 
-  def position_first_node(first_node)
-    first_node.clone_with(
-      x: 0,
-      y: 0,
-    )
-  end
+  attr_reader :children
 
-  def position_a_subsequent_node(node, preceding_sibling:)
-    case node
-    when *INLINE_NODES
-      case preceding_sibling
-      when *INLINE_NODES
-        position_inline(node, preceding_sibling: preceding_sibling)
+  def position_group(group, y:)
+    group.inject([]) { |positioned_children, child|
+      preceding_sibling = positioned_children.last
+
+      if preceding_sibling.nil?
+        positioned_children + [position_on_new_row(child, y: y)]
       else
-        position_block_level(node, preceding_sibling: preceding_sibling)
+        positioned_children +
+          [position_on_existing_row(child, preceding_sibling: preceding_sibling)]
       end
-    else
-      position_block_level(node, preceding_sibling: preceding_sibling)
-    end
+    }
   end
 
-  def position_block_level(node, preceding_sibling:)
-    node.clone_with(
+  def position_on_new_row(child, y:)
+    child.clone_with(
       x: 0,
-      y: preceding_sibling.bottom,
+      y: y,
     )
   end
 
-  def position_inline(node, preceding_sibling:)
-    node.clone_with(
+  def position_on_existing_row(child, preceding_sibling:)
+    child.clone_with(
       x: preceding_sibling.right,
       y: preceding_sibling.y,
     )
+  end
+
+  def consecutive_groups
+    ChildrenConsecutor.new(children).as_groups
   end
 end

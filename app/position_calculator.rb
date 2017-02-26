@@ -31,7 +31,7 @@ class PositionCalculator
   end
 
   def position_children(children)
-    ChildrenArranger.new.call(children)
+    ChildrenArranger.new(children).call
   end
 
   def measure_children_dimensions(children)
