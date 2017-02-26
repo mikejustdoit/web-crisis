@@ -45,7 +45,7 @@ class ChildrenArranger
 
   def position_block_level(node, preceding_sibling:)
     node.clone_with(
-      x: preceding_sibling.x,
+      x: 0,
       y: preceding_sibling.bottom,
     )
   end
