@@ -20,11 +20,7 @@ RSpec.describe PositionCalculator do
     let(:middle_grandchild) {
       InlineElement.new(Element.new(box: a_box_of_height, children: []))
     }
-    let(:last_child) {
-      Element.new(
-        children: [last_grandchild],
-      )
-    }
+    let(:last_child) { Element.new(children: [last_grandchild]) }
     let(:last_grandchild) { Element.new }
 
     let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 51, height: 11) }
