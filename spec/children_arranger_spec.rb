@@ -5,7 +5,7 @@ require "element"
 require "inline_element"
 
 RSpec.describe ChildrenArranger do
-  describe "positioning the first node in the group" do
+  describe "arranging the first node in the group" do
     let(:first_node) { Element.new(box: offset_from_edges) }
     let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
 
