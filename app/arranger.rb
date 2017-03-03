@@ -16,21 +16,19 @@ class Arranger
 
   private
 
-  def visit_element(node)
-    children_with_positioned_children = node.children.map { |child| call(child) }
+  def visit_element(positioned_node)
+    arranged_children = arrange_children(positioned_node.children)
 
-    positioned_children = position_children(children_with_positioned_children)
+    inner_width, inner_height = measure_children_dimensions(arranged_children)
 
-    inner_width, inner_height = measure_children_dimensions(positioned_children)
-
-    node.clone_with(
-      children: positioned_children,
+    positioned_node.clone_with(
+      children: arranged_children,
       width: inner_width,
       height: inner_height,
     )
   end
 
-  def position_children(children)
+  def arrange_children(children)
     return [] if children.empty?
 
     ChildrenConsecutor.new(children).as_groups
@@ -38,23 +36,27 @@ class Arranger
         preceding_sibling = arranged_children.last
 
         if preceding_sibling.nil?
-          arranged_children + position_group(group, y: 0)
+          arranged_children + arrange_group(group, y: 0)
         else
-          arranged_children + position_group(group, y: preceding_sibling.bottom)
+          arranged_children + arrange_group(group, y: preceding_sibling.bottom)
         end
       }
   end
 
-  def position_group(group, y:)
-    group.inject([]) { |positioned_children, child|
-      preceding_sibling = positioned_children.last
+  def arrange_group(group, y:)
+    group.inject([]) { |arranged_children, child|
+      preceding_sibling = arranged_children.last
 
       if preceding_sibling.nil?
-        positioned_children + [position_on_new_row(child, y: y)]
+        positioned_child = position_on_new_row(child, y: y)
       else
-        positioned_children +
-          [position_on_existing_row(child, preceding_sibling: preceding_sibling)]
+        positioned_child = position_on_existing_row(
+          child,
+          preceding_sibling: preceding_sibling,
+        )
       end
+
+      arranged_children + [call(positioned_child)]
     }
   end
 
