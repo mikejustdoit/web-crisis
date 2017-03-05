@@ -33,4 +33,54 @@ RSpec.describe Text do
       expect(node.children).to eq([])
     end
   end
+
+  describe "combining Text nodes" do
+    subject(:hello_node) {
+      Text.new(
+        box: Box.new(x: 1, y: 1, width: 20, height: 6),
+        content: "Hello",
+      )
+    }
+    subject(:punctuation_node) {
+      Text.new(
+        box: Box.new(x: 0, y: 2, width: 2, height: 2),
+        content: ", ",
+      )
+    }
+    subject(:world_node) {
+      Text.new(
+        box: Box.new(x: 11, y: 4, width: 15, height: 25),
+        content: "world!",
+      )
+    }
+
+    let(:combined_node) { hello_node + punctuation_node + world_node }
+
+    it "returns a new Text node" do
+      [hello_node, punctuation_node, world_node].each do |original_node|
+        expect(combined_node).not_to eq(original_node)
+      end
+    end
+
+    it "combines the text content" do
+      expect(combined_node.content).to eq("Hello, world!")
+    end
+
+    it "takes the first node's position" do
+      expect(combined_node.x).to eq(hello_node.x)
+      expect(combined_node.y).to eq(hello_node.y)
+    end
+
+    it "takes the combined width" do
+      expect(combined_node.width).to eq(
+        hello_node.width + punctuation_node.width + world_node.width
+      )
+    end
+
+    it "takes the largest height" do
+      expect(combined_node.height).to eq(
+        [hello_node.height, punctuation_node.height, world_node.height].max
+      )
+    end
+  end
 end
