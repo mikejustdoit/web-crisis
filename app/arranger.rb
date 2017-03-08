@@ -56,7 +56,7 @@ class Arranger
         )
       end
 
-      arranged_children + [call(positioned_child)]
+      arranged_children + [*call(positioned_child)]
     }
   end
 
