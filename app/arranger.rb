@@ -1,20 +1,26 @@
 require "children_consecutor"
 require "children_measurer"
 require "node_types"
+require "text_wrapper"
 
 class Arranger
-  def initialize(**_); end
+  def initialize(text_width_calculator:, viewport_width:, **)
+    @text_width_calculator = text_width_calculator
+    @viewport_width = viewport_width
+  end
 
   def call(node)
     case node
     when *ELEMENTS
       visit_element(node)
     when Text
-      node
+      visit_text(node)
     end
   end
 
   private
+
+  attr_reader :text_width_calculator, :viewport_width
 
   def visit_element(positioned_node)
     arranged_children = arrange_children(positioned_node.children)
@@ -26,6 +32,11 @@ class Arranger
       width: inner_width,
       height: inner_height,
     )
+  end
+
+  def visit_text(positioned_node)
+    TextWrapper.new(positioned_node, text_width_calculator: text_width_calculator)
+      .call(right_limit: viewport_width)
   end
 
   def arrange_children(children)

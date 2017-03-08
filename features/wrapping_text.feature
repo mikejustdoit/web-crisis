@@ -1,6 +1,5 @@
 Feature: wrapping text
 
-  @wip
   Scenario: wrapping a long single piece of text
     Given the HTML input:
       """

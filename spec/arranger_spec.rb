@@ -1,10 +1,16 @@
 require "arranger"
 require "box"
 require "inline_element"
+require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"
 
 RSpec.describe Arranger do
-  subject(:visitor) { Arranger.new }
+  subject(:visitor) {
+    Arranger.new(
+      text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
+      viewport_width: 640,
+    )
+  }
 
   it_behaves_like "a visitor"
 
