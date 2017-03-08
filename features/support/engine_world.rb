@@ -20,7 +20,7 @@ module EngineWorld
       new_address,
       viewport_width,
       viewport_height,
-      gosu_text_width_calculator_stub,
+      gosu_text_width_calculator_stub(returns: 9000),
     )
   end
 
@@ -64,7 +64,7 @@ module OfflineHtmlWorld
         "https://dummy.address",
         viewport_width,
         viewport_height,
-        gosu_text_width_calculator_stub,
+        gosu_text_width_calculator_stub(returns: 9000),
       )
   end
 

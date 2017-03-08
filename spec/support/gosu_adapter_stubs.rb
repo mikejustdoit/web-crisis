@@ -16,9 +16,9 @@ def gosu_text_renderer_stub
     }
 end
 
-def gosu_text_width_calculator_stub
+def gosu_text_width_calculator_stub(returns:)
   GosuTextWidthCalculator.new
     .tap { |twc|
-      allow(twc).to receive(:call).and_return(9000)
+      allow(twc).to receive(:call).and_return(returns)
     }
 end

@@ -8,7 +8,7 @@ RSpec.describe IntrinsicWidthSetter do
       text_width_calculator: text_width_calculator,
     )
   }
-  let(:text_width_calculator) { gosu_text_width_calculator_stub }
+  let(:text_width_calculator) { gosu_text_width_calculator_stub(returns: 9000) }
 
   it_behaves_like "a visitor"
 
