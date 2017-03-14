@@ -1,10 +1,23 @@
 class Inspector
+  class TooManyMatchesFound < TypeError; end
+  class NotEnoughMatchesFound < TypeError; end
+
   def initialize(render_tree)
     @render_tree = render_tree
   end
 
   def find_nodes_with_text(text)
     deepest_matches(render_tree, text)
+  end
+
+  def find_single_node_with_text(text)
+    matches = find_nodes_with_text(text)
+
+    raise TooManyMatchesFound if matches.size > 1
+
+    raise NotEnoughMatchesFound if matches.size < 1
+
+    matches.first
   end
 
   private
