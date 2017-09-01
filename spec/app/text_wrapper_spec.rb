@@ -16,6 +16,7 @@ RSpec.describe TextWrapper do
       let(:input_text) {
         Text.new(
           content: "An excellent opportunity.",
+          box: Box.new(x: 0, y: 0, height: 20),
         )
       }
 
@@ -38,6 +39,7 @@ RSpec.describe TextWrapper do
       let(:input_text) {
         Text.new(
           content: "An excellent opportunity to purchase this home of great character offering spacious accommodation and benefitting from extensive uPVC double glazing and gas wall heaters.",
+          box: Box.new(x: 0, y: 0, height: 20),
         )
       }
 

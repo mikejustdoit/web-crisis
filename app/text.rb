@@ -4,7 +4,7 @@ require "forwardable"
 class Text
   extend Forwardable
 
-  def initialize(box: empty_box, content:)
+  def initialize(box: Box.new, content:)
     @box = box
     @content = content
   end
@@ -35,8 +35,4 @@ class Text
   private
 
   attr_reader :box
-
-  def empty_box
-    Box.new(x: 0, y: 0, width: 0, height: 0)
-  end
 end
