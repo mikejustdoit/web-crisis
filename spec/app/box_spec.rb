@@ -33,6 +33,30 @@ RSpec.describe Box do
         expect(box.bottom).to eq(y + height)
       end
     end
+
+    describe "tracking undefined attributes" do
+      context "when all of x, y, width and height are non-nil" do
+        it "considers itself _defined_" do
+          expect(box).to be_defined
+        end
+      end
+
+      context "when one or more attribute is nil" do
+        let(:width) { nil }
+
+        it "doesn't consider itself _defined_" do
+          expect(box).not_to be_defined
+        end
+      end
+
+      context "when one or more attribute hasn't been supplied" do
+        subject(:box) { Box.new }
+
+        it "doesn't consider itself _defined_" do
+          expect(box).not_to be_defined
+        end
+      end
+    end
   end
 
   describe "it behaving like a value object" do

@@ -1,9 +1,11 @@
 class Box
-  def initialize(x:, y:, width:, height:)
-    @x = x
-    @y = y
-    @width = width
-    @height = height
+  UNDEFINED = Module.new
+
+  def initialize(x: UNDEFINED, y: UNDEFINED, width: UNDEFINED, height: UNDEFINED)
+    @x = x ? x : UNDEFINED
+    @y = y ? y : UNDEFINED
+    @width = width ? width : UNDEFINED
+    @height = height ? height : UNDEFINED
   end
 
   attr_reader :x, :y, :width, :height
@@ -30,5 +32,9 @@ class Box
       width: attributes.fetch(:width, width),
       height: attributes.fetch(:height, height),
     )
+  end
+
+  def defined?
+    [x, y, width, height].all? { |attribute| attribute != UNDEFINED }
   end
 end
