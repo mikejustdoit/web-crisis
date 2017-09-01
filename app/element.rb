@@ -4,7 +4,7 @@ require "forwardable"
 class Element
   extend Forwardable
 
-  def initialize(box: empty_box, children: [])
+  def initialize(box: Box.new, children: [])
     @box = box
     @children = children.dup
   end
@@ -29,8 +29,4 @@ class Element
   private
 
   attr_reader :box
-
-  def empty_box
-    Box.new(x: 0, y: 0, width: 0, height: 0)
-  end
 end

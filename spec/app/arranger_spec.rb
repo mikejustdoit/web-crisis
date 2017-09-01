@@ -8,9 +8,10 @@ RSpec.describe Arranger do
   subject(:visitor) {
     Arranger.new(
       text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
-      viewport_width: 640,
+      viewport_width: viewport.width,
     )
   }
+  let(:viewport) { Box.new(x: 0, y: 0, width: 640, height: 480) }
 
   it_behaves_like "a visitor"
 
@@ -59,7 +60,9 @@ RSpec.describe Arranger do
     let(:box_of_some_size) { Box.new(x: 0, y: 0, width: 5, height: 8) }
 
     context "a block-level node" do
-      let(:root) { Element.new(children: [first_child, middle_child, last_child]) }
+      let(:root) {
+        Element.new(box: viewport, children: [first_child, middle_child, last_child])
+      }
       let(:first_child) { InlineElement.new(Element.new(box: box_of_some_size)) }
       let(:middle_child) { BlockLevelElement.new(Element.new(box: box_of_some_size)) }
       let(:last_child) { BlockLevelElement.new(Element.new(box: box_of_some_size)) }
@@ -93,7 +96,9 @@ RSpec.describe Arranger do
     end
 
     context "an inline node" do
-      let(:root) { Element.new(children: [first_child, middle_child, last_child]) }
+      let(:root) {
+        Element.new(box: viewport, children: [first_child, middle_child, last_child])
+      }
       let(:first_child) { BlockLevelElement.new(Element.new(box: box_of_some_size)) }
       let(:middle_child) { InlineElement.new(Element.new(box: box_of_some_size)) }
       let(:last_child) { InlineElement.new(Element.new(box: box_of_some_size)) }

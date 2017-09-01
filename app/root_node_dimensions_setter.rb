@@ -19,6 +19,8 @@ class RootNodeDimensionsSetter
 
   def visit_element(node)
     node.clone_with(
+      x: 0,
+      y: 0,
       width: viewport_width,
       height: viewport_height,
     )

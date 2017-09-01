@@ -40,6 +40,11 @@ RSpec.describe RootNodeDimensionsSetter do
         expect(returned_root.height).to eq(viewport_height)
       end
 
+      it "sets the returned root node's position to the left, top viewport edge" do
+        expect(returned_root.x).to eq(0)
+        expect(returned_root.y).to eq(0)
+      end
+
       it "doesn't affect the rest of the tree" do
         expect(returned_first_child).to eq(first_child)
         expect(returned_last_child).to eq(last_child)
@@ -59,7 +64,9 @@ RSpec.describe RootNodeDimensionsSetter do
         expect(returned_node).to eq(root)
       end
 
-      it "doesn't bother changing the root node's dimensions" do
+      it "doesn't bother changing the root node's dimensions or position" do
+        expect(returned_node.x).to eq(root.x)
+        expect(returned_node.y).to eq(root.y)
         expect(returned_node.width).to eq(root.width)
         expect(returned_node.height).to eq(root.height)
       end
