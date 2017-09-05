@@ -1,3 +1,4 @@
+require "box"
 require "block_level_element"
 require "element"
 require "inline_element"
@@ -31,7 +32,10 @@ class NodeFactory
     case parsed_element.name
     when "text"
       parsed_element.content.strip.split("\n").map { |content|
-        Text.new(content: content)
+        Text.new(
+          box: Box.new(height: text_node_height),
+          content: content,
+        )
       }
     when *BLOCK_LEVEL_ELEMENT_TYPES
       BlockLevelElement.new(Element.new(children: children))
@@ -59,5 +63,9 @@ class NodeFactory
 
   def renderable_types
     ELEMENT_TYPES + OTHER_NODE_TYPES
+  end
+
+  def text_node_height
+    18
   end
 end
