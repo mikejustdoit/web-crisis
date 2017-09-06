@@ -16,19 +16,25 @@ RSpec.describe Arranger do
   it_behaves_like "a visitor"
 
   describe "the returned tree" do
-    let(:root) { Element.new(children: [first_child, last_child]) }
+    let(:root) {
+      BlockLevelElement.new(Element.new(children: [first_child, last_child]))
+    }
     let(:first_child) {
-      Element.new(
-        box: a_box_of_height,
-        children: [first_grandchild, middle_grandchild],
+      BlockLevelElement.new(
+        Element.new(
+          box: a_box_of_height,
+          children: [first_grandchild, middle_grandchild],
+        )
       )
     }
     let(:first_grandchild) { Text.new(box: a_box_of_height, content: "ABC") }
     let(:middle_grandchild) {
       InlineElement.new(Element.new(box: a_box_of_height, children: []))
     }
-    let(:last_child) { Element.new(children: [last_grandchild]) }
-    let(:last_grandchild) { Element.new }
+    let(:last_child) {
+      BlockLevelElement.new(Element.new(children: [last_grandchild]))
+    }
+    let(:last_grandchild) { BlockLevelElement.new(Element.new) }
 
     let(:a_box_of_height) { Box.new(x: 0, y: 0, width: 51, height: 11) }
 
@@ -40,8 +46,8 @@ RSpec.describe Arranger do
   end
 
   describe "arranging the first node in the group" do
-    let(:root) { Element.new(children: [first_child]) }
-    let(:first_child) { Element.new(box: offset_from_edges) }
+    let(:root) { BlockLevelElement.new(Element.new(children: [first_child])) }
+    let(:first_child) { BlockLevelElement.new(Element.new(box: offset_from_edges)) }
     let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
 
     let(:arranged_children) { visitor.call(root).children }
