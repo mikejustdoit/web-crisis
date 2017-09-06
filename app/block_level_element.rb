@@ -1,7 +1,20 @@
+require "point"
+
 class BlockLevelElement < SimpleDelegator
   def clone_with(**attributes)
     BlockLevelElement.new(
       __getobj__.clone_with(**attributes),
     )
+  end
+
+  def position_after(preceding_node)
+    clone_with(
+      x: 0,
+      y: preceding_node.bottom,
+    )
+  end
+
+  def next_available_point
+    Point.new(x: x, y: bottom)
   end
 end

@@ -83,4 +83,47 @@ RSpec.describe Text do
       )
     end
   end
+
+  describe "negotiating positions with consecutive nodes" do
+    describe "determining our starting position" do
+      subject(:node) { Text.new(content: "Tweet of the week") }
+
+      let(:preceding_node) {
+        double(:preceding_node, next_available_point: Point.new(x: 1, y: 2))
+      }
+
+      it "uses the preceding node's #next_available_point" do
+        node.position_after(preceding_node)
+
+        expect(preceding_node).to have_received(:next_available_point)
+      end
+
+      it "returns a new node" do
+        expect(node.position_after(preceding_node)).not_to eq(node)
+      end
+    end
+
+    describe "communicating the next available position for subsequent nodes" do
+      subject(:node) { Text.new(box: box, content: "Tweet of the week") }
+      let(:box) {
+        double(
+          :box,
+          right: double(:box_right),
+          y: double(:box_y),
+        )
+      }
+
+      it "uses the position after its box" do
+        node.next_available_point
+
+        expect(box).to have_received(:right)
+        expect(box).to have_received(:y)
+      end
+
+      it "returns a point" do
+        expect(node.next_available_point).to respond_to(:x)
+        expect(node.next_available_point).to respond_to(:y)
+      end
+    end
+  end
 end

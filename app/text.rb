@@ -32,6 +32,18 @@ class Text
     )
   end
 
+  def position_after(preceding_node)
+    point = preceding_node.next_available_point
+    clone_with(
+      x: point.x,
+      y: point.y,
+    )
+  end
+
+  def next_available_point
+    Point.new(x: right, y: y)
+  end
+
   private
 
   attr_reader :box
