@@ -1,5 +1,6 @@
 require "element"
 require "node_counter"
+require "text"
 
 RSpec.describe NodeCounter do
   subject(:node_counter) { NodeCounter.new }
@@ -14,7 +15,7 @@ RSpec.describe NodeCounter do
 
   context "when there're a few levels of nodes" do
     let(:tree) { Element.new(children: children) }
-    let(:children) { [Element.new, Element.new(children: grandchildren)] }
+    let(:children) { [Text.new(content: "a"), Element.new(children: grandchildren)] }
     let(:grandchildren) { [Element.new, Element.new] }
 
     it "includes all nodes, including the root node" do

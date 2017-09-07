@@ -27,6 +27,8 @@ class Inspector
   def deepest_matches(parent_node, text)
     return [] unless parent_node.content.include?(text)
 
+    return [parent_node] unless parent_node.respond_to?(:children)
+
     matching_children = parent_node.children
       .flat_map { |child|
         deepest_matches(child, text)

@@ -1,6 +1,5 @@
 require "children_measurer"
 require "no_preceding_sibling"
-require "node_types"
 require "text_wrapper"
 
 class Arranger
@@ -10,10 +9,9 @@ class Arranger
   end
 
   def call(node)
-    case node
-    when *ELEMENTS
+    if node.respond_to?(:children)
       visit_element(node)
-    when Text
+    else
       visit_text(node)
     end
   end

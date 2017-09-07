@@ -1,5 +1,3 @@
-require "node_types"
-
 class DrawingVisitor
   def initialize(box_renderer:, text_renderer:)
     @box_renderer = box_renderer
@@ -7,10 +5,9 @@ class DrawingVisitor
   end
 
   def call(node)
-    case node
-    when *ELEMENTS
+    if node.respond_to?(:children)
       visit_element(node)
-    when Text
+    else
       visit_text(node)
     end
   end

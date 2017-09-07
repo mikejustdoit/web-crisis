@@ -13,10 +13,6 @@ class Text
 
   def_delegators :box, :x, :y, :width, :height, :right, :bottom
 
-  def children
-    []
-  end
-
   def clone_with(**attributes)
     Text.new(
       box: box.clone_with(**attributes),

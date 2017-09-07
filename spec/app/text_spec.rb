@@ -24,16 +24,6 @@ RSpec.describe Text do
     it_behaves_like "a clonable node"
   end
 
-  describe "quacking like an Element" do
-    it "has a #children method" do
-      expect(node).to respond_to(:children)
-    end
-
-    it "returns an empty array" do
-      expect(node.children).to eq([])
-    end
-  end
-
   describe "combining Text nodes" do
     subject(:hello_node) {
       Text.new(
