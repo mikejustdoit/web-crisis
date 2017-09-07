@@ -1,4 +1,5 @@
 require "element"
+require "node_types"
 require "support/visitor_double"
 require "text"
 
@@ -42,6 +43,18 @@ RSpec.shared_examples "a depth-first tree traverser" do
       expect(visitor).to have_received(:call).with(grandchildren.first).ordered
       expect(visitor).to have_received(:call).with(grandchildren.last).ordered
       expect(visitor).to have_received(:call).with(children.last).ordered
+    end
+  end
+end
+
+RSpec.shared_examples "a class-centric callable" do
+  describe "handling unrecognised node types" do
+    let(:weird_root) { double(:unrecognised_type_of_node) }
+
+    it "complains about unrecognised node types" do
+      expect {
+        visitor.call(weird_root)
+      }.to raise_error(UnrecognisedNodeType)
     end
   end
 end
