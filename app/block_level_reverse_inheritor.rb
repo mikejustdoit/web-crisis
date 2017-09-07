@@ -11,6 +11,8 @@ class BlockLevelReverseInheritor
       visit_block_level_element(node)
     when Text
       node
+    else
+      raise UnrecognisedNodeType
     end
   end
 

@@ -10,6 +10,8 @@ RSpec.describe BlockLevelReverseInheritor do
 
   it_behaves_like "a depth-first tree traverser"
 
+  it_behaves_like "a class-centric callable"
+
   describe "the returned tree" do
     let(:root) {
       InlineElement.new(Element.new(children: [first_child, last_child]))
