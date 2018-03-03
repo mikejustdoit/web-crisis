@@ -7,8 +7,7 @@ class TextWrapper
   end
 
   def call(right_limit:)
-    text_node.content.split(" ")
-      .map { |word_text| node_from(word_text) }
+    words
       .inject([]) { |rows, next_word|
         current_row = rows.last
 
@@ -34,6 +33,11 @@ class TextWrapper
   private
 
   attr_reader :text_node, :text_width_calculator
+
+  def words
+    text_node.content.split(" ")
+      .map { |word_text| node_from(word_text) }
+  end
 
   def add_to_new_row(word, y:)
     word.clone_with(
