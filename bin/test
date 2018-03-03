@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+bundle exec rspec
+
+bundle exec cucumber
