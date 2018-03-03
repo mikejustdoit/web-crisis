@@ -7,14 +7,6 @@ class TextWrapper
   end
 
   def call(right_limit:)
-    wrap(right_limit: right_limit)
-  end
-
-  private
-
-  attr_reader :text_node, :text_width_calculator
-
-  def wrap(right_limit:)
     text_node.content.split(" ")
       .map { |word_text| node_from(word_text) }
       .inject([]) { |rows, next_word|
@@ -38,6 +30,10 @@ class TextWrapper
         end
       }
   end
+
+  private
+
+  attr_reader :text_node, :text_width_calculator
 
   def add_to_new_row(word, y:)
     word.clone_with(
