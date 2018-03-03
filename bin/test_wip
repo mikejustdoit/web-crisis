@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+bundle exec rspec --tag wip
+
+bundle exec cucumber --tag @wip
