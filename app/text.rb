@@ -1,4 +1,5 @@
 require "box"
+require "build_text"
 require "forwardable"
 require "point"
 
@@ -22,10 +23,12 @@ class Text
   end
 
   def +(other_text_node)
-    clone_with(
+    BuildText.new.call(
+      box: box.clone_with(
+        width: width + other_text_node.width,
+        height: [height, other_text_node.height].max,
+      ),
       content: content + other_text_node.content,
-      width: width + other_text_node.width,
-      height: [height, other_text_node.height].max,
     )
   end
 
