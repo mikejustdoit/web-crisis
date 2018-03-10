@@ -6,19 +6,23 @@ require "point"
 class Text
   extend Forwardable
 
-  def initialize(box: Box.new, content:)
+  def initialize(box: Box.new, rows:)
     @box = box
-    @content = content
+    @rows = rows
   end
 
-  attr_reader :content
+  attr_reader :rows
 
   def_delegators :box, :x, :y, :width, :height, :right, :bottom
+
+  def content
+    rows.map(&:content).join
+  end
 
   def clone_with(**attributes)
     Text.new(
       box: box.clone_with(**attributes),
-      content: attributes.fetch(:content, content),
+      rows: attributes.fetch(:rows, rows),
     )
   end
 

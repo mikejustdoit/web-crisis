@@ -2,14 +2,23 @@ require "box"
 require "support/shared_examples/node"
 require "support/visitor_double"
 require "text"
+require "text_row"
 
 RSpec.describe Text do
-  subject(:node) { Text.new(box: box, content: text_content) }
+  subject(:node) { Text.new(box: box, rows: rows) }
   let(:text_content) { "Tweet of the week" }
   let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
+  let(:rows) {
+    [
+      TextRow.new(
+        box: Box.new(x: 0, y: 0, width: box.width, height: box.height),
+        content: text_content,
+      ),
+    ]
+  }
 
   describe "#content" do
-    it "returns the content it was initialised with" do
+    it "presents its rows' content" do
       expect(node.content).to eq(text_content)
     end
   end
@@ -19,7 +28,7 @@ RSpec.describe Text do
   end
 
   describe "cloning" do
-    let(:node_specific_attribute) { :content }
+    let(:node_specific_attribute) { :rows }
 
     it_behaves_like "a clonable node"
   end
@@ -28,19 +37,34 @@ RSpec.describe Text do
     subject(:hello_node) {
       Text.new(
         box: Box.new(x: 1, y: 1, width: 20, height: 6),
-        content: "Hello",
+        rows: [
+          TextRow.new(
+            box: Box.new(x: 0, y: 0, width: 20, height: 6),
+            content: "Hello",
+          ),
+        ],
       )
     }
     subject(:punctuation_node) {
       Text.new(
         box: Box.new(x: 0, y: 2, width: 2, height: 2),
-        content: ", ",
+        rows: [
+          TextRow.new(
+            box: Box.new(x: 0, y: 0, width: 2, height: 2),
+            content: ", ",
+          ),
+        ],
       )
     }
     subject(:world_node) {
       Text.new(
         box: Box.new(x: 11, y: 4, width: 15, height: 25),
-        content: "world!",
+        rows: [
+          TextRow.new(
+            box: Box.new(x: 0, y: 0, width: 15, height: 25),
+            content: "world!",
+          ),
+        ],
       )
     }
 
@@ -76,7 +100,7 @@ RSpec.describe Text do
 
   describe "negotiating positions with consecutive nodes" do
     describe "determining our starting position" do
-      subject(:node) { Text.new(content: "Tweet of the week") }
+      subject(:node) { Text.new(rows: []) }
 
       let(:preceding_node) {
         double(:preceding_node, next_available_point: Point.new(x: 1, y: 2))
@@ -94,7 +118,7 @@ RSpec.describe Text do
     end
 
     describe "communicating the next available position for subsequent nodes" do
-      subject(:node) { Text.new(box: box, content: "Tweet of the week") }
+      subject(:node) { Text.new(box: box, rows: []) }
       let(:box) {
         double(
           :box,
