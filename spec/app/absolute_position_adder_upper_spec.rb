@@ -1,5 +1,6 @@
 require "absolute_position_adder_upper"
 require "box"
+require "build_text"
 require "element"
 require "support/shared_examples/visitor"
 require "text"
@@ -12,7 +13,7 @@ RSpec.describe AbsolutePositionAdderUpper do
   describe "the returned tree" do
     let(:root) { Element.new(children: [child], box: offset_from_edges) }
     let(:child) { Element.new(children: [grandchild], box: offset_from_edges) }
-    let(:grandchild) { Text.new(content: "ABC", box: offset_from_edges) }
+    let(:grandchild) { BuildText.new.call(content: "ABC", box: offset_from_edges) }
 
     let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
 

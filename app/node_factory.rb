@@ -1,5 +1,6 @@
 require "box"
 require "block_level_element"
+require "build_text"
 require "element"
 require "inline_element"
 require "text"
@@ -32,7 +33,7 @@ class NodeFactory
     case parsed_element.name
     when "text"
       parsed_element.content.strip.split("\n").map { |content|
-        Text.new(
+        BuildText.new.call(
           box: Box.new(height: text_node_height),
           content: content,
         )

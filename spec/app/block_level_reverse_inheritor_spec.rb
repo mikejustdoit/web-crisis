@@ -1,5 +1,6 @@
 require "block_level_reverse_inheritor"
 require "block_level_element"
+require "build_text"
 require "inline_element"
 require "support/shared_examples/visitor"
 
@@ -23,7 +24,7 @@ RSpec.describe BlockLevelReverseInheritor do
         )
       )
     }
-    let(:first_grandchild) { Text.new(content: "ABC") }
+    let(:first_grandchild) { BuildText.new.call(content: "ABC") }
     let(:middle_grandchild) { BlockLevelElement.new(Element.new) }
     let(:last_grandchild) { InlineElement.new(Element.new) }
     let(:last_child) { InlineElement.new(Element.new) }

@@ -1,3 +1,4 @@
+require "build_text"
 require "element"
 require "node_types"
 require "support/visitor_double"
@@ -6,7 +7,7 @@ require "text"
 RSpec.shared_examples "a visitor" do
   describe "public interface" do
     let(:element) { Element.new(box: box, children: []) }
-    let(:text) { Text.new(box: box, content: "Just passing.") }
+    let(:text) { BuildText.new.call(box: box, content: "Just passing.") }
     let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
     it "supports Element nodes" do
@@ -27,7 +28,7 @@ RSpec.shared_examples "a depth-first tree traverser" do
   describe "traversal" do
     let(:root) { Element.new(children: children) }
     let(:children) { [Element.new(children: grandchildren), Element.new] }
-    let(:grandchildren) { [Text.new(content: "ABC"), Element.new] }
+    let(:grandchildren) { [BuildText.new.call(content: "ABC"), Element.new] }
 
     let(:all_nodes) { [root] + children + grandchildren }
 

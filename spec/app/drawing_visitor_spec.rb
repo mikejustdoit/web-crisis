@@ -1,4 +1,5 @@
 require "box"
+require "build_text"
 require "drawing_visitor"
 require "element"
 require "support/gosu_adapter_stubs"
@@ -22,7 +23,7 @@ RSpec.describe DrawingVisitor do
   describe "the returned tree" do
     let(:root) { Element.new(children: [first_child, last_child]) }
     let(:first_child) { Element.new(children: [first_grandchild, last_grandchild]) }
-    let(:first_grandchild) { Text.new(content: "ABC") }
+    let(:first_grandchild) { BuildText.new.call(content: "ABC") }
     let(:last_grandchild) { Element.new }
     let(:last_child) { Element.new }
 
@@ -43,7 +44,7 @@ RSpec.describe DrawingVisitor do
 
   describe "delegating drawing tasks to renderers" do
     describe "drawing text nodes" do
-      let(:node) { Text.new(box: box, content: text) }
+      let(:node) { BuildText.new.call(box: box, content: text) }
       let(:text) { "Please, make yourself at home." }
       let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 

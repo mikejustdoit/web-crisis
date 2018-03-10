@@ -1,3 +1,4 @@
+require "build_text"
 require "element"
 require "inspector"
 require "text"
@@ -8,7 +9,7 @@ RSpec.describe Inspector do
   describe "#find_nodes_with_text" do
     context "when tree has a single node" do
       context "and the tree contains the search text" do
-        let(:root_node) { Text.new(content: "search string") }
+        let(:root_node) { BuildText.new.call(content: "search string") }
 
         it "returns the root node" do
           expect(inspector.find_nodes_with_text("search")).to eq([root_node])
@@ -16,7 +17,7 @@ RSpec.describe Inspector do
       end
 
       context "and the text is not in the tree" do
-        let(:root_node) { Text.new(content: "other things") }
+        let(:root_node) { BuildText.new.call(content: "other things") }
 
         it "returns an empty array" do
           expect(inspector.find_nodes_with_text("search")).to eq([])
@@ -34,12 +35,12 @@ RSpec.describe Inspector do
       }
       let(:grandchildren) {
         [
-          Text.new(content: "not very "),
+          BuildText.new.call(content: "not very "),
           Element.new,
-          Text.new(content: "interesting stuff"),
+          BuildText.new.call(content: "interesting stuff"),
         ]
       }
-      let(:other_grandchildren) { [Text.new(content: "things of interest")] }
+      let(:other_grandchildren) { [BuildText.new.call(content: "things of interest")] }
 
       context "and a leaf node contains the search text" do
         it "returns the deepest node with the text" do
@@ -71,8 +72,8 @@ RSpec.describe Inspector do
     let(:root_node) { Element.new(children: children) }
     let(:children) {
       [
-        Text.new(content: "Anyone who has struggled with a genuine problem"),
-        Text.new(content: " without having been taught an explicit method"),
+        BuildText.new.call(content: "Anyone who has struggled with a genuine problem"),
+        BuildText.new.call(content: " without having been taught an explicit method"),
       ]
     }
 

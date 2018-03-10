@@ -1,4 +1,5 @@
 require "box"
+require "build_text"
 require "text"
 
 class TextWrapper
@@ -48,7 +49,7 @@ class TextWrapper
   end
 
   def node_from(word)
-    Text.new(
+    BuildText.new.call(
       box: Box.new(
         x: 0,
         y: 0,
@@ -64,7 +65,7 @@ class TextWrapper
   end
 
   def zero_width_space(text_node:)
-    Text.new(
+    BuildText.new.call(
       box: Box.new(
         x: 0,
         y: 0,

@@ -1,5 +1,6 @@
 require "arranger"
 require "box"
+require "build_text"
 require "inline_element"
 require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"
@@ -27,7 +28,7 @@ RSpec.describe Arranger do
         )
       )
     }
-    let(:first_grandchild) { Text.new(box: a_box_of_height, content: "ABC") }
+    let(:first_grandchild) { BuildText.new.call(box: a_box_of_height, content: "ABC") }
     let(:middle_grandchild) {
       InlineElement.new(Element.new(box: a_box_of_height, children: []))
     }
