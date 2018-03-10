@@ -1,3 +1,4 @@
+require "box"
 require "text"
 
 class TextWrapper

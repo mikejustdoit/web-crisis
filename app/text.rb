@@ -1,5 +1,6 @@
 require "box"
 require "forwardable"
+require "point"
 
 class Text
   extend Forwardable

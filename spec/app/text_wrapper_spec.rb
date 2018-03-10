@@ -1,4 +1,5 @@
 require "box"
+require "element"
 require "support/gosu_adapter_stubs"
 require "text"
 require "text_wrapper"
