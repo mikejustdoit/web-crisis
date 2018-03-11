@@ -1,5 +1,6 @@
 require "box"
 require "forwardable"
+require "point"
 
 class TextRow
   extend Forwardable
@@ -26,6 +27,10 @@ class TextRow
       width: width + other_text_row.width,
       height: [height, other_text_row.height].max,
     )
+  end
+
+  def next_available_point
+    Point.new(x: right, y: y)
   end
 
   private

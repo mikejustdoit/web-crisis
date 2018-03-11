@@ -72,4 +72,31 @@ RSpec.describe TextRow do
       )
     end
   end
+
+  describe "communicating the next available position for subsequent rows" do
+    subject(:row) { TextRow.new(box: box, content: "Follow me.") }
+    let(:box) { Box.new(x: 100, y: 150, width: 1, height: 2) }
+
+    before do
+      allow(box).to receive(:right).and_call_original
+      allow(box).to receive(:y).and_call_original
+    end
+
+    it "uses the position after its box's right" do
+      row.next_available_point
+
+      expect(box).to have_received(:right)
+    end
+
+    it "uses the position at the same level as its box" do
+      row.next_available_point
+
+      expect(box).to have_received(:y)
+    end
+
+    it "returns a point" do
+      expect(node.next_available_point).to respond_to(:x)
+      expect(node.next_available_point).to respond_to(:y)
+    end
+  end
 end
