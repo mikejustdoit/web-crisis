@@ -28,4 +28,24 @@ RSpec.describe Point do
 
     it_behaves_like "a clonable node"
   end
+
+  describe "combining Points" do
+    subject(:first_point) { Point.new(x: 1, y: 3) }
+    subject(:next_point) { Point.new(x: 5, y: 7) }
+
+    let(:combined_point) { first_point + next_point }
+
+    it "returns a new Point" do
+      expect(combined_point).not_to eq(first_point)
+      expect(combined_point).not_to eq(next_point)
+    end
+
+    it "takes the combined x" do
+      expect(combined_point.x).to eq(first_point.x + next_point.x)
+    end
+
+    it "takes the combined y" do
+      expect(combined_point.y).to eq(first_point.y + next_point.y)
+    end
+  end
 end

@@ -16,4 +16,11 @@ class Point
       y: attributes.fetch(:y, y),
     )
   end
+
+  def +(other_point)
+    Point.new(
+      x: x + other_point.x,
+      y: y + other_point.y,
+    )
+  end
 end
