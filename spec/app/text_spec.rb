@@ -1,20 +1,20 @@
 require "box"
+require "point"
 require "support/shared_examples/node"
 require "support/visitor_double"
 require "text"
 require "text_row"
 
 RSpec.describe Text do
-  subject(:node) { Text.new(box: box, rows: rows) }
+  subject(:node) { Text.new(position: position, rows: rows) }
   let(:text_content) { "Tweet of the week" }
-  let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
-  let(:rows) {
-    [
-      TextRow.new(
-        box: Box.new(x: 0, y: 0, width: box.width, height: box.height),
-        content: text_content,
-      ),
-    ]
+  let(:position) { Point.new(x: 0, y: 1) }
+  let(:rows) { [row] }
+  let(:row) {
+    TextRow.new(
+      box: Box.new(x: 0, y: 0, width: 2, height: 3),
+      content: text_content,
+    )
   }
 
   describe "#content" do
@@ -24,7 +24,48 @@ RSpec.describe Text do
   end
 
   describe "working with node's position and dimensions" do
-    it_behaves_like "a node with position and dimensions"
+    before do
+      allow(row).to receive(:right).and_call_original
+      allow(row).to receive(:bottom).and_call_original
+    end
+
+    it "exposes delegated getters for position's attributes" do
+      expect(node.x).to eq(position.x)
+      expect(node.y).to eq(position.y)
+    end
+
+    it "derives its width from its internal rows" do
+      node.width
+
+      expect(row).to have_received(:right)
+    end
+
+    it "derives its height from its internal rows" do
+      node.height
+
+      expect(row).to have_received(:bottom)
+    end
+
+    it "exposes position and dimension aggregate methods" do
+      expect(node).to respond_to(:right)
+      expect(node).to respond_to(:bottom)
+    end
+
+    describe "creating a new node with new attributes" do
+      let(:new_attributes) { {:x => 10, :y => 10} }
+
+      let(:clone_of_node) { node.clone_with(new_attributes) }
+
+      it "doesn't change the old node's attributes" do
+        expect(node.x).to eq(position.x)
+        expect(node.y).to eq(position.y)
+      end
+
+      it "assigns the new node the specified attributes" do
+        expect(clone_of_node.x).to eq(new_attributes.fetch(:x))
+        expect(clone_of_node.y).to eq(new_attributes.fetch(:y))
+      end
+    end
   end
 
   describe "cloning" do
@@ -36,7 +77,7 @@ RSpec.describe Text do
   describe "combining Text nodes" do
     subject(:hello_node) {
       Text.new(
-        box: Box.new(x: 1, y: 1, width: 20, height: 6),
+        position: Point.new(x: 1, y: 1),
         rows: [
           TextRow.new(
             box: Box.new(x: 0, y: 0, width: 20, height: 6),
@@ -47,7 +88,7 @@ RSpec.describe Text do
     }
     subject(:punctuation_node) {
       Text.new(
-        box: Box.new(x: 0, y: 2, width: 2, height: 2),
+        position: Point.new(x: 0, y: 2),
         rows: [
           TextRow.new(
             box: Box.new(x: 0, y: 0, width: 2, height: 2),
@@ -58,7 +99,7 @@ RSpec.describe Text do
     }
     subject(:world_node) {
       Text.new(
-        box: Box.new(x: 11, y: 4, width: 15, height: 25),
+        position: Point.new(x: 11, y: 4),
         rows: [
           TextRow.new(
             box: Box.new(x: 0, y: 0, width: 15, height: 25),
@@ -100,7 +141,12 @@ RSpec.describe Text do
 
   describe "negotiating positions with consecutive nodes" do
     describe "determining our starting position" do
-      subject(:node) { Text.new(rows: []) }
+      subject(:node) {
+        Text.new(
+          position: Point.new(x: 100, y: 150),
+          rows: double(:rows),
+        )
+      }
 
       let(:preceding_node) {
         double(:preceding_node, next_available_point: Point.new(x: 1, y: 2))
@@ -118,20 +164,25 @@ RSpec.describe Text do
     end
 
     describe "communicating the next available position for subsequent nodes" do
-      subject(:node) { Text.new(box: box, rows: []) }
-      let(:box) {
-        double(
-          :box,
-          right: double(:box_right),
-          y: double(:box_y),
-        )
-      }
+      subject(:node) { Text.new(position: position, rows: rows) }
+      let(:position) { Point.new(x: 10, y: 15) }
+      let(:rows) { [TextRow.new(box: final_rows_box, content: "Follow me.")] }
+      let(:final_rows_box) { Box.new(x: 100, y: 150, width: 1, height: 2) }
 
-      it "uses the position after its box" do
+      before do
+        allow(position).to receive(:x).and_call_original
+        allow(position).to receive(:y).and_call_original
+        allow(final_rows_box).to receive(:right).and_call_original
+        allow(final_rows_box).to receive(:y).and_call_original
+      end
+
+      it "uses the position after its final internal row's box" do
         node.next_available_point
 
-        expect(box).to have_received(:right)
-        expect(box).to have_received(:y)
+        expect(position).to have_received(:x)
+        expect(final_rows_box).to have_received(:right)
+        expect(position).to have_received(:y)
+        expect(final_rows_box).to have_received(:y)
       end
 
       it "returns a point" do

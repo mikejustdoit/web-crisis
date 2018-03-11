@@ -1,19 +1,34 @@
 require "box"
 require "build_text"
 require "forwardable"
-require "point"
 
 class Text
   extend Forwardable
 
-  def initialize(box: Box.new, rows:)
-    @box = box
+  def initialize(position:, rows:)
+    @position = position
     @rows = rows
   end
 
   attr_reader :rows
 
-  def_delegators :box, :x, :y, :width, :height, :right, :bottom
+  def_delegators :position, :x, :y
+
+  def width
+    rows.map(&:right).max
+  end
+
+  def height
+    rows.map(&:bottom).max
+  end
+
+  def right
+    x + width
+  end
+
+  def bottom
+    y + height
+  end
 
   def content
     rows.map(&:content).join
@@ -21,14 +36,16 @@ class Text
 
   def clone_with(**attributes)
     Text.new(
-      box: box.clone_with(**attributes),
+      position: position.clone_with(**attributes),
       rows: attributes.fetch(:rows, rows),
     )
   end
 
   def +(other_text_node)
     BuildText.new.call(
-      box: box.clone_with(
+      box: Box.new(
+        x: x,
+        y: y,
         width: width + other_text_node.width,
         height: [height, other_text_node.height].max,
       ),
@@ -45,10 +62,10 @@ class Text
   end
 
   def next_available_point
-    Point.new(x: right, y: y)
+    position + rows.last.next_available_point
   end
 
   private
 
-  attr_reader :box
+  attr_reader :position
 end
