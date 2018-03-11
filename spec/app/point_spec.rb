@@ -1,4 +1,5 @@
 require "point"
+require "support/shared_examples/node"
 
 RSpec.describe Point do
   describe "it behaving like a value object" do
@@ -19,5 +20,12 @@ RSpec.describe Point do
         expect( point == other_point ).to be true
       end
     end
+  end
+
+  describe "cloning" do
+    let(:node) { Point.new(x: 20, y: 15) }
+    let(:node_specific_attribute) { :x }
+
+    it_behaves_like "a clonable node"
   end
 end
