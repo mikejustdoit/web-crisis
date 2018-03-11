@@ -34,7 +34,7 @@ RSpec.shared_examples "a clonable node" do
     let(:clone_of_node) { node.clone_with({}) }
 
     it "returns a new node" do
-      expect(clone_of_node).not_to eq(node)
+      expect(clone_of_node).not_to eql(node)
     end
 
     it "copies over original node's attributes" do
