@@ -14,6 +14,8 @@ class BuildText
     )
   end
 
+  private
+
   def zero_text_box(box)
     box.clone_with(x: 0, y: 0)
   end
