@@ -10,21 +10,21 @@ RSpec.describe AbsolutePositionAdderUpper do
 
   it_behaves_like "a visitor"
 
-  describe "the returned tree" do
-    let(:root) { Element.new(children: [child], box: offset_from_edges) }
-    let(:child) { Element.new(children: [grandchild], box: offset_from_edges) }
-    let(:grandchild) { BuildText.new.call(content: "ABC", box: offset_from_edges) }
+  let(:root) { Element.new(children: [child], box: offset_from_edges) }
+  let(:child) { Element.new(children: [grandchild], box: offset_from_edges) }
+  let(:grandchild) { BuildText.new.call(content: "ABC", box: offset_from_edges) }
 
-    let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
+  let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
 
-    let(:returned_root) { visitor.call(root) }
-    let(:returned_child) { returned_root.children.first }
-    let(:returned_grandchild) { returned_child.children.first }
+  let(:returned_root) { visitor.call(root) }
+  let(:returned_child) { returned_root.children.first }
+  let(:returned_grandchild) { returned_child.children.first }
 
-    it "returns a new tree" do
-      expect(returned_root).not_to eq(root)
-    end
+  it "returns a new tree" do
+    expect(returned_root).not_to eq(root)
+  end
 
+  describe "setting new positions for nodes" do
     it "doesn't affect the root node's position" do
       expect(returned_root.x).to eq(root.x)
       expect(returned_root.y).to eq(root.y)
