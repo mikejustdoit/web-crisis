@@ -1,11 +1,11 @@
 require "children_measurer"
 require "no_preceding_sibling"
+require "node_within_parent"
 require "text_wrapper"
 
 class Arranger
-  def initialize(text_width_calculator:, viewport_width:, **)
+  def initialize(text_width_calculator:, **)
     @text_width_calculator = text_width_calculator
-    @viewport_width = viewport_width
   end
 
   def call(node)
@@ -18,10 +18,14 @@ class Arranger
 
   private
 
-  attr_reader :text_width_calculator, :viewport_width
+  attr_reader :text_width_calculator
 
   def visit_element(positioned_node)
-    arranged_children = arrange_children(positioned_node.children)
+    arranged_children = arrange_children(
+      positioned_node.children.map { |child|
+        NodeWithinParent.new(child, positioned_node)
+      }
+    )
 
     inner_width, inner_height = measure_children_dimensions(arranged_children)
     x_offset, y_offset = minimum_children_position_offset(arranged_children)
@@ -46,7 +50,7 @@ class Arranger
     wrapped_text = TextWrapper.new(
       positioned_node,
       text_width_calculator: text_width_calculator,
-      maximum_bounds: TextBounds.new(x: 0, width: viewport_width),
+      maximum_bounds: positioned_node.maximum_bounds,
     ).call
 
     x_offset, y_offset = minimum_children_position_offset(wrapped_text.rows)

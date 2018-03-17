@@ -2,6 +2,7 @@ require "arranger"
 require "box"
 require "build_text"
 require "inline_element"
+require "node_within_parent"
 require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"
 
@@ -9,12 +10,27 @@ RSpec.describe Arranger do
   subject(:visitor) {
     Arranger.new(
       text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
-      viewport_width: viewport.width,
     )
   }
   let(:viewport) { Box.new(x: 0, y: 0, width: 640, height: 480) }
 
-  it_behaves_like "a visitor"
+  describe "public interface like other visitors" do
+    let(:element) { Element.new(box: box, children: []) }
+    let(:text) { BuildText.new.call(box: box, content: "Just passing.") }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
+
+    it "supports Element nodes" do
+      expect(
+        visitor.call(element)
+      ).not_to be_nil
+    end
+
+    it "supports Text nodes as long as they're wrapped within a parent" do
+      expect(
+        visitor.call(NodeWithinParent.new(text, element))
+      ).not_to be_nil
+    end
+  end
 
   describe "the returned tree" do
     let(:root) {
