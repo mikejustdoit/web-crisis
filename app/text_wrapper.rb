@@ -20,10 +20,7 @@ class TextWrapper
 
             if row_with_word.right > right_limit
               rows + [
-                add_to_new_row(
-                  zero_width_space + next_word,
-                  y: current_row.bottom,
-                )
+                add_to_new_row(next_word, y: current_row.bottom)
               ]
             else
               rows[0...-1] + [row_with_word]
@@ -63,17 +60,5 @@ class TextWrapper
 
   def space
     @space ||= node_from(" ")
-  end
-
-  def zero_width_space
-    TextRow.new(
-      box: Box.new(
-        x: 0,
-        y: 0,
-        width: 0,
-        height: text_node.height,
-      ),
-      content: " ",
-    )
   end
 end

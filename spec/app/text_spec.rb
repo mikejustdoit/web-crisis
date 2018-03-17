@@ -7,26 +7,33 @@ require "text_row"
 
 RSpec.describe Text do
   subject(:node) { Text.new(position: position, rows: rows) }
-  let(:text_content) { "Tweet of the week" }
   let(:position) { Point.new(x: 0, y: 1) }
-  let(:rows) { [row] }
-  let(:row) {
+  let(:rows) { [first_row, second_row] }
+  let(:first_row) {
     TextRow.new(
       box: Box.new(x: 0, y: 0, width: 2, height: 3),
-      content: text_content,
+      content: "Tweet of the",
+    )
+  }
+  let(:second_row) {
+    TextRow.new(
+      box: Box.new(x: 0, y: 3, width: 1, height: 3),
+      content: "Week",
     )
   }
 
   describe "#content" do
-    it "presents its rows' content" do
-      expect(node.content).to eq(text_content)
+    it "presents its rows' content, with spaces" do
+      expect(node.content).to eq("Tweet of the Week")
     end
   end
 
   describe "working with node's position and dimensions" do
     before do
-      allow(row).to receive(:right).and_call_original
-      allow(row).to receive(:bottom).and_call_original
+      allow(first_row).to receive(:right).and_call_original
+      allow(second_row).to receive(:right).and_call_original
+      allow(first_row).to receive(:bottom).and_call_original
+      allow(second_row).to receive(:bottom).and_call_original
     end
 
     it "exposes delegated getters for position's attributes" do
@@ -37,13 +44,15 @@ RSpec.describe Text do
     it "derives its width from its internal rows" do
       node.width
 
-      expect(row).to have_received(:right)
+      expect(first_row).to have_received(:right)
+      expect(second_row).to have_received(:right)
     end
 
     it "derives its height from its internal rows" do
       node.height
 
-      expect(row).to have_received(:bottom)
+      expect(first_row).to have_received(:bottom)
+      expect(second_row).to have_received(:bottom)
     end
 
     it "exposes position and dimension aggregate methods" do

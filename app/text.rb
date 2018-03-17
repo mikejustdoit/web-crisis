@@ -31,7 +31,7 @@ class Text
   end
 
   def content
-    rows.map(&:content).join
+    rows.map(&:content).join(" ")
   end
 
   def clone_with(**attributes)
