@@ -182,7 +182,7 @@ module OfflineHtmlWorld
 
   def text_is_split_across_multiple_nodes
     entire_text_content = "The web-development community was briefly thrown into chaos in late March when a lone Node.js developer suddenly unpublished a short but widely used package from the Node Package Manager (npm) repository. The events leading up to that developer's withdrawal are controversial in their own right, but the chaotic effects raise even more serious questions for the Node.js and npm user communities."
-    text_node = page.find_nodes_with_text(entire_text_content).first
+    text_node = page.find_single_node_with_text(entire_text_content)
     expect(text_node.rows.size).to be > 1
   end
 
