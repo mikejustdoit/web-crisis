@@ -2,12 +2,13 @@ require "box"
 require "text_row"
 
 class TextWrapper
-  def initialize(text_node, text_width_calculator:)
+  def initialize(text_node, text_width_calculator:, maximum_bounds:)
     @text_node = text_node
     @text_width_calculator = text_width_calculator
+    @maximum_bounds = maximum_bounds
   end
 
-  def call(maximum_bounds:)
+  def call
     text_node.clone_with(
       rows: words
         .inject([]) { |rows, next_word|
@@ -32,7 +33,7 @@ class TextWrapper
 
   private
 
-  attr_reader :text_node, :text_width_calculator
+  attr_reader :text_node, :text_width_calculator, :maximum_bounds
 
   def words
     text_node.content.split(" ")

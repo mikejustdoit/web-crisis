@@ -46,8 +46,8 @@ class Arranger
     wrapped_text = TextWrapper.new(
       positioned_node,
       text_width_calculator: text_width_calculator,
-    )
-      .call(maximum_bounds: TextBounds.new(x: 0, width: viewport_width))
+      maximum_bounds: TextBounds.new(x: 0, width: viewport_width),
+    ).call
 
     x_offset, y_offset = minimum_children_position_offset(wrapped_text.rows)
 

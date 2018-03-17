@@ -10,6 +10,7 @@ RSpec.describe TextWrapper do
     TextWrapper.new(
       input_text,
       text_width_calculator: gosu_text_width_calculator_stub(returns: 20),
+      maximum_bounds: TextBounds.new(x: 0, width: maximum_bounds_width),
     )
   }
 
@@ -21,9 +22,10 @@ RSpec.describe TextWrapper do
           box: Box.new(x: 0, y: 0, height: 20),
         )
       }
+      let(:maximum_bounds_width) { 1500 }
 
       let(:wrapped_text) {
-        text_wrapper.call(maximum_bounds: TextBounds.new(x: 0, width: 1500))
+        text_wrapper.call
       }
 
       it "produces a single text node" do
@@ -44,9 +46,10 @@ RSpec.describe TextWrapper do
           box: Box.new(x: 0, y: 0, height: 20),
         )
       }
+      let(:maximum_bounds_width) { 50 }
 
       let(:wrapped_text) {
-        text_wrapper.call(maximum_bounds: TextBounds.new(x: 0, width: 50))
+        text_wrapper.call
       }
 
       it "produces a single text node" do
