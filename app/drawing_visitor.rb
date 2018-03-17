@@ -1,3 +1,6 @@
+require "root_node_drawing_visitor"
+require "text_drawing_visitor"
+
 class DrawingVisitor
   def initialize(box_renderer:, text_renderer:)
     @box_renderer = box_renderer
@@ -5,33 +8,19 @@ class DrawingVisitor
   end
 
   def call(node)
-    if node.respond_to?(:children)
-      visit_element(node)
-    else
-      visit_text(node)
-    end
+    text_drawing_visitor.call(
+      root_node_drawing_visitor.call(node)
+    )
   end
 
   private
 
-  def visit_element(node)
-    box_renderer.call(node.x, node.y, node.width, node.height)
-
-    node.children.each { |child| call(child) }
-
-    node
+  def root_node_drawing_visitor
+    RootNodeDrawingVisitor.new(box_renderer: box_renderer)
   end
 
-  def visit_text(node)
-    node.rows.each { |row|
-      text_renderer.call(
-        row.content,
-        node.x + row.x,
-        node.y + row.y,
-      )
-    }
-
-    node
+  def text_drawing_visitor
+    TextDrawingVisitor.new(text_renderer: text_renderer)
   end
 
   attr_reader :box_renderer, :text_renderer

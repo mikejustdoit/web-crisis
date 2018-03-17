@@ -5,16 +5,16 @@ require "element"
 require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"
 require "text"
+require "text_drawing_visitor"
+require "text_row"
 
-RSpec.describe DrawingVisitor do
+RSpec.describe TextDrawingVisitor do
   subject(:visitor) {
-    DrawingVisitor.new(
-      box_renderer: box_renderer,
+    TextDrawingVisitor.new(
       text_renderer: text_renderer,
     )
   }
   let(:text_renderer) { gosu_text_renderer_stub }
-  let(:box_renderer) { gosu_box_renderer_stub }
 
   it_behaves_like "a visitor"
 
@@ -47,7 +47,7 @@ RSpec.describe DrawingVisitor do
     end
   end
 
-  describe "delegating drawing tasks to renderers" do
+  describe "delegating drawing task to text renderer" do
     describe "drawing text nodes" do
       let(:node) { BuildText.new.call(box: box, content: text) }
       let(:text) { "Please, make yourself at home." }
@@ -61,19 +61,21 @@ RSpec.describe DrawingVisitor do
         expect(text_renderer).to have_received(:call).with(text, box.x, box.y)
       end
     end
+  end
 
-    describe "drawing element nodes" do
-      let(:node) { Element.new(box: box) }
-      let(:box) { Box.new(**box_attributes) }
-      let(:box_attributes) { {:x => 0, :y => 1, :width => 2, :height => 3} }
+  describe "handling non-text nodes" do
+    let(:node) { Element.new(children: [child]) }
+    let(:child) { Element.new }
 
-      before do
-        visitor.call(node)
-      end
+    before do
+      allow(visitor).to receive(:call).and_call_original
 
-      it "delegates the actual drawing to the box renderer" do
-        expect(box_renderer).to have_received(:call).with(*box_attributes.values)
-      end
+      visitor.call(node)
+    end
+
+    it "traverses element's children" do
+      expect(visitor).to have_received(:call).with(node)
+      expect(visitor).to have_received(:call).with(child)
     end
   end
 
