@@ -1,5 +1,3 @@
-require "box"
-require "build_text"
 require "forwardable"
 require "text_bounds"
 
@@ -39,18 +37,6 @@ class Text
     Text.new(
       position: position.clone_with(**attributes),
       rows: attributes.fetch(:rows, rows),
-    )
-  end
-
-  def +(other_text_node)
-    BuildText.new.call(
-      box: Box.new(
-        x: x,
-        y: y,
-        width: width + other_text_node.width,
-        height: [height, other_text_node.height].max,
-      ),
-      content: content + other_text_node.content,
     )
   end
 
