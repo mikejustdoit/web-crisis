@@ -44,7 +44,7 @@ class Arranger
       preceding_sibling = arranged_children.last
 
       arranged_children + [
-        *call(child.position_after(preceding_sibling || no_preceding_sibling))
+        call(child.position_after(preceding_sibling || no_preceding_sibling))
       ]
     }
   end

@@ -1,6 +1,5 @@
 require "box"
 require "build_text"
-require "element"
 require "support/gosu_adapter_stubs"
 require "text"
 require "text_wrapper"
@@ -22,16 +21,16 @@ RSpec.describe TextWrapper do
         )
       }
 
-      let(:wrapped_texts) {
-        return *text_wrapper.call(right_limit: 1500)
+      let(:wrapped_text) {
+        text_wrapper.call(right_limit: 1500)
       }
 
       it "produces a single text node" do
-        expect(wrapped_texts.size).to eq(1)
+        expect(wrapped_text).to be_a(Text)
       end
 
-      it "returns content intact" do
-        expect(wrapped_texts.first.content).to eq(input_text.content)
+      it "produces a single row of text" do
+        expect(wrapped_text.rows.size).to eq(1)
       end
     end
   end
@@ -45,18 +44,16 @@ RSpec.describe TextWrapper do
         )
       }
 
-      let(:wrapped_texts) {
-        return *text_wrapper.call(right_limit: 50)
+      let(:wrapped_text) {
+        text_wrapper.call(right_limit: 50)
       }
 
-      it "produces multiple text nodes" do
-        expect(wrapped_texts.size).to be > 1
+      it "produces a single text node" do
+        expect(wrapped_text).to be_a(Text)
       end
 
-      it "splits content over those nodes" do
-        expect(
-          Element.new(children: wrapped_texts).content
-        ).to eq(input_text.content)
+      it "produces multiple rows of text" do
+        expect(wrapped_text.rows.size).to be > 1
       end
     end
   end

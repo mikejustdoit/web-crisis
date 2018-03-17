@@ -1,6 +1,5 @@
 require "box"
-require "build_text"
-require "text"
+require "text_row"
 
 class TextWrapper
   def initialize(text_node, text_width_calculator:)
@@ -9,27 +8,29 @@ class TextWrapper
   end
 
   def call(right_limit:)
-    words
-      .inject([]) { |rows, next_word|
-        current_row = rows.last
+    text_node.clone_with(
+      rows: words
+        .inject([]) { |rows, next_word|
+          current_row = rows.last
 
-        if current_row.nil?
-          [add_to_new_row(next_word, y: text_node.y)]
-        else
-          row_with_word = current_row + space + next_word
-
-          if row_with_word.right > right_limit
-            rows + [
-              add_to_new_row(
-                zero_width_space + next_word,
-                y: current_row.bottom,
-              )
-            ]
+          if current_row.nil?
+            [add_to_new_row(next_word, y: 0)]
           else
-            rows[0...-1] + [row_with_word]
+            row_with_word = current_row + space + next_word
+
+            if row_with_word.right > right_limit
+              rows + [
+                add_to_new_row(
+                  zero_width_space + next_word,
+                  y: current_row.bottom,
+                )
+              ]
+            else
+              rows[0...-1] + [row_with_word]
+            end
           end
-        end
-      }
+        },
+    )
   end
 
   private
@@ -49,7 +50,7 @@ class TextWrapper
   end
 
   def node_from(word)
-    BuildText.new.call(
+    TextRow.new(
       box: Box.new(
         x: 0,
         y: 0,
@@ -65,7 +66,7 @@ class TextWrapper
   end
 
   def zero_width_space
-    BuildText.new.call(
+    TextRow.new(
       box: Box.new(
         x: 0,
         y: 0,
