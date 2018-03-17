@@ -23,7 +23,12 @@ RSpec.describe DrawingVisitor do
   describe "the returned tree" do
     let(:root) { Element.new(children: [first_child, last_child]) }
     let(:first_child) { Element.new(children: [first_grandchild, last_grandchild]) }
-    let(:first_grandchild) { BuildText.new.call(content: "ABC") }
+    let(:first_grandchild) {
+      BuildText.new.call(
+        box: Box.new(x: 0, y: 0, width: 100, height: 100),
+        content: "ABC",
+      )
+    }
     let(:last_grandchild) { Element.new }
     let(:last_child) { Element.new }
 

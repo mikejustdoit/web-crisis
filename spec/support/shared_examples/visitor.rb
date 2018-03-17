@@ -28,7 +28,15 @@ RSpec.shared_examples "a depth-first tree traverser" do
   describe "traversal" do
     let(:root) { Element.new(children: children) }
     let(:children) { [Element.new(children: grandchildren), Element.new] }
-    let(:grandchildren) { [BuildText.new.call(content: "ABC"), Element.new] }
+    let(:grandchildren) {
+      [
+        BuildText.new.call(
+          box: Box.new(x: 0, y: 0, width: 100, height: 100),
+          content: "ABC",
+        ),
+        Element.new,
+      ]
+    }
 
     let(:all_nodes) { [root] + children + grandchildren }
 
