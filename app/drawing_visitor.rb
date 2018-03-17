@@ -23,7 +23,13 @@ class DrawingVisitor
   end
 
   def visit_text(node)
-    text_renderer.call(node.content, node.x, node.y)
+    node.rows.each { |row|
+      text_renderer.call(
+        row.content,
+        node.x + row.x,
+        node.y + row.y,
+      )
+    }
 
     node
   end

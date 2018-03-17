@@ -76,4 +76,42 @@ RSpec.describe DrawingVisitor do
       end
     end
   end
+
+  describe "drawing text that wraps over multiple rows" do
+    let(:node) {
+      Text.new(
+        position: Point.new(x: 75, y: 1234),
+        rows: [first_row, second_row],
+      )
+    }
+    let(:first_row) {
+      TextRow.new(
+        box: Box.new(x: 0, y: 0, width: 200, height: 18),
+        content: "My Life in Text Wrapping",
+      )
+    }
+    let(:second_row) {
+      TextRow.new(
+        box: Box.new(x: 0, y: 18, width: 150, height: 18),
+        content: "A true crime special",
+      )
+    }
+
+    before do
+      visitor.call(node)
+    end
+
+    it "draws each row separately, with absolute position" do
+      expect(text_renderer).to have_received(:call).with(
+        first_row.content,
+        node.x + first_row.x,
+        node.y + first_row.y,
+      )
+      expect(text_renderer).to have_received(:call).with(
+        second_row.content,
+        node.x + second_row.x,
+        node.y + second_row.y,
+      )
+    end
+  end
 end
