@@ -15,7 +15,7 @@ class TextWrapper
           current_row = rows.last
 
           if current_row.nil?
-            [add_to_new_row(next_word, y: 0)]
+            [create_first_row(next_word)]
           else
             row_with_word = current_row + space + next_word
 
@@ -40,9 +40,16 @@ class TextWrapper
       .map { |word_text| node_from(word_text) }
   end
 
-  def add_to_new_row(word, y:)
+  def create_first_row(word)
     word.clone_with(
       x: 0,
+      y: 0,
+    )
+  end
+
+  def add_to_new_row(word, y:)
+    word.clone_with(
+      x: maximum_bounds.x,
       y: y,
     )
   end
