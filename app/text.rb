@@ -1,6 +1,7 @@
 require "box"
 require "build_text"
 require "forwardable"
+require "text_bounds"
 
 class Text
   extend Forwardable
@@ -63,6 +64,10 @@ class Text
 
   def next_available_point
     position + rows.last.next_available_point
+  end
+
+  def maximum_bounds
+    TextBounds.new
   end
 
   private

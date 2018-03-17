@@ -83,6 +83,12 @@ RSpec.describe Text do
     it_behaves_like "a clonable node"
   end
 
+  describe "node's maximum bounds" do
+    it "considers its maximum bounds permanently undefined" do
+      expect(node.maximum_bounds).not_to be_defined
+    end
+  end
+
   describe "combining Text nodes" do
     subject(:hello_node) {
       Text.new(

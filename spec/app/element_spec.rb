@@ -65,6 +65,13 @@ RSpec.describe Element do
     let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
     it_behaves_like "a node with position and dimensions"
+
+    describe "node's maximum bounds" do
+      it "considers its current x and width to be its maximum bounds" do
+        expect(node.maximum_bounds.x).to eq(node.x)
+        expect(node.maximum_bounds.width).to eq(node.width)
+      end
+    end
   end
 
   describe "cloning" do

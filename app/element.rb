@@ -1,5 +1,6 @@
 require "box"
 require "forwardable"
+require "text_bounds"
 
 class Element
   extend Forwardable
@@ -24,6 +25,10 @@ class Element
       box: box.clone_with(**attributes),
       children: attributes.fetch(:children, children),
     )
+  end
+
+  def maximum_bounds
+    TextBounds.new(x: x, width: width)
   end
 
   private
