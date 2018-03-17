@@ -7,7 +7,7 @@ class TextWrapper
     @text_width_calculator = text_width_calculator
   end
 
-  def call(right_limit:)
+  def call(maximum_bounds:)
     text_node.clone_with(
       rows: words
         .inject([]) { |rows, next_word|
@@ -18,7 +18,7 @@ class TextWrapper
           else
             row_with_word = current_row + space + next_word
 
-            if row_with_word.right > right_limit
+            if row_with_word.right > maximum_bounds.right
               rows + [
                 add_to_new_row(next_word, y: current_row.bottom)
               ]

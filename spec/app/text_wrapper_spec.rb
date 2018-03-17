@@ -2,6 +2,7 @@ require "box"
 require "build_text"
 require "support/gosu_adapter_stubs"
 require "text"
+require "text_bounds"
 require "text_wrapper"
 
 RSpec.describe TextWrapper do
@@ -13,7 +14,7 @@ RSpec.describe TextWrapper do
   }
 
   describe "not wrapping" do
-    context "when total width's within right_limit" do
+    context "when total width's within maximum_bounds" do
       let(:input_text) {
         BuildText.new.call(
           content: "An excellent opportunity.",
@@ -22,7 +23,7 @@ RSpec.describe TextWrapper do
       }
 
       let(:wrapped_text) {
-        text_wrapper.call(right_limit: 1500)
+        text_wrapper.call(maximum_bounds: TextBounds.new(x: 0, width: 1500))
       }
 
       it "produces a single text node" do
@@ -36,7 +37,7 @@ RSpec.describe TextWrapper do
   end
 
   describe "wrapping" do
-    context "when total width goes over right_limit" do
+    context "when total width goes over maximum_bounds's right" do
       let(:input_text) {
         BuildText.new.call(
           content: "An excellent opportunity to purchase this home of great character offering spacious accommodation and benefitting from extensive uPVC double glazing and gas wall heaters.",
@@ -45,7 +46,7 @@ RSpec.describe TextWrapper do
       }
 
       let(:wrapped_text) {
-        text_wrapper.call(right_limit: 50)
+        text_wrapper.call(maximum_bounds: TextBounds.new(x: 0, width: 50))
       }
 
       it "produces a single text node" do
