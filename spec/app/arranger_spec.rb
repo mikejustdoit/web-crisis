@@ -18,7 +18,9 @@ RSpec.describe Arranger do
 
   describe "the returned tree" do
     let(:root) {
-      BlockLevelElement.new(Element.new(children: [first_child, last_child]))
+      BlockLevelElement.new(
+        Element.new(box: viewport, children: [first_child, last_child])
+      )
     }
     let(:first_child) {
       BlockLevelElement.new(
@@ -47,7 +49,9 @@ RSpec.describe Arranger do
   end
 
   describe "arranging the first node in the group" do
-    let(:root) { BlockLevelElement.new(Element.new(children: [first_child])) }
+    let(:root) {
+      BlockLevelElement.new(Element.new(box: viewport, children: [first_child]))
+    }
     let(:first_child) { BlockLevelElement.new(Element.new(box: offset_from_edges)) }
     let(:offset_from_edges) { Box.new(x: 100, y: 100, width: 0, height: 0) }
 
