@@ -13,41 +13,51 @@ RSpec.describe BlockLevelReverseInheritor do
 
   it_behaves_like "a class-centric callable"
 
-  describe "the returned tree" do
-    let(:root) {
-      InlineElement.new(Element.new(children: [first_child, last_child]))
-    }
-    let(:first_child) {
-      InlineElement.new(
-        Element.new(
-          children: [first_grandchild, middle_grandchild, last_grandchild],
-        )
-      )
-    }
-    let(:first_grandchild) { BuildText.new.call(content: "ABC") }
-    let(:middle_grandchild) { BlockLevelElement.new(Element.new) }
-    let(:last_grandchild) { InlineElement.new(Element.new) }
-    let(:last_child) { InlineElement.new(Element.new) }
+  context "when an inline element is the ancestor of a block-level element" do
+    let(:root) { InlineElement.new(Element.new(children: [child])) }
+    let(:child) { BlockLevelElement.new(Element.new) }
 
-    let(:returned_root) { visitor.call(root) }
-    let(:returned_first_child) { returned_root.children.first }
-    let(:returned_first_grandchild) { returned_first_child.children.first }
-    let(:returned_last_grandchild) { returned_first_child.children.last }
-    let(:returned_last_child) { returned_root.children.last }
+    it "turns the inline element into a block-level one" do
+      returned_root = visitor.call(root)
 
-    it "turns inline ancestors of block-level elements block-level" do
-      expect(returned_first_child).to be_a BlockLevelElement
-      expect(returned_root).to be_a BlockLevelElement
+      expect(returned_root).to be_a(BlockLevelElement)
     end
+  end
 
-    it "leaves everything else alone" do
-      [
-        returned_first_grandchild,
-        returned_last_grandchild,
-        returned_last_child,
-      ].each do |node|
-        expect(node).not_to be_a BlockLevelElement
+  context "when a block-level element is the ancestor of a block-level element" do
+    let(:root) { BlockLevelElement.new(Element.new(children: [child])) }
+    let(:child) { BlockLevelElement.new(Element.new) }
+
+    it "doesn't change the block-levelness of the ancestor" do
+      returned_root = visitor.call(root)
+
+      expect(returned_root).to be_a(BlockLevelElement)
+    end
+  end
+
+  describe "mismatched siblings" do
+    context "when an inline element is the sibling of a block-level element" do
+      let(:root) {
+        InlineElement.new(Element.new(children: [first_child, last_child]))
+      }
+      let(:first_child) { InlineElement.new(Element.new) }
+      let(:last_child) { BlockLevelElement.new(Element.new) }
+
+      it "doesn't change the inlineness of the sibling element" do
+        returned_first_child = visitor.call(root).children.first
+
+        expect(returned_first_child).not_to be_a(BlockLevelElement)
       end
+    end
+  end
+
+  context "when a node doesn't support children" do
+    let(:non_children_node) { BuildText.new.call(content: "ABC") }
+
+    it "doesn't even touch the node" do
+      returned_non_children_node = visitor.call(non_children_node)
+
+      expect(returned_non_children_node).to eq(non_children_node)
     end
   end
 end
