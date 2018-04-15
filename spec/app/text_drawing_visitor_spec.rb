@@ -64,18 +64,37 @@ RSpec.describe TextDrawingVisitor do
   end
 
   describe "handling non-text nodes" do
-    let(:node) { Element.new(children: [child]) }
-    let(:child) { Element.new }
-
     before do
       allow(visitor).to receive(:call).and_call_original
-
-      visitor.call(node)
     end
 
-    it "traverses element's children" do
-      expect(visitor).to have_received(:call).with(node)
-      expect(visitor).to have_received(:call).with(child)
+    context "when they support children" do
+      let(:node) { Element.new(children: [child]) }
+      let(:child) { Element.new }
+
+      it "traverses node's children" do
+        visitor.call(node)
+
+        expect(visitor).to have_received(:call).with(child)
+      end
+
+      it "returns the node" do
+        expect(visitor.call(node)).to eq(node)
+      end
+    end
+
+    context "when they don't support children" do
+      let(:non_children_node) { double(:non_children_node) }
+
+      it "returns the node" do
+        expect(visitor.call(non_children_node)).to eq(non_children_node)
+      end
+
+      it "doesn't invoke the text renderer" do
+        visitor.call(non_children_node)
+
+        expect(text_renderer).not_to have_received(:call)
+      end
     end
   end
 

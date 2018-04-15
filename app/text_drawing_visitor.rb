@@ -6,8 +6,10 @@ class TextDrawingVisitor
   def call(node)
     if node.respond_to?(:children)
       visit_element(node)
-    else
+    elsif node.respond_to?(:rows)
       visit_text(node)
+    else
+      node
     end
   end
 
