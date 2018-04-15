@@ -57,15 +57,3 @@ RSpec.shared_examples "a depth-first tree traverser" do
     end
   end
 end
-
-RSpec.shared_examples "a class-centric callable" do
-  describe "handling unrecognised node types" do
-    let(:weird_root) { double(:unrecognised_type_of_node) }
-
-    it "complains about unrecognised node types" do
-      expect {
-        visitor.call(weird_root)
-      }.to raise_error(UnrecognisedNodeType)
-    end
-  end
-end

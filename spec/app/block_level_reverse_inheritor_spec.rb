@@ -11,8 +11,6 @@ RSpec.describe BlockLevelReverseInheritor do
 
   it_behaves_like "a depth-first tree traverser"
 
-  it_behaves_like "a class-centric callable"
-
   context "when an inline element is the ancestor of a block-level element" do
     let(:root) { InlineElement.new(Element.new(children: [child])) }
     let(:child) { BlockLevelElement.new(Element.new) }
@@ -58,6 +56,18 @@ RSpec.describe BlockLevelReverseInheritor do
       returned_non_children_node = visitor.call(non_children_node)
 
       expect(returned_non_children_node).to eq(non_children_node)
+    end
+  end
+
+  describe "handling unrecognised node types" do
+    context "when a node supports #children but isn't a recognised type" do
+      let(:unrecognised_type_of_node) { double(:unrecognised_type_of_node) }
+
+      it "complains about the unrecognised node type" do
+        expect {
+          visitor.call(unrecognised_type_of_node)
+        }.to raise_error(UnrecognisedNodeType)
+      end
     end
   end
 end
