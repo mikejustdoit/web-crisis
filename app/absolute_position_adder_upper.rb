@@ -5,7 +5,7 @@ class AbsolutePositionAdderUpper
     if node.respond_to?(:children)
       visit_element(node, parent_node_x: parent_node_x, parent_node_y: parent_node_y)
     else
-      visit_text(node, parent_node_x: parent_node_x, parent_node_y: parent_node_y)
+      visit_other(node, parent_node_x: parent_node_x, parent_node_y: parent_node_y)
     end
   end
 
@@ -24,7 +24,7 @@ class AbsolutePositionAdderUpper
     )
   end
 
-  def visit_text(node, parent_node_x:, parent_node_y:)
+  def visit_other(node, parent_node_x:, parent_node_y:)
     absolute_x = node.x + parent_node_x
     absolute_y = node.y + parent_node_y
 
