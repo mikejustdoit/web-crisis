@@ -14,21 +14,46 @@ RSpec.describe Arranger do
   }
   let(:viewport) { Box.new(x: 0, y: 0, width: 640, height: 480) }
 
-  describe "public interface like other visitors" do
+  describe "visiting elements with children" do
     let(:element) { Element.new(box: box, children: []) }
-    let(:text) { BuildText.new.call(box: box, content: "Just passing.") }
     let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
-    it "supports Element nodes" do
+    before do
+      allow(element).to receive(:children).and_call_original
+    end
+
+    it "supports elements with children" do
       expect(
         visitor.call(element)
       ).not_to be_nil
+    end
+
+    it "accesses the element's children" do
+      visitor.call(element)
+
+      expect(element).to have_received(:children).at_least(1).times
+    end
+  end
+
+  describe "visiting text nodes" do
+    let(:text) { BuildText.new.call(box: box, content: "Just passing.") }
+    let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
+    let(:element) { Element.new(box: box, children: []) }
+
+    before do
+      allow(TextWrapper).to receive(:new).and_call_original
     end
 
     it "supports Text nodes as long as they're wrapped within a parent" do
       expect(
         visitor.call(NodeWithinParent.new(text, element))
       ).not_to be_nil
+    end
+
+    it "invokes the TextWrapper" do
+      visitor.call(NodeWithinParent.new(text, element))
+
+      expect(TextWrapper).to have_received(:new)
     end
   end
 
