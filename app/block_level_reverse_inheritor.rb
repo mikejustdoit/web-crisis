@@ -4,13 +4,13 @@ class BlockLevelReverseInheritor
   def initialize(**_); end
 
   def call(node)
+    return node unless node.respond_to?(:children)
+
     case node
     when InlineElement
       visit_inline_element(node)
     when BlockLevelElement
       visit_block_level_element(node)
-    when Text
-      node
     else
       raise UnrecognisedNodeType
     end
