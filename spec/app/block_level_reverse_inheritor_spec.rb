@@ -61,7 +61,7 @@ RSpec.describe BlockLevelReverseInheritor do
 
   describe "handling unrecognised node types" do
     context "when a node supports #children but isn't a recognised type" do
-      let(:unrecognised_type_of_node) { double(:unrecognised_type_of_node) }
+      let(:unrecognised_type_of_node) { Element.new }
 
       it "complains about the unrecognised node type" do
         expect {

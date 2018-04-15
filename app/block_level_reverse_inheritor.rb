@@ -7,7 +7,7 @@ class BlockLevelReverseInheritor
     case node
     when InlineElement
       visit_inline_element(node)
-    when *ELEMENTS
+    when BlockLevelElement
       visit_block_level_element(node)
     when Text
       node
