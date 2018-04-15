@@ -57,6 +57,18 @@ RSpec.describe Arranger do
     end
   end
 
+  describe "handling unrecognised node types" do
+    context "when a node doesn't support #children and isn't text" do
+      let(:unrecognised_type_of_node) { double(:unrecognised_type_of_node) }
+
+      it "complains about the unrecognised node type" do
+        expect {
+          visitor.call(unrecognised_type_of_node)
+        }.to raise_error(UnrecognisedNodeType)
+      end
+    end
+  end
+
   describe "the returned tree" do
     let(:root) {
       BlockLevelElement.new(
