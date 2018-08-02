@@ -13,6 +13,11 @@ end
 
 Then(/^the browser should render the web page$/) do
   page_displays_heading("Welcome to LWN.net")
+  page_displays_image(
+    "https://static.lwn.net/images/logo/barepenguin-70.png",
+    width: 70,
+    height: 81,
+  )
 end
 
 Then(/^each element appears to the right of its predecessor$/) do

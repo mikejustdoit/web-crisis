@@ -42,6 +42,13 @@ module EngineWorld
     expect(node.y).to be < viewport_height / 2
   end
 
+  def page_displays_image(image_address, width:, height:)
+    image = page.find_single_image(image_address)
+
+    expect(image.width).to eq(width)
+    expect(image.height).to eq(height)
+  end
+
   def page
     Inspector.new(@render_tree)
   end
