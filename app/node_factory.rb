@@ -2,6 +2,7 @@ require "box"
 require "block_level_element"
 require "build_text"
 require "element"
+require "image"
 require "inline_element"
 require "text"
 
@@ -12,7 +13,7 @@ class NodeFactory
   }
 
   INLINE_ELEMENT_TYPES = %w{
-    a div em strong
+    a div em img strong
   }
 
   ELEMENT_TYPES = BLOCK_LEVEL_ELEMENT_TYPES + INLINE_ELEMENT_TYPES
@@ -38,6 +39,8 @@ class NodeFactory
           content: content,
         )
       }
+    when "img"
+      InlineElement.new(Image.new(src: parsed_element["src"]))
     when *BLOCK_LEVEL_ELEMENT_TYPES
       BlockLevelElement.new(Element.new(children: children))
     else

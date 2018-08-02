@@ -1,6 +1,5 @@
 Feature: browsing the WWW
 
-  @wip
   Scenario: visiting an address
     When I request an address
     Then the browser should visit the address
