@@ -4,4 +4,10 @@ class Image
   end
 
   attr_reader :src
+
+  def clone_with(**attributes)
+    Image.new(
+      src: attributes.fetch(:src, src),
+    )
+  end
 end
