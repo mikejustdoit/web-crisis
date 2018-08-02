@@ -20,6 +20,16 @@ class Inspector
     matches.first
   end
 
+  def find_single_image(src)
+    matches = all_src_matches(render_tree, src)
+
+    raise TooManyMatchesFound if matches.size > 1
+
+    raise NotEnoughMatchesFound if matches.size < 1
+
+    matches.first
+  end
+
   private
 
   attr_reader :render_tree
@@ -38,5 +48,13 @@ class Inspector
     return matching_children unless matching_children.empty?
 
     [parent_node]
+  end
+
+  def all_src_matches(parent_node, src)
+    return [parent_node] if parent_node.respond_to?(:src) && parent_node.src == src
+
+    return [] unless parent_node.respond_to?(:children)
+
+    parent_node.children.flat_map { |child| all_src_matches(child, src) }.compact
   end
 end

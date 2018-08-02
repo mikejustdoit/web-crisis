@@ -109,4 +109,44 @@ RSpec.describe Inspector do
       end
     end
   end
+
+  describe "finding a single image node by `src`" do
+    context "when there is one on the page" do
+      let(:root_node) { Element.new(children: [image]) }
+      let(:image) { double(:image, :src => "https://www.example.com/art.jpg") }
+
+      it "returns it" do
+        expect(
+          inspector.find_single_image("https://www.example.com/art.jpg")
+        ).to eq(image)
+      end
+    end
+
+    context "when there are none" do
+      let(:root_node) { Element.new(children: []) }
+
+      it "complains" do
+        expect {
+          inspector.find_single_image("https://www.example.com/art.jpg")
+        }.to raise_error(Inspector::NotEnoughMatchesFound)
+      end
+    end
+
+    context "when there are multiple matches" do
+      let(:root_node) {
+        Element.new(
+          children: [
+            double(:image, :src => "https://www.example.com/art.jpg"),
+            double(:image, :src => "https://www.example.com/art.jpg"),
+          ]
+        )
+      }
+
+      it "complains" do
+        expect {
+          inspector.find_single_image("https://www.example.com/art.jpg")
+        }.to raise_error(Inspector::TooManyMatchesFound)
+      end
+    end
+  end
 end
