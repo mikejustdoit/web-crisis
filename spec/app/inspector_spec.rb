@@ -1,5 +1,6 @@
 require "build_text"
 require "element"
+require "image"
 require "inspector"
 require "text"
 
@@ -113,7 +114,7 @@ RSpec.describe Inspector do
   describe "finding a single image node by `src`" do
     context "when there is one on the page" do
       let(:root_node) { Element.new(children: [image]) }
-      let(:image) { double(:image, :src => "https://www.example.com/art.jpg") }
+      let(:image) { Image.new(src: "https://www.example.com/art.jpg") }
 
       it "returns it" do
         expect(
@@ -136,8 +137,8 @@ RSpec.describe Inspector do
       let(:root_node) {
         Element.new(
           children: [
-            double(:image, :src => "https://www.example.com/art.jpg"),
-            double(:image, :src => "https://www.example.com/art.jpg"),
+            Image.new(src: "https://www.example.com/art.jpg"),
+            Image.new(src: "https://www.example.com/art.jpg"),
           ]
         )
       }
