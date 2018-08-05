@@ -33,13 +33,9 @@ module EngineWorld
   end
 
   def page_displays_heading(text)
-    expect_text_to_be_at_top(text)
-  end
-
-  def expect_text_to_be_at_top(text)
     node = page.find_nodes_with_text(text).first
 
-    expect(node.y).to be < viewport_height / 2
+    expect(node.y).to be < viewport_height
   end
 
   def page_displays_image(image_address, width:, height:)
