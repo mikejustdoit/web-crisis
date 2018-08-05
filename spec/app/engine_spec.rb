@@ -23,6 +23,7 @@ RSpec.describe Engine do
         viewport_width: 640,
         viewport_height: 480,
         text_width_calculator: double(:text_width_calculator),
+        image_dimensions_calculator: double(:image_dimensions_calculator),
       )
     end
 
@@ -43,6 +44,7 @@ RSpec.describe Engine do
         viewport_width: 640,
         viewport_height: 480,
         text_width_calculator: double(:text_width_calculator),
+        image_dimensions_calculator: double(:image_dimensions_calculator),
       )
     }
 

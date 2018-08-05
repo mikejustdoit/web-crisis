@@ -1,6 +1,7 @@
 require "box"
 require "gosu"
 require "gosu_box_renderer"
+require "gosu_image_dimensions_calculator"
 require "gosu_image_renderer"
 require "gosu_text_renderer"
 require "gosu_text_width_calculator"
@@ -28,6 +29,7 @@ class GuiWindow < Gosu::Window
         viewport_width: viewport_width,
         viewport_height: viewport_height,
         text_width_calculator: GosuTextWidthCalculator.new,
+        image_dimensions_calculator: GosuImageDimensionsCalculator.new,
       ),
       box_renderer: box_renderer,
       image_renderer: image_renderer,

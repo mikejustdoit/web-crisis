@@ -1,6 +1,7 @@
 require "engine"
 require "fetcher"
 require "gosu_adapter_stubs"
+require "gosu_image_dimensions_calculator"
 require "inspector"
 require "layout_visitors"
 require "offline_html_fetcher"
@@ -21,6 +22,7 @@ module EngineWorld
       viewport_width: viewport_width,
       viewport_height: viewport_height,
       text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
+      image_dimensions_calculator: GosuImageDimensionsCalculator.new,
     )
   end
 
@@ -68,6 +70,7 @@ module OfflineHtmlWorld
         viewport_width: viewport_width,
         viewport_height: viewport_height,
         text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
+        image_dimensions_calculator: GosuImageDimensionsCalculator.new,
       )
   end
 
