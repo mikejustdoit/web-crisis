@@ -16,7 +16,7 @@ class InlineElement < SimpleDelegator
   end
 
   def next_available_point
-    if children.any?
+    if respond_to?(:children) && children.any?
       point = children.last.next_available_point
       Point.new(x: x + point.x, y: y + point.y)
     else
