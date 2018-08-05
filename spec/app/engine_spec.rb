@@ -20,9 +20,9 @@ RSpec.describe Engine do
     before do
       engine.request(
         "https://weworkremotely.com/",
-        640,
-        480,
-        double(:text_width_calculator),
+        viewport_width: 640,
+        viewport_height: 480,
+        text_width_calculator: double(:text_width_calculator),
       )
     end
 
@@ -40,9 +40,9 @@ RSpec.describe Engine do
     let(:returned_tree) {
       engine.request(
         "https://weworkremotely.com/",
-        640,
-        480,
-        double(:text_width_calculator),
+        viewport_width: 640,
+        viewport_height: 480,
+        text_width_calculator: double(:text_width_calculator),
       )
     }
 

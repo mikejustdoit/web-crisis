@@ -25,9 +25,9 @@ class GuiWindow < Gosu::Window
     drawing_visitors.visit(
       engine.request(
         address,
-        viewport_width,
-        viewport_height,
-        GosuTextWidthCalculator.new,
+        viewport_width: viewport_width,
+        viewport_height: viewport_height,
+        text_width_calculator: GosuTextWidthCalculator.new,
       ),
       box_renderer: box_renderer,
       image_renderer: image_renderer,

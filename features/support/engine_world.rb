@@ -18,9 +18,9 @@ module EngineWorld
   def visit_address(new_address)
     @render_tree = engine.request(
       new_address,
-      viewport_width,
-      viewport_height,
-      gosu_text_width_calculator_stub(returns: 50),
+      viewport_width: viewport_width,
+      viewport_height: viewport_height,
+      text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
     )
   end
 
@@ -65,9 +65,9 @@ module OfflineHtmlWorld
     @render_tree = offline_html_engine(html_input)
       .request(
         "https://dummy.address",
-        viewport_width,
-        viewport_height,
-        gosu_text_width_calculator_stub(returns: 50),
+        viewport_width: viewport_width,
+        viewport_height: viewport_height,
+        text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
       )
   end
 
