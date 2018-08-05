@@ -11,6 +11,10 @@ RSpec.describe Image do
     expect(node.src).to eq(src)
   end
 
+  it "has #content for compatibility with other nodes" do
+    expect(node.content).to eq("")
+  end
+
   describe "cloning" do
     let(:node_specific_attribute) { :src }
 
