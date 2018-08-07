@@ -23,4 +23,28 @@ RSpec.describe GosuImageDimensionsCalculator do
     expect(width).to eq(100)
     expect(height).to eq(100)
   end
+
+  context "when Gosu::Image isn't happy" do
+    before do
+      allow(Gosu::Image).to receive(:new).and_raise(
+        RuntimeError.new("Cannot load image: unknown image type")
+      )
+    end
+
+    filename = "app/broken.png"
+
+    it "raises its own error" do
+      expect { calculator.call(filename) }.to raise_error(
+        GosuImageDimensionsCalculator::Error
+      )
+    end
+
+    it "surfaces the original error message" do
+      expect { calculator.call(filename) }.to raise_error(/unknown image type/)
+    end
+
+    it "also includes the filename" do
+      expect { calculator.call(filename) }.to raise_error(/#{filename}/)
+    end
+  end
 end
