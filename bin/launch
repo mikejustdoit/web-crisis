@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative "../config/env"
-require "drawing_visitor"
+require "drawing_visitors"
 require "engine"
 require "fetcher"
 require "gosu_box_renderer"
@@ -23,7 +23,7 @@ browser = GuiWindow.new(
     layout_pipeline: LAYOUT_VISITORS,
     parser: Parser.new(logger: ->(message) { puts(message) }),
   ),
-  drawing_visitor_factory: DrawingVisitor.method(:new),
+  drawing_visitors: DRAWING_VISITORS,
 )
 
 browser.address = uri

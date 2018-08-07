@@ -5,9 +5,9 @@ require "gosu_text_renderer"
 require "gosu_text_width_calculator"
 
 class GuiWindow < Gosu::Window
-  def initialize(engine:, drawing_visitor_factory:)
+  def initialize(engine:, drawing_visitors:)
     @engine = engine
-    @drawing_visitor_factory = drawing_visitor_factory
+    @drawing_visitors = drawing_visitors
 
     @address = ""
 
@@ -21,13 +21,15 @@ class GuiWindow < Gosu::Window
   attr_accessor :address
 
   def draw
-    drawing_visitor.call(
+    drawing_visitors.visit(
       engine.request(
         address,
         viewport_width,
         viewport_height,
         GosuTextWidthCalculator.new,
-      )
+      ),
+      box_renderer: box_renderer,
+      text_renderer: text_renderer,
     )
 
     @needs_redraw = false
@@ -43,14 +45,7 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :drawing_visitor_factory, :engine, :needs_redraw
-
-  def drawing_visitor
-    drawing_visitor_factory.call(
-      box_renderer: box_renderer,
-      text_renderer: text_renderer,
-    )
-  end
+  attr_reader :drawing_visitors, :engine, :needs_redraw
 
   def viewport_x
     0
