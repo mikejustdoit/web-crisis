@@ -1,6 +1,5 @@
 require "box"
 require "build_text"
-require "drawing_visitor"
 require "element"
 require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"

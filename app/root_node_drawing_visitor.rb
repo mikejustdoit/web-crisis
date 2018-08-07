@@ -1,5 +1,5 @@
 class RootNodeDrawingVisitor
-  def initialize(box_renderer:)
+  def initialize(box_renderer:, **)
     @box_renderer = box_renderer
   end
 

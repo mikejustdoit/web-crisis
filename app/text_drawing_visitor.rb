@@ -1,5 +1,5 @@
 class TextDrawingVisitor
-  def initialize(text_renderer:)
+  def initialize(text_renderer:, **)
     @text_renderer = text_renderer
   end
 
