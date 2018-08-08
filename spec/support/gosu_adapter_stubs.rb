@@ -1,5 +1,6 @@
 require "gosu_box_renderer"
 require "gosu_image_dimensions_calculator"
+require "gosu_image_renderer"
 require "gosu_text_renderer"
 require "gosu_text_width_calculator"
 
@@ -14,6 +15,13 @@ def gosu_image_dimensions_calculator_stub(returns:)
   GosuImageDimensionsCalculator.new
     .tap { |idc|
       allow(idc).to receive(:call).and_return(returns)
+    }
+end
+
+def gosu_image_renderer_stub
+  GosuImageRenderer.new(double(:viewport))
+    .tap { |ir|
+      allow(ir).to receive(:call).and_return(nil)
     }
 end
 
