@@ -1,6 +1,6 @@
 Feature: laying out a web page
 
-  Scenario: block-level nodes
+  Scenario: wrapping block-level nodes
     Given the HTML input:
       """
       <div>
@@ -9,9 +9,9 @@ Feature: laying out a web page
       """
     When I render it in the browser
     Then each element appears below its predecessor
-    And their parent fits them all heightwise
+    And their parent fits them all horizontically and vertically
 
-  Scenario: inline nodes
+  Scenario: not wrapping inline nodes
     Given the HTML input:
       """
       <div>
@@ -20,9 +20,9 @@ Feature: laying out a web page
       """
     When I render it in the browser
     Then each element appears to the right of its predecessor
-    And their parent fits them all widthwise
+    And their parent fits them all horizontically and vertically
 
-  Scenario: mixed block-level and inline nodes
+  Scenario: wrapping mixed block-level and inline nodes
     Given the HTML input:
       """
       <div>
@@ -33,4 +33,4 @@ Feature: laying out a web page
       """
     When I render it in the browser
     Then the elements appear over four rows
-    And their parent fits the longest row of chilren
+    And their parent fits them all horizontically and vertically

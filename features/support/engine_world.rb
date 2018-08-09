@@ -4,6 +4,7 @@ require "gosu_adapter_stubs"
 require "gosu_image_dimensions_calculator"
 require "inspector"
 require "layout_visitors"
+require "node_lister"
 require "offline_html_fetcher"
 require "parser"
 
@@ -114,78 +115,28 @@ module OfflineHtmlWorld
     expect(last_node.y).to be >= fifth_node.bottom
   end
 
-  def root_node_is_at_least_as_wide_as_all_of_its_chilren
+  def root_node_is_at_least_as_wide_as_all_of_its_children
     parent_node = @render_tree
 
-    first_child_node = page.find_nodes_with_text("Your").first
-    second_child_node = page.find_nodes_with_text("ad").first
-    third_child_node = page.find_nodes_with_text("here").first
+    all_descendants = NodeLister.new.call(parent_node) - [parent_node]
 
-    expect(parent_node.width).to be >=
-      first_child_node.width + second_child_node.width + third_child_node.width
+    furthest_left = all_descendants.map(&:x).min
+    furthest_right = all_descendants.map(&:right).max
+
+    expect(parent_node.x).to be <= furthest_left
+    expect(parent_node.right).to be >= furthest_right
   end
 
-  def root_node_is_at_least_as_tall_as_all_of_its_chilren
+  def root_node_is_at_least_as_tall_as_all_of_its_children
     parent_node = @render_tree
 
-    first_child_node = page.find_nodes_with_text("Firstly.").first
-    second_child_node = page.find_nodes_with_text("Secondly.").first
-    third_child_node = page.find_nodes_with_text("Lastly.").first
+    all_descendants = NodeLister.new.call(parent_node) - [parent_node]
 
-    expect(parent_node.height).to be >=
-      first_child_node.height + second_child_node.height + third_child_node.height
-  end
+    furthest_top = all_descendants.map(&:y).min
+    furthest_bottom = all_descendants.map(&:bottom).max
 
-  def root_node_is_about_as_tall_as_four_rows
-    parent_node = @render_tree
-
-    first_node = page.find_nodes_with_text("Firstly.").first
-
-    second_node = page.find_nodes_with_text("Secondly.").first
-
-    third_node = page.find_nodes_with_text("Your").first
-    fourth_node = page.find_nodes_with_text("ad").first
-    fifth_node = page.find_nodes_with_text("here").first
-
-    last_node = page.find_nodes_with_text("Lastly.").first
-
-
-    height_of_all_four_rows =
-      first_node.height + second_node.height +
-      third_node.height + last_node.height
-
-    height_of_all_children =
-      first_node.height + second_node.height +
-      third_node.height + fourth_node.height +
-      fifth_node.height + last_node.height
-
-    expect(parent_node.height).to be >= height_of_all_four_rows
-    expect(parent_node.height).to be < height_of_all_children
-  end
-
-  def root_node_is_about_as_wide_as_its_longest_row_of_chilren
-    parent_node = @render_tree
-
-    first_child_node = page.find_nodes_with_text("Firstly.").first
-
-    second_child_node = page.find_nodes_with_text("Secondly.").first
-
-    third_child_node = page.find_nodes_with_text("Your").first
-    fourth_child_node = page.find_nodes_with_text("ad").first
-    fifth_child_node = page.find_nodes_with_text("here").first
-
-    last_child_node = page.find_nodes_with_text("Lastly.").first
-
-    width_of_longest_row =
-      third_child_node.width + fourth_child_node.width + fifth_child_node.width
-
-    width_of_all_children =
-      first_child_node.width + second_child_node.width +
-      third_child_node.width + fourth_child_node.width +
-      fifth_child_node.width + last_child_node.width
-
-    expect(parent_node.width).to be >= width_of_longest_row
-    expect(parent_node.width).to be < width_of_all_children
+    expect(parent_node.y).to be <= furthest_top
+    expect(parent_node.bottom).to be >= furthest_bottom
   end
 
   def text_is_split_across_multiple_nodes
