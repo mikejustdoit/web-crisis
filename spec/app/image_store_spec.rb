@@ -106,4 +106,34 @@ RSpec.describe ImageStore do
       expect(logger).to have_received(:call).with(/bad internet/)
     end
   end
+
+  context "when the URI is local (file scheme)" do
+    let(:src) { "file:///home/seppel/art.jpg" }
+
+    it "doesn't attempt to fetch the remote image" do
+      store[src]
+
+      expect(fetcher).not_to have_received(:call)
+    end
+
+    it "doesn't attempt to write to disk" do
+      store[src]
+
+      expect(File).not_to have_received(:open)
+    end
+
+    it "uses the file path from the URI" do
+      image_file = store[src]
+
+      expect(image_file.name).to eq("/home/seppel/art.jpg")
+    end
+
+    it "returns a useful representation of the image on disk" do
+      image_file = store[src]
+
+      expect(image_file).to respond_to(:name)
+      expect(image_file).to respond_to(:width)
+      expect(image_file).to respond_to(:height)
+    end
+  end
 end
