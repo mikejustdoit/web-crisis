@@ -34,6 +34,7 @@ class Engine
     ImageStore.new(
       fetcher: fetcher,
       image_dimensions_calculator: image_dimensions_calculator,
+      logger: logger,
     )
   end
 end

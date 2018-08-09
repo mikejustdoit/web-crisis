@@ -1,7 +1,8 @@
 class ImageStore
-  def initialize(fetcher:, image_dimensions_calculator:)
+  def initialize(fetcher:, image_dimensions_calculator:, logger:)
     @fetcher = fetcher
     @image_dimensions_calculator = image_dimensions_calculator
+    @logger = logger
   end
 
   def [](uri)
@@ -10,7 +11,7 @@ class ImageStore
 
   private
 
-  attr_reader :fetcher, :image_dimensions_calculator
+  attr_reader :fetcher, :image_dimensions_calculator, :logger
 
   def download(uri)
     name = filename(uri)
@@ -20,6 +21,11 @@ class ImageStore
     end
 
     ImageFile.new(name, image_dimensions_calculator: image_dimensions_calculator)
+
+  rescue => e
+    logger.call(e.message)
+
+    ImageFile.new(PLACEHOLDER_IMAGE, image_dimensions_calculator: image_dimensions_calculator)
   end
 
   def filename(uri)
