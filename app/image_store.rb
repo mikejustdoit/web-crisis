@@ -15,7 +15,9 @@ class ImageStore
   def download(uri)
     name = filename(uri)
 
-    File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
+    if !File.exist?(name)
+      File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
+    end
 
     ImageFile.new(name, image_dimensions_calculator: image_dimensions_calculator)
   end

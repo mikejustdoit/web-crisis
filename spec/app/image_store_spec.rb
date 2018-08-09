@@ -21,7 +21,39 @@ RSpec.describe ImageStore do
   end
   let(:file) { StringIO.new }
 
+  context "when we have a matching file on disk" do
+    before do
+      allow(File).to receive(:exist?).and_return(true)
+    end
+
+    let(:src) { "https://www.example.com/art.jpg" }
+
+    it "doesn't attempt to fetch the remote image" do
+      store[src]
+
+      expect(fetcher).not_to have_received(:call)
+    end
+
+    it "doesn't attempt to write to disk" do
+      store[src]
+
+      expect(File).not_to have_received(:open)
+    end
+
+    it "returns a useful representation of the image on disk" do
+      image_file = store[src]
+
+      expect(image_file).to respond_to(:name)
+      expect(image_file).to respond_to(:width)
+      expect(image_file).to respond_to(:height)
+    end
+  end
+
   context "when there is no matching file on disk" do
+    before do
+      allow(File).to receive(:exist?).and_return(false)
+    end
+
     let(:src) { "https://www.example.com/art.jpg" }
 
     it "fetches the image" do
