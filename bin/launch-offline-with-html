@@ -14,11 +14,14 @@ require "parser"
 
 html = STDIN.read
 
+logger = ->(message) { puts(message) }
+
 browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: OfflineHtmlFetcher.new(html),
     layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new(logger: ->(message) { puts(message) }),
+    logger: logger,
+    parser: Parser.new(logger: logger),
   ),
   drawing_visitors: DRAWING_VISITORS,
 )

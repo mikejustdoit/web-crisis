@@ -17,11 +17,14 @@ if uri.nil? || uri.empty?
   exit(1)
 end
 
+logger = ->(message) { puts(message) }
+
 browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: Fetcher.new,
     layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new(logger: ->(message) { puts(message) }),
+    logger: logger,
+    parser: Parser.new(logger: logger),
   ),
   drawing_visitors: DRAWING_VISITORS,
 )
