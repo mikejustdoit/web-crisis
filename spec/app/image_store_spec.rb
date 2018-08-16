@@ -100,10 +100,12 @@ RSpec.describe ImageStore do
       expect(image_file).to respond_to(:height)
     end
 
-    it "logs the error" do
+    it "logs the error and the URI in question" do
       store[src]
 
-      expect(logger).to have_received(:call).with(/StandardError.*bad internet/)
+      expect(logger).to have_received(:call).with(
+        /StandardError.*bad internet.*https:\/\/www\.example\.com\/art\.jpg/
+      )
     end
   end
 
