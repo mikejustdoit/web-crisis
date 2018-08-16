@@ -103,7 +103,7 @@ RSpec.describe ImageStore do
     it "logs the error" do
       store[src]
 
-      expect(logger).to have_received(:call).with(/bad internet/)
+      expect(logger).to have_received(:call).with(/StandardError.*bad internet/)
     end
   end
 

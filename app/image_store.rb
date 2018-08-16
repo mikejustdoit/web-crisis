@@ -31,7 +31,7 @@ class ImageStore
     ImageFile.new(name, image_dimensions_calculator: image_dimensions_calculator)
 
   rescue => e
-    logger.call(e.message)
+    logger.call(e.inspect)
 
     ImageFile.new(PLACEHOLDER_IMAGE, image_dimensions_calculator: image_dimensions_calculator)
   end
