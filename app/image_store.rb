@@ -1,6 +1,9 @@
 require "uri"
+require "digest"
+require "base64"
 
 class ImageStore
+  DATA_SCHEME_PATTERN = /^data:/
   FILE_SCHEME_PATTERN = /^file:\/\//
 
   def initialize(fetcher:, image_dimensions_calculator:)
@@ -19,6 +22,17 @@ class ImageStore
   def download(uri)
     if is_local_file?(uri)
       name = without_file_scheme(URI.unescape(uri))
+    elsif is_data_uri?(uri)
+      name = File.join(
+        ASSETS,
+        "#{Digest::SHA256.hexdigest(just_the_data(uri))}.#{file_type(uri)}",
+      )
+
+      if !File.exist?(name)
+        File.open(name, "wb") { |file|
+          file.print(Base64.strict_decode64(just_the_data(uri)))
+        }
+      end
     else
       name = filename(uri)
 
@@ -46,8 +60,20 @@ class ImageStore
     uri =~ FILE_SCHEME_PATTERN
   end
 
+  def is_data_uri?(uri)
+    uri =~ DATA_SCHEME_PATTERN
+  end
+
   def without_file_scheme(uri)
     uri.sub(FILE_SCHEME_PATTERN, "")
+  end
+
+  def just_the_data(uri)
+    uri.sub(/#{DATA_SCHEME_PATTERN}image\/[a-z]+;base64,/, "")
+  end
+
+  def file_type(uri)
+    /#{DATA_SCHEME_PATTERN}image\/([a-z]+);base64,/.match(uri)[1]
   end
 
   class ImageFile
