@@ -7,6 +7,7 @@ require "fetcher"
 require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
+require "image_store"
 require "layout_visitors"
 require "parser"
 
@@ -19,9 +20,17 @@ end
 
 LOGGER = ->(message) { puts(message) }
 
+online_image_store = ->(image_dimensions_calculator:) {
+  ImageStore.new(
+    fetcher: Fetcher.new,
+    image_dimensions_calculator: image_dimensions_calculator,
+  )
+}
+
 browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: Fetcher.new,
+    image_store_factory: online_image_store,
     layout_pipeline: LAYOUT_VISITORS,
     parser: Parser.new,
   ),

@@ -1,7 +1,9 @@
 require "engine"
+require "failing_fetcher"
 require "fetcher"
 require "gosu_adapter_stubs"
 require "gosu_image_dimensions_calculator"
+require "image_store"
 require "inspector"
 require "layout_visitors"
 require "node_lister"
@@ -12,9 +14,19 @@ module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
+      image_store_factory: online_image_store,
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )
+  end
+
+  def online_image_store
+    ->(image_dimensions_calculator:) {
+      ImageStore.new(
+        fetcher: Fetcher.new,
+        image_dimensions_calculator: image_dimensions_calculator,
+      )
+    }
   end
 
   def visit_address(new_address)
@@ -59,9 +71,19 @@ module OfflineHtmlWorld
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
+      image_store_factory: offline_image_store,
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )
+  end
+
+  def offline_image_store
+    ->(image_dimensions_calculator:) {
+      ImageStore.new(
+        fetcher: FailingFetcher.new,
+        image_dimensions_calculator: image_dimensions_calculator,
+      )
+    }
   end
 
   def render_in_browser(html_input)
