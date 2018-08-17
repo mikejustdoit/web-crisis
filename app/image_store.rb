@@ -3,10 +3,9 @@ require "uri"
 class ImageStore
   FILE_SCHEME_PATTERN = /^file:\/\//
 
-  def initialize(fetcher:, image_dimensions_calculator:, logger:)
+  def initialize(fetcher:, image_dimensions_calculator:)
     @fetcher = fetcher
     @image_dimensions_calculator = image_dimensions_calculator
-    @logger = logger
   end
 
   def [](uri)
@@ -15,7 +14,7 @@ class ImageStore
 
   private
 
-  attr_reader :fetcher, :image_dimensions_calculator, :logger
+  attr_reader :fetcher, :image_dimensions_calculator
 
   def download(uri)
     if is_local_file?(uri)
@@ -58,5 +57,9 @@ class ImageStore
     end
 
     attr_reader :name, :width, :height
+  end
+
+  def logger
+    LOGGER
   end
 end

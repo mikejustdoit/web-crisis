@@ -6,7 +6,6 @@ RSpec.describe ImageStore do
     ImageStore.new(
       fetcher: fetcher,
       image_dimensions_calculator: image_dimensions_calculator,
-      logger: logger,
     )
   }
   let(:fetcher) { double(:fetcher, :call => "ABCIMAGECONTENTS") }
@@ -15,9 +14,10 @@ RSpec.describe ImageStore do
   }
   let(:image_width) { 20 }
   let(:image_height) { 50 }
-  let(:logger) { double(:logger, :call => nil) }
 
   before do
+    stub_const("LOGGER", double(:logger, :call => nil))
+
     allow(File).to receive(:open).and_yield(file)
     allow(file).to receive(:print).and_call_original
   end
@@ -103,7 +103,7 @@ RSpec.describe ImageStore do
     it "logs the error and the URI in question" do
       store[src]
 
-      expect(logger).to have_received(:call).with(
+      expect(LOGGER).to have_received(:call).with(
         /StandardError.*bad internet.*https:\/\/www\.example\.com\/art\.jpg/
       )
     end

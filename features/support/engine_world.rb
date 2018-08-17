@@ -13,8 +13,7 @@ module EngineWorld
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
       layout_pipeline: LAYOUT_VISITORS,
-      logger: double(:logger, :call => nil),
-      parser: Parser.new(logger: ->(_) {}),
+      parser: Parser.new,
     )
   end
 
@@ -61,8 +60,7 @@ module OfflineHtmlWorld
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
       layout_pipeline: LAYOUT_VISITORS,
-      logger: double(:logger, :call => nil),
-      parser: Parser.new(logger: ->(_) {}),
+      parser: Parser.new,
     )
   end
 

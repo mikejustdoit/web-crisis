@@ -1,10 +1,9 @@
 require "image_store"
 
 class Engine
-  def initialize(fetcher:, layout_pipeline:, logger:, parser:)
+  def initialize(fetcher:, layout_pipeline:, parser:)
     @fetcher = fetcher
     @layout_pipeline = layout_pipeline
-    @logger = logger
     @parser = parser
   end
 
@@ -20,7 +19,7 @@ class Engine
 
   private
 
-  attr_reader :fetcher, :layout_pipeline, :logger, :parser
+  attr_reader :fetcher, :layout_pipeline, :parser
 
   def parse(uri)
     parser.call(fetch(uri))
@@ -34,7 +33,6 @@ class Engine
     ImageStore.new(
       fetcher: fetcher,
       image_dimensions_calculator: image_dimensions_calculator,
-      logger: logger,
     )
   end
 end

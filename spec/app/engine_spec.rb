@@ -6,7 +6,6 @@ RSpec.describe Engine do
     Engine.new(
       fetcher: fetcher,
       layout_pipeline: layout_pipeline,
-      logger: double(:logger, :call => nil),
       parser: parser,
     )
   }
