@@ -14,19 +14,10 @@ module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
-      image_store_factory: online_image_store,
+      image_store: ImageStore.new(fetcher: Fetcher.new),
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )
-  end
-
-  def online_image_store
-    ->(image_dimensions_calculator:) {
-      ImageStore.new(
-        fetcher: Fetcher.new,
-        image_dimensions_calculator: image_dimensions_calculator,
-      )
-    }
   end
 
   def visit_address(new_address)
@@ -71,7 +62,7 @@ module OfflineHtmlWorld
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
-      image_store_factory: LocalFileImageStore.method(:new),
+      image_store: LocalFileImageStore.new,
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )

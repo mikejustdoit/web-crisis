@@ -1,19 +1,8 @@
 require "image_store"
-require "support/gosu_adapter_stubs"
 
 RSpec.describe ImageStore do
-  subject(:store) {
-    ImageStore.new(
-      fetcher: fetcher,
-      image_dimensions_calculator: image_dimensions_calculator,
-    )
-  }
+  subject(:store) { ImageStore.new(fetcher: fetcher) }
   let(:fetcher) { double(:fetcher, :call => "ABCIMAGECONTENTS") }
-  let(:image_dimensions_calculator) {
-    gosu_image_dimensions_calculator_stub(returns: [image_width, image_height])
-  }
-  let(:image_width) { 20 }
-  let(:image_height) { 50 }
 
   before do
     stub_const("LOGGER", double(:logger, :call => nil))
@@ -42,12 +31,10 @@ RSpec.describe ImageStore do
       expect(File).not_to have_received(:open)
     end
 
-    it "returns a useful representation of the image on disk" do
-      image_file = store[src]
+    it "returns the filename of the image on disk" do
+      image_filename = store[src]
 
-      expect(image_file).to respond_to(:name)
-      expect(image_file).to respond_to(:width)
-      expect(image_file).to respond_to(:height)
+      expect(image_filename).to match(/art\.jpg/)
     end
   end
 
@@ -70,12 +57,10 @@ RSpec.describe ImageStore do
       expect(file).to have_received(:print)
     end
 
-    it "returns a useful representation of the image on disk" do
-      image_file = store[src]
+    it "returns the filename of the image on disk" do
+      image_filename = store[src]
 
-      expect(image_file).to respond_to(:name)
-      expect(image_file).to respond_to(:width)
-      expect(image_file).to respond_to(:height)
+      expect(image_filename).to match(/art\.jpg/)
     end
   end
 
@@ -87,17 +72,9 @@ RSpec.describe ImageStore do
     let(:src) { "https://www.example.com/art.jpg" }
 
     it "falls back to our placeholder image" do
-      image_file = store[src]
+      image_filename = store[src]
 
-      expect(image_file.name).to eq(PLACEHOLDER_IMAGE)
-    end
-
-    it "returns a useful representation of the image on disk" do
-      image_file = store[src]
-
-      expect(image_file).to respond_to(:name)
-      expect(image_file).to respond_to(:width)
-      expect(image_file).to respond_to(:height)
+      expect(image_filename).to eq(PLACEHOLDER_IMAGE)
     end
 
     it "logs the error and the URI in question" do
@@ -125,19 +102,11 @@ RSpec.describe ImageStore do
     end
 
     it "creates a file name from the data itself" do
-      image_file = store[src]
+      image_filename = store[src]
 
       digest_of_data = "544c7a60c7e34728383b74b57d7ebe658fecb1cab4c4757dbb43e38c0f7e8de9"
 
-      expect(image_file.name).to match(/#{digest_of_data}\.png/)
-    end
-
-    it "returns a useful representation of the image on disk" do
-      image_file = store[src]
-
-      expect(image_file).to respond_to(:name)
-      expect(image_file).to respond_to(:width)
-      expect(image_file).to respond_to(:height)
+      expect(image_filename).to match(/#{digest_of_data}\.png/)
     end
   end
 end

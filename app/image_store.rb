@@ -2,14 +2,11 @@ require "uri"
 require "digest"
 require "base64"
 
-require "image_file"
-
 class ImageStore
   DATA_SCHEME_PATTERN = /^data:/
 
-  def initialize(fetcher:, image_dimensions_calculator:)
+  def initialize(fetcher:)
     @fetcher = fetcher
-    @image_dimensions_calculator = image_dimensions_calculator
   end
 
   def [](uri)
@@ -18,7 +15,7 @@ class ImageStore
 
   private
 
-  attr_reader :fetcher, :image_dimensions_calculator
+  attr_reader :fetcher
 
   def download(uri)
     if is_data_uri?(uri)
@@ -37,12 +34,12 @@ class ImageStore
       end
     end
 
-    ImageFile.new(name, image_dimensions_calculator: image_dimensions_calculator)
+    name
 
   rescue => e
     logger.call("#{e.inspect} || #{uri}")
 
-    ImageFile.new(PLACEHOLDER_IMAGE, image_dimensions_calculator: image_dimensions_calculator)
+    PLACEHOLDER_IMAGE
   end
 
   def remote_image_to_filename(uri)

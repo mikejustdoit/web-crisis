@@ -6,17 +6,20 @@ require "support/gosu_adapter_stubs"
 require "support/shared_examples/visitor"
 
 RSpec.describe ImageFetcher do
-  subject(:visitor) { ImageFetcher.new(image_store: image_store) }
-
-  let(:image_store) { double(:image_store, :[] => image_file) }
-  let(:image_file) {
-    double(
-      :image_file,
-      name: "https---www-example-com-art-jpg-art.jpg",
-      width: 20,
-      height: 50,
+  subject(:visitor) {
+    ImageFetcher.new(
+      image_dimensions_calculator: image_dimensions_calculator,
+      image_store: image_store,
     )
   }
+
+  let(:image_dimensions_calculator) {
+    gosu_image_dimensions_calculator_stub(returns: [image_width, image_height])
+  }
+  let(:image_width) { 20 }
+  let(:image_height) { 50 }
+  let(:image_filename) { "https---www-example-com-art-jpg-art.jpg" }
+  let(:image_store) { double(:image_store, :[] => image_filename) }
 
   it_behaves_like "a visitor"
 
@@ -38,7 +41,7 @@ RSpec.describe ImageFetcher do
 
       returned_image = returned_root.children.first
 
-      expect(returned_image.filename).to eq(image_file.name)
+      expect(returned_image.filename).to eq(image_filename)
     end
 
     it "sets the new image dimensions" do
@@ -46,8 +49,8 @@ RSpec.describe ImageFetcher do
 
       returned_image = returned_root.children.first
 
-      expect(returned_image.width).to eq(image_file.width)
-      expect(returned_image.height).to eq(image_file.height)
+      expect(returned_image.width).to eq(image_width)
+      expect(returned_image.height).to eq(image_height)
     end
   end
 end

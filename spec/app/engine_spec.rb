@@ -5,7 +5,7 @@ RSpec.describe Engine do
   subject(:engine) {
     Engine.new(
       fetcher: fetcher,
-      image_store_factory: double(:image_store_factory, :call => nil),
+      image_store: double(:image_store, :[] => nil),
       layout_pipeline: layout_pipeline,
       parser: parser,
     )

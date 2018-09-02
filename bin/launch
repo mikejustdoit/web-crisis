@@ -20,17 +20,10 @@ end
 
 LOGGER = ->(message) { puts(message) }
 
-online_image_store = ->(image_dimensions_calculator:) {
-  ImageStore.new(
-    fetcher: Fetcher.new,
-    image_dimensions_calculator: image_dimensions_calculator,
-  )
-}
-
 browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: Fetcher.new,
-    image_store_factory: online_image_store,
+    image_store: ImageStore.new(fetcher: Fetcher.new),
     layout_pipeline: LAYOUT_VISITORS,
     parser: Parser.new,
   ),
