@@ -2,6 +2,8 @@ require "uri"
 require "digest"
 require "base64"
 
+require "image_file"
+
 class ImageStore
   DATA_SCHEME_PATTERN = /^data:/
   FILE_SCHEME_PATTERN = /^file:\/\//
@@ -82,15 +84,6 @@ class ImageStore
       ASSETS,
       "#{Digest::SHA256.hexdigest(just_the_data(uri))}.#{file_type(uri)}",
     )
-  end
-
-  class ImageFile
-    def initialize(name, image_dimensions_calculator:)
-      @name = name
-      @width, @height = image_dimensions_calculator.call(name)
-    end
-
-    attr_reader :name, :width, :height
   end
 
   def logger
