@@ -1,11 +1,11 @@
 require "engine"
-require "failing_fetcher"
 require "fetcher"
 require "gosu_adapter_stubs"
 require "gosu_image_dimensions_calculator"
 require "image_store"
 require "inspector"
 require "layout_visitors"
+require "local_file_image_store"
 require "node_lister"
 require "offline_html_fetcher"
 require "parser"
@@ -71,19 +71,10 @@ module OfflineHtmlWorld
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
-      image_store_factory: offline_image_store,
+      image_store_factory: LocalFileImageStore.method(:new),
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )
-  end
-
-  def offline_image_store
-    ->(image_dimensions_calculator:) {
-      ImageStore.new(
-        fetcher: FailingFetcher.new,
-        image_dimensions_calculator: image_dimensions_calculator,
-      )
-    }
   end
 
   def render_in_browser(html_input)

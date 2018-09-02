@@ -3,12 +3,11 @@
 require_relative "../config/env"
 require "drawing_visitors"
 require "engine"
-require "failing_fetcher"
 require "gosu_box_renderer"
 require "gosu_text_renderer"
 require "gui_window"
-require "image_store"
 require "layout_visitors"
+require "local_file_image_store"
 require "offline_html_fetcher"
 require "parser"
 
@@ -18,17 +17,10 @@ html = STDIN.read
 
 LOGGER = ->(message) { puts(message) }
 
-offline_image_store = ->(image_dimensions_calculator:) {
-  ImageStore.new(
-    fetcher: FailingFetcher.new,
-    image_dimensions_calculator: image_dimensions_calculator,
-  )
-}
-
 browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: OfflineHtmlFetcher.new(html),
-    image_store_factory: offline_image_store,
+    image_store_factory: LocalFileImageStore.method(:new),
     layout_pipeline: LAYOUT_VISITORS,
     parser: Parser.new,
   ),

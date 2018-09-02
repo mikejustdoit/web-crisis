@@ -6,7 +6,6 @@ require "image_file"
 
 class ImageStore
   DATA_SCHEME_PATTERN = /^data:/
-  FILE_SCHEME_PATTERN = /^file:\/\//
 
   def initialize(fetcher:, image_dimensions_calculator:)
     @fetcher = fetcher
@@ -22,9 +21,7 @@ class ImageStore
   attr_reader :fetcher, :image_dimensions_calculator
 
   def download(uri)
-    if is_local_file?(uri)
-      name = local_file_filename(uri)
-    elsif is_data_uri?(uri)
+    if is_data_uri?(uri)
       name = data_uri_to_filename(uri)
 
       if !File.exist?(name)
@@ -55,16 +52,8 @@ class ImageStore
     )
   end
 
-  def is_local_file?(uri)
-    uri =~ FILE_SCHEME_PATTERN
-  end
-
   def is_data_uri?(uri)
     uri =~ DATA_SCHEME_PATTERN
-  end
-
-  def without_file_scheme(uri)
-    uri.sub(FILE_SCHEME_PATTERN, "")
   end
 
   def just_the_data(uri)
@@ -73,10 +62,6 @@ class ImageStore
 
   def file_type(uri)
     /#{DATA_SCHEME_PATTERN}image\/([a-z]+);base64,/.match(uri)[1]
-  end
-
-  def local_file_filename(uri)
-    without_file_scheme(URI.unescape(uri))
   end
 
   def data_uri_to_filename(uri)
