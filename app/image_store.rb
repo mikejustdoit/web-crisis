@@ -21,12 +21,9 @@ class ImageStore
 
   def download(uri)
     if is_local_file?(uri)
-      name = without_file_scheme(URI.unescape(uri))
+      name = local_file_filename(uri)
     elsif is_data_uri?(uri)
-      name = File.join(
-        ASSETS,
-        "#{Digest::SHA256.hexdigest(just_the_data(uri))}.#{file_type(uri)}",
-      )
+      name = data_uri_to_filename(uri)
 
       if !File.exist?(name)
         File.open(name, "wb") { |file|
@@ -34,7 +31,7 @@ class ImageStore
         }
       end
     else
-      name = filename(uri)
+      name = remote_image_to_filename(uri)
 
       if !File.exist?(name)
         File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
@@ -49,7 +46,7 @@ class ImageStore
     ImageFile.new(PLACEHOLDER_IMAGE, image_dimensions_calculator: image_dimensions_calculator)
   end
 
-  def filename(uri)
+  def remote_image_to_filename(uri)
     File.join(
       ASSETS,
       "#{uri.gsub(/[^-_0-9a-zA-Z]/, "-")}-#{File.basename(URI.parse(uri).path)}",
@@ -74,6 +71,17 @@ class ImageStore
 
   def file_type(uri)
     /#{DATA_SCHEME_PATTERN}image\/([a-z]+);base64,/.match(uri)[1]
+  end
+
+  def local_file_filename(uri)
+    without_file_scheme(URI.unescape(uri))
+  end
+
+  def data_uri_to_filename(uri)
+    File.join(
+      ASSETS,
+      "#{Digest::SHA256.hexdigest(just_the_data(uri))}.#{file_type(uri)}",
+    )
   end
 
   class ImageFile
