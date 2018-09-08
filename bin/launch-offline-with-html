@@ -11,9 +11,23 @@ require "local_file_image_store"
 require "offline_html_fetcher"
 require "parser"
 
-# "Usage: echo '<html></html>' | #{$0}"
+=begin
+  Usage:
 
-html = STDIN.read
+    #{$0} path/to/local.html
+
+    OR
+
+    echo '<html></html>' | #{$0}
+=end
+
+uri = ARGV[0]
+
+html = if uri.nil? || uri.empty?
+  STDIN.read
+else
+  File.read(uri)
+end
 
 LOGGER = ->(message) { puts(message) }
 
@@ -27,7 +41,7 @@ browser = GuiWindow.new(
   drawing_visitors: DRAWING_VISITORS,
 )
 
-browser.address = "offline"
+browser.address = uri || "offline"
 browser.go
 
 browser.show
