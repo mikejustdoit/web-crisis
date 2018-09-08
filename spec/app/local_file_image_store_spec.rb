@@ -8,10 +8,8 @@ RSpec.describe LocalFileImageStore do
   end
 
   context "when the URI contains the file:// scheme" do
-    let(:src) { "file:///home/seppel/art.jpg" }
-
     it "uses the file path from the URI" do
-      image_filename = store[src]
+      image_filename = store["file:///home/seppel/art.jpg"]
 
       expect(image_filename).to eq("/home/seppel/art.jpg")
     end
