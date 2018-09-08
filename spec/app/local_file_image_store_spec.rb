@@ -1,7 +1,7 @@
 require "local_file_image_store"
 
 RSpec.describe LocalFileImageStore do
-  subject(:store) { LocalFileImageStore.new }
+  subject(:store) { LocalFileImageStore.new(origin: "/home/seppel/index.html") }
 
   before do
     stub_const("LOGGER", double(:logger, :call => nil))

@@ -13,7 +13,7 @@ class Engine
       viewport_height: viewport_height,
       text_width_calculator: text_width_calculator,
       image_dimensions_calculator: image_dimensions_calculator,
-      image_store: image_store_factory.call,
+      image_store: image_store_factory.call(origin: uri),
     )
   end
 

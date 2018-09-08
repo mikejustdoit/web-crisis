@@ -5,16 +5,19 @@ RSpec.describe Engine do
   subject(:engine) {
     Engine.new(
       fetcher: fetcher,
-      image_store_factory: double(
-        :image_store_factory,
-        :call => double(:image_store, :[] => nil),
-      ),
+      image_store_factory: image_store_factory,
       layout_pipeline: layout_pipeline,
       parser: parser,
     )
   }
 
   let(:fetcher) { double(:fetcher, :call => nil) }
+  let(:image_store_factory) {
+    double(
+      :image_store_factory,
+      :call => double(:image_store, :[] => nil),
+    )
+  }
   let(:layout_pipeline) { double(:layout_pipeline, :visit => a_tree) }
   let(:parser) { double(:parser, :call => nil) }
 
@@ -34,6 +37,11 @@ RSpec.describe Engine do
     it "calls its callable collaborators" do
       expect(fetcher).to have_received(:call)
       expect(parser).to have_received(:call)
+    end
+
+    it "builds its image store with the current 'origin' URI" do
+      expect(image_store_factory).to have_received(:call)
+        .with(origin: "https://weworkremotely.com/")
     end
 
     it "starts its visitors visiting" do
