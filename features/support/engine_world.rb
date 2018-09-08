@@ -14,7 +14,7 @@ module EngineWorld
   def engine
     @engine ||= Engine.new(
       fetcher: Fetcher.new,
-      image_store: ImageStore.new(fetcher: Fetcher.new),
+      image_store_factory: -> (**) { ImageStore.new(fetcher: Fetcher.new) },
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )
@@ -70,7 +70,7 @@ module OfflineHtmlWorld
   def offline_html_engine(html_input)
     Engine.new(
       fetcher: OfflineHtmlFetcher.new(html_input),
-      image_store: LocalFileImageStore.new,
+      image_store_factory: LocalFileImageStore.method(:new),
       layout_pipeline: LAYOUT_VISITORS,
       parser: Parser.new,
     )

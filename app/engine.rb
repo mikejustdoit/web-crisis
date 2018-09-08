@@ -1,7 +1,7 @@
 class Engine
-  def initialize(fetcher:, image_store:, layout_pipeline:, parser:)
+  def initialize(fetcher:, image_store_factory:, layout_pipeline:, parser:)
     @fetcher = fetcher
-    @image_store = image_store
+    @image_store_factory = image_store_factory
     @layout_pipeline = layout_pipeline
     @parser = parser
   end
@@ -13,13 +13,13 @@ class Engine
       viewport_height: viewport_height,
       text_width_calculator: text_width_calculator,
       image_dimensions_calculator: image_dimensions_calculator,
-      image_store: image_store,
+      image_store: image_store_factory.call,
     )
   end
 
   private
 
-  attr_reader :fetcher, :image_store, :layout_pipeline, :parser
+  attr_reader :fetcher, :image_store_factory, :layout_pipeline, :parser
 
   def parse(uri)
     parser.call(fetch(uri))

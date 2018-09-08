@@ -34,7 +34,7 @@ LOGGER = ->(message) { puts(message) }
 browser = GuiWindow.new(
   engine: Engine.new(
     fetcher: OfflineHtmlFetcher.new(html),
-    image_store: LocalFileImageStore.new,
+    image_store_factory: LocalFileImageStore.method(:new),
     layout_pipeline: LAYOUT_VISITORS,
     parser: Parser.new,
   ),
