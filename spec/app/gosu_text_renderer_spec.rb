@@ -18,7 +18,7 @@ RSpec.describe GosuTextRenderer do
       let(:text_y) { 50 }
 
       it "creates a Gosu::Font and draws the text with it" do
-        gosu_text_renderer.call(text, text_x, text_y)
+        gosu_text_renderer.call(text, x: text_x, y: text_y)
 
         expect(gosu_font).to have_received(:draw).with(
           text,
@@ -53,7 +53,7 @@ RSpec.describe GosuTextRenderer do
       let(:y_plus_viewport_y) { text_y + viewport_y }
 
       it "translates the viewport-world position to a window position" do
-        gosu_text_renderer.call(text, text_x, text_y)
+        gosu_text_renderer.call(text, x: text_x, y: text_y)
 
         expect(gosu_font).to have_received(:draw).with(
           text,
