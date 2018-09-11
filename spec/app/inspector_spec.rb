@@ -111,6 +111,61 @@ RSpec.describe Inspector do
     end
   end
 
+
+  describe "find a single element (not a text node) with text" do
+    let(:root_node) { Element.new(children: children) }
+    let(:children) {
+      [
+        Element.new(
+          children: [
+            BuildText.new.call(
+              content: "Anyone who has struggled with a genuine problem"
+            ),
+          ],
+        ),
+        Element.new(
+          children: [
+            BuildText.new.call(
+              content: " without having been taught an explicit method"
+            ),
+          ],
+        )
+      ]
+    }
+
+    context "a leaf node contains the search text" do
+      it "returns its closest ancestor with the text" do
+        expect(
+          inspector.find_single_element_with_text("Anyone who has struggled")
+        ).to eq(children.first)
+      end
+    end
+
+    context "a branch node contains the search text" do
+      it "returns the deepest node with the whole text" do
+        expect(
+          inspector.find_single_element_with_text("genuine problem without having")
+        ).to eq(root_node)
+      end
+    end
+
+    context "more than one node contains the search text" do
+      it "complains loudly" do
+        expect{
+          inspector.find_single_element_with_text("with")
+        }.to raise_error(Inspector::TooManyMatchesFound)
+      end
+    end
+
+    context "the text is not in the tree" do
+      it "complains loudly about this too" do
+        expect{
+          inspector.find_single_element_with_text("search string that isn't in tree")
+        }.to raise_error(Inspector::NotEnoughMatchesFound)
+      end
+    end
+  end
+
   describe "finding a single image node by `src`" do
     context "when there is one on the page" do
       let(:root_node) { Element.new(children: [image]) }
