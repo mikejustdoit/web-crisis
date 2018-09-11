@@ -34,6 +34,7 @@ class GosuTextRenderer
   def gosu_colour(colour)
     {
       :black => Gosu::Color::BLACK,
+      :blue => Gosu::Color::BLUE,
     }.fetch(colour)
   end
 end
