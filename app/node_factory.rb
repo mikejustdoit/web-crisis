@@ -4,6 +4,7 @@ require "build_text"
 require "element"
 require "image"
 require "inline_element"
+require "link"
 require "text"
 
 class NodeFactory
@@ -41,6 +42,13 @@ class NodeFactory
       }
     when "img"
       InlineElement.new(Image.new(src: parsed_element["src"]))
+    when "a"
+      InlineElement.new(
+        Link.new(
+          Element.new(children: children),
+          href: parsed_element["href"],
+        )
+      )
     when *BLOCK_LEVEL_ELEMENT_TYPES
       BlockLevelElement.new(Element.new(children: children))
     else
