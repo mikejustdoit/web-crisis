@@ -52,11 +52,9 @@ RSpec.describe TextDrawingVisitor do
       let(:text) { "Please, make yourself at home." }
       let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 
-      before do
-        visitor.call(node)
-      end
-
       it "delegates the actual drawing to the text renderer" do
+        visitor.call(node)
+
         expect(text_renderer).to have_received(:call).with(text, box.x, box.y)
       end
     end
@@ -117,11 +115,9 @@ RSpec.describe TextDrawingVisitor do
       )
     }
 
-    before do
-      visitor.call(node)
-    end
-
     it "draws each row separately, with absolute position" do
+      visitor.call(node)
+
       expect(text_renderer).to have_received(:call).with(
         first_row.content,
         node.x + first_row.x,
