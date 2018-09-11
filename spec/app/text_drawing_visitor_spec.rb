@@ -55,7 +55,12 @@ RSpec.describe TextDrawingVisitor do
       it "delegates the actual drawing to the text renderer" do
         visitor.call(node)
 
-        expect(text_renderer).to have_received(:call).with(text, x: box.x, y: box.y)
+        expect(text_renderer).to have_received(:call).with(
+          text,
+          x: box.x,
+          y: box.y,
+          colour: :black,
+        )
       end
     end
   end
@@ -122,11 +127,13 @@ RSpec.describe TextDrawingVisitor do
         first_row.content,
         x: node.x + first_row.x,
         y: node.y + first_row.y,
+        colour: :black,
       )
       expect(text_renderer).to have_received(:call).with(
         second_row.content,
         x: node.x + second_row.x,
         y: node.y + second_row.y,
+        colour: :black,
       )
     end
   end

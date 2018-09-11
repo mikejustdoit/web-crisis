@@ -29,6 +29,7 @@ class TextDrawingVisitor
         row.content,
         x: node.x + row.x,
         y: node.y + row.y,
+        colour: :black,
       )
     }
 

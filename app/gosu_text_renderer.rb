@@ -5,9 +5,9 @@ class GosuTextRenderer
     @viewport = viewport
   end
 
-  def call(text, x:, y:)
+  def call(text, x:, y:, colour:)
     translate_viewport_to_gui(x, y) do |gui_x, gui_y|
-      font.draw(text, gui_x, gui_y, 0, 1.0, 1.0, colour)
+      font.draw(text, gui_x, gui_y, 0, 1.0, 1.0, gosu_colour(colour))
     end
   end
 
@@ -31,7 +31,9 @@ class GosuTextRenderer
     "Comic Sans"
   end
 
-  def colour
-    Gosu::Color::BLACK
+  def gosu_colour(colour)
+    {
+      :black => Gosu::Color::BLACK,
+    }.fetch(colour)
   end
 end
