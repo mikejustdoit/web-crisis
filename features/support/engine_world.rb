@@ -51,6 +51,14 @@ module EngineWorld
     expect(image.height).to eq(height)
   end
 
+  def page_displays_link(uri, content)
+    element = page.find_single_element_with_text(content)
+    child_text_nodes = page.find_nodes_with_text(content)
+
+    expect(element.href).to eq(uri)
+    expect(child_text_nodes.map(&:colour).uniq).to eq([:blue])
+  end
+
   def page
     Inspector.new(@render_tree)
   end

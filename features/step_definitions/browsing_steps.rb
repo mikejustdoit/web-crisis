@@ -18,6 +18,7 @@ Then(/^the browser should render the web page$/) do
     width: 70,
     height: 81,
   )
+  page_displays_link("/op/AuthorGuide.lwn", "Write for us")
 end
 
 Then(/^each element appears to the right of its predecessor$/) do
