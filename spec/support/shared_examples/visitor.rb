@@ -49,11 +49,11 @@ RSpec.shared_examples "a depth-first tree traverser" do
     end
 
     it "visits all nodes once in depth-first order" do
-      expect(visitor).to have_received(:call).with(root).ordered
-      expect(visitor).to have_received(:call).with(children.first).ordered
-      expect(visitor).to have_received(:call).with(grandchildren.first).ordered
-      expect(visitor).to have_received(:call).with(grandchildren.last).ordered
-      expect(visitor).to have_received(:call).with(children.last).ordered
+      expect(visitor).to have_received(:call).with(root, any_args).ordered
+      expect(visitor).to have_received(:call).with(children.first, any_args).ordered
+      expect(visitor).to have_received(:call).with(grandchildren.first, any_args).ordered
+      expect(visitor).to have_received(:call).with(grandchildren.last, any_args).ordered
+      expect(visitor).to have_received(:call).with(children.last, any_args).ordered
     end
   end
 end
