@@ -6,7 +6,7 @@ require "text"
 require "text_row"
 
 RSpec.describe Text do
-  subject(:node) { Text.new(position: position, rows: rows) }
+  subject(:node) { Text.new(position: position, rows: rows, colour: :black) }
   let(:position) { Point.new(x: 0, y: 1) }
   let(:rows) { [first_row, second_row] }
   let(:first_row) {
@@ -26,6 +26,10 @@ RSpec.describe Text do
     it "presents its rows' content, with spaces" do
       expect(node.content).to eq("Tweet of the Week")
     end
+  end
+
+  it "has a colour" do
+    expect(node.colour).to eq(:black)
   end
 
   describe "working with node's position and dimensions" do
@@ -95,6 +99,7 @@ RSpec.describe Text do
         Text.new(
           position: Point.new(x: 100, y: 150),
           rows: double(:rows),
+          colour: :black,
         )
       }
 
@@ -114,7 +119,7 @@ RSpec.describe Text do
     end
 
     describe "communicating the next available position for subsequent nodes" do
-      subject(:node) { Text.new(position: position, rows: rows) }
+      subject(:node) { Text.new(position: position, rows: rows, colour: :black) }
       let(:position) { Point.new(x: 10, y: 15) }
       let(:rows) { [TextRow.new(box: final_rows_box, content: "Follow me.")] }
       let(:final_rows_box) { Box.new(x: 100, y: 150, width: 1, height: 2) }

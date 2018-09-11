@@ -4,12 +4,13 @@ require "text_bounds"
 class Text
   extend Forwardable
 
-  def initialize(position:, rows:)
+  def initialize(colour:, position:, rows:)
+    @colour = colour
     @position = position
     @rows = rows
   end
 
-  attr_reader :rows
+  attr_reader :colour, :rows
 
   def_delegators :position, :x, :y
 
@@ -37,6 +38,7 @@ class Text
     Text.new(
       position: position.clone_with(**attributes),
       rows: attributes.fetch(:rows, rows),
+      colour: attributes.fetch(:colour, colour),
     )
   end
 

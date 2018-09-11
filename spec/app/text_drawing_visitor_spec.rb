@@ -105,6 +105,7 @@ RSpec.describe TextDrawingVisitor do
       Text.new(
         position: Point.new(x: 75, y: 1234),
         rows: [first_row, second_row],
+        colour: :black,
       )
     }
     let(:first_row) {

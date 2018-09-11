@@ -17,6 +17,7 @@ RSpec.describe AbsolutePositionAdderUpper do
     Text.new(
       position: Point.new(x: offset_from_edges.x, y: offset_from_edges.y),
       rows: [texts_internal_row],
+      colour: :black,
     )
   }
   let(:texts_internal_row) { double(:texts_internal_row) }

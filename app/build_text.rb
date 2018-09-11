@@ -3,7 +3,7 @@ require "text"
 require "text_row"
 
 class BuildText
-  def call(box: Box.new, content:)
+  def call(box: Box.new, colour: :black, content:)
     Text.new(
       position: position_from_box(box),
       rows: [
@@ -11,7 +11,8 @@ class BuildText
           box: zero_text_box(box),
           content: content,
         )
-      ]
+      ],
+      colour: colour,
     )
   end
 
