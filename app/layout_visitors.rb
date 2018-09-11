@@ -4,6 +4,7 @@ require "block_level_reverse_inheritor"
 require "image_fetcher"
 require "layout_pipeline"
 require "root_node_dimensions_setter"
+require "text_colourer"
 
 LAYOUT_VISITORS = LayoutPipeline.new(
   [
@@ -12,5 +13,6 @@ LAYOUT_VISITORS = LayoutPipeline.new(
     RootNodeDimensionsSetter.method(:new),
     Arranger.method(:new),
     AbsolutePositionAdderUpper.method(:new),
+    TextColourer.method(:new),
   ]
 )
