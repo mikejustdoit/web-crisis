@@ -27,11 +27,17 @@ class LocalFileImageStore
   attr_reader :origin
 
   def local_file_filename(uri)
-    path = without_file_scheme(URI.unescape(uri))
+    path = absolute(without_file_scheme(URI.unescape(uri)))
 
     raise FileNotFound.new(path) unless File.exist?(path)
 
     path
+  end
+
+  def absolute(path)
+    return path if path.start_with?("/")
+
+    File.expand_path(path, origin)
   end
 
   def without_file_scheme(uri)

@@ -51,4 +51,18 @@ RSpec.describe LocalFileImageStore do
         .with(/FileNotFound.*not found on disk/)
     end
   end
+
+  describe "resolving relative file paths" do
+    it "returns an absolute path" do
+      image_filename = store["art.jpg"]
+
+      expect(image_filename).to start_with("/")
+    end
+
+    it "locates the file relative to the store's `origin` path" do
+      image_filename = store["art.jpg"]
+
+      expect(image_filename).to eq("/home/seppel/art.jpg")
+    end
+  end
 end
