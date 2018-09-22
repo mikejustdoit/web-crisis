@@ -4,6 +4,12 @@ require "uri"
 class LocalFileImageStore
   FILE_SCHEME_PATTERN = /^file:\/\//
 
+  class FileNotAccessible < StandardError
+    def initialize(path, origin)
+      super("'#{path}' not a descendant of origin '#{origin}'")
+    end
+  end
+
   class FileNotFound < StandardError
     def initialize(path)
       super("'#{path}' not found on disk")
@@ -32,7 +38,13 @@ class LocalFileImageStore
 
     raise FileNotFound.new(path) unless File.exist?(path)
 
+    raise FileNotAccessible.new(path, origin) unless descendant_of_origin?(path)
+
     path.to_s
+  end
+
+  def descendant_of_origin?(path)
+    path.ascend.to_a.include?(origin)
   end
 
   def absolute(path)

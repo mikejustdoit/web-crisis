@@ -65,4 +65,36 @@ RSpec.describe LocalFileImageStore do
       expect(image_filename).to eq("/home/seppel/art.jpg")
     end
   end
+
+  describe "handling file paths that aren't descendants of the origin" do
+    context "when file path is absolute" do
+      it "falls back to our placeholder image" do
+        image_filename = store["/home/zaccharias/art.jpg"]
+
+        expect(image_filename).to eq(PLACEHOLDER_IMAGE)
+      end
+
+      it "logs the problem" do
+        store["/home/zaccharias/art.jpg"]
+
+        expect(LOGGER).to have_received(:call)
+          .with(/FileNotAccessible.*not a descendant of origin.*\/home\/seppel/)
+      end
+    end
+
+    context "when file path is relative" do
+      it "falls back to our placeholder image" do
+        image_filename = store["../zaccharias/art.jpg"]
+
+        expect(image_filename).to eq(PLACEHOLDER_IMAGE)
+      end
+
+      it "logs the problem" do
+        store["../zaccharias/art.jpg"]
+
+        expect(LOGGER).to have_received(:call)
+          .with(/FileNotAccessible.*not a descendant of origin.*\/home\/seppel/)
+      end
+    end
+  end
 end
