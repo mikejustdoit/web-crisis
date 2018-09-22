@@ -1,3 +1,4 @@
+require "pathname"
 require "uri"
 
 class LocalFileImageStore
@@ -10,7 +11,7 @@ class LocalFileImageStore
   end
 
   def initialize(origin:)
-    @origin = File.dirname(File.expand_path(origin))
+    @origin = Pathname.new(origin).expand_path.dirname
   end
 
   def [](uri)
@@ -27,21 +28,23 @@ class LocalFileImageStore
   attr_reader :origin
 
   def local_file_filename(uri)
-    path = absolute(without_file_scheme(URI.unescape(uri)))
+    path = absolute(to_path(URI.unescape(uri)))
 
     raise FileNotFound.new(path) unless File.exist?(path)
 
-    path
+    path.to_s
   end
 
   def absolute(path)
-    return path if path.start_with?("/")
+    return path if path.absolute?
 
-    File.expand_path(path, origin)
+    path.expand_path(origin)
   end
 
-  def without_file_scheme(uri)
-    uri.sub(FILE_SCHEME_PATTERN, "")
+  def to_path(uri)
+    Pathname.new(
+      uri.sub(FILE_SCHEME_PATTERN, "")
+    )
   end
 
   def logger

@@ -56,7 +56,7 @@ RSpec.describe LocalFileImageStore do
     it "returns an absolute path" do
       image_filename = store["art.jpg"]
 
-      expect(image_filename).to start_with("/")
+      expect(Pathname.new(image_filename)).to be_absolute
     end
 
     it "locates the file relative to the store's `origin` path" do
