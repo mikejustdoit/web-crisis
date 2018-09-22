@@ -5,6 +5,8 @@ RSpec.describe LocalFileImageStore do
 
   before do
     stub_const("LOGGER", double(:logger, :call => nil))
+
+    allow(File).to receive(:exist?).and_return(true)
   end
 
   context "when the URI contains the file:// scheme" do
@@ -28,6 +30,25 @@ RSpec.describe LocalFileImageStore do
       image_filename = store[nil]
 
       expect(image_filename).to eq(PLACEHOLDER_IMAGE)
+    end
+  end
+
+  context "when no local file exists matching the URI" do
+    before do
+      allow(File).to receive(:exist?).and_return(false)
+    end
+
+    it "falls back to our placeholder image" do
+      image_filename = store["https://www.example.com/art.jpg"]
+
+      expect(image_filename).to eq(PLACEHOLDER_IMAGE)
+    end
+
+    it "logs the problem" do
+      store["https://www.example.com/art.jpg"]
+
+      expect(LOGGER).to have_received(:call)
+        .with(/FileNotFound.*not found on disk/)
     end
   end
 end
