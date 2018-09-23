@@ -1,6 +1,5 @@
 require "uri"
-require "digest"
-require "base64"
+require "data_uri"
 
 class ImageStore
   DATA_SCHEME_PATTERN = /^data:/
@@ -19,13 +18,11 @@ class ImageStore
 
   def download(uri)
     if is_data_uri?(uri)
-      name = data_uri_to_filename(uri)
+      data_uri = DataUri.new(uri)
 
-      if !File.exist?(name)
-        File.open(name, "wb") { |file|
-          file.print(Base64.strict_decode64(just_the_data(uri)))
-        }
-      end
+      data_uri.write_to_file
+
+      name = data_uri.name
     else
       name = remote_image_to_filename(uri)
 
@@ -51,21 +48,6 @@ class ImageStore
 
   def is_data_uri?(uri)
     uri =~ DATA_SCHEME_PATTERN
-  end
-
-  def just_the_data(uri)
-    uri.sub(/#{DATA_SCHEME_PATTERN}image\/[a-z]+;base64,/, "")
-  end
-
-  def file_type(uri)
-    /#{DATA_SCHEME_PATTERN}image\/([a-z]+);base64,/.match(uri)[1]
-  end
-
-  def data_uri_to_filename(uri)
-    File.join(
-      ASSETS,
-      "#{Digest::SHA256.hexdigest(just_the_data(uri))}.#{file_type(uri)}",
-    )
   end
 
   def logger
