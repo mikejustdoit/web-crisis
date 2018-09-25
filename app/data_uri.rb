@@ -1,4 +1,5 @@
 require "base64"
+require "digest"
 
 class DataUri
   DATA_SCHEME_PATTERN = /^data:/
