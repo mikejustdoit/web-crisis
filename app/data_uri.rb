@@ -2,16 +2,19 @@ require "base64"
 require "digest"
 
 class DataUri
-  DATA_SCHEME_PATTERN = /^data:/
-
   def initialize(uri)
-    @uri = uri
+    parts = /^data:(image\/[-\+a-z]+)(;base64)?,(.*)$/.match(uri)
+    @mime_type = parts[1]
+    @is_base64 = parts[2]
+    @data = parts[3]
   end
 
   def write_to_file
     if !File.exist?(name)
       File.open(name, "wb") { |file|
-        file.print(Base64.strict_decode64(just_the_data))
+        file.print(
+          is_base64? ? Base64.strict_decode64(data) : data
+        )
       }
     end
   end
@@ -19,19 +22,19 @@ class DataUri
   def name
     File.join(
       ASSETS,
-      "#{Digest::SHA256.hexdigest(just_the_data)}.#{file_type}",
+      "#{Digest::SHA256.hexdigest(data)}.#{file_type}",
     )
   end
 
   private
 
-  attr_reader :uri
-
-  def just_the_data
-    uri.sub(/#{DATA_SCHEME_PATTERN}image\/[a-z]+;base64,/, "")
-  end
+  attr_reader :mime_type, :is_base64, :data
 
   def file_type
-    /#{DATA_SCHEME_PATTERN}image\/([a-z]+);base64,/.match(uri)[1]
+    mime_type.split("/").last.split(/\W/).first
+  end
+
+  def is_base64?
+    is_base64
   end
 end
