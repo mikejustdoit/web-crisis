@@ -1,7 +1,9 @@
+require "data_uri"
 require "pathname"
 require "uri"
 
 class LocalFileImageStore
+  DATA_SCHEME_PATTERN = /^data:/
   FILE_SCHEME_PATTERN = /^file:\/\//
 
   class FileNotAccessible < StandardError
@@ -21,7 +23,15 @@ class LocalFileImageStore
   end
 
   def [](uri)
-    local_file_filename(uri)
+    if is_data_uri?(uri)
+      data_uri = DataUri.new(uri)
+
+      data_uri.write_to_file
+
+      data_uri.name
+    else
+      local_file_filename(uri)
+    end
 
   rescue => e
     logger.call("#{e.inspect} || #{uri}")
@@ -57,6 +67,10 @@ class LocalFileImageStore
     Pathname.new(
       uri.sub(FILE_SCHEME_PATTERN, "")
     )
+  end
+
+  def is_data_uri?(uri)
+    uri =~ DATA_SCHEME_PATTERN
   end
 
   def logger
