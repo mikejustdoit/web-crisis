@@ -99,4 +99,25 @@ RSpec.describe TextRow do
       expect(node.next_available_point).to respond_to(:y)
     end
   end
+
+  describe "comparing to another row" do
+    subject(:row) { TextRow.new(box: box, content: "I am what I do.") }
+    let(:box) { Box.new(x: 100, y: 150, width: 1, height: 2) }
+
+    context "with different content, postion or dimensions" do
+      let(:other_row) { TextRow.new(box: box, content: "I am something else.") }
+
+      it "does not equal that other row" do
+        expect( row == other_row ).not_to be true
+      end
+    end
+
+    context "with identical content, postion and dimensions" do
+      let(:other_row) { TextRow.new(box: box, content: "I am what I do.") }
+
+      it "does equal that other row" do
+        expect( row == other_row ).to be true
+      end
+    end
+  end
 end

@@ -33,6 +33,14 @@ class TextRow
     Point.new(x: right, y: y)
   end
 
+  def ==(other_row)
+    content == other_row.content &&
+      x == other_row.x &&
+      y == other_row.y &&
+      width == other_row.width &&
+      height == other_row.height
+  end
+
   private
 
   attr_reader :box
