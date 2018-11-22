@@ -7,6 +7,12 @@ class InlineElement < SimpleDelegator
     )
   end
 
+  def clone_with_children(new_children)
+    InlineElement.new(
+      __getobj__.clone_with_children(new_children),
+    )
+  end
+
   def position_after(preceding_node)
     point = preceding_node.next_available_point
     clone_with(
