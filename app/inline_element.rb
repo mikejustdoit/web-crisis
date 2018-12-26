@@ -1,6 +1,14 @@
 require "point"
 
 class InlineElement < SimpleDelegator
+  def inspect
+    "InlineElement<#{__getobj__}>"
+  end
+
+  def to_s
+    inspect
+  end
+
   def clone_with(**attributes)
     InlineElement.new(
       __getobj__.clone_with(**attributes),

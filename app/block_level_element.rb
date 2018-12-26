@@ -1,6 +1,14 @@
 require "point"
 
 class BlockLevelElement < SimpleDelegator
+  def inspect
+    "BlockLevelElement<#{__getobj__}>"
+  end
+
+  def to_s
+    inspect
+  end
+
   def clone_with(**attributes)
     BlockLevelElement.new(
       __getobj__.clone_with(**attributes),

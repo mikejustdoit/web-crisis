@@ -8,6 +8,14 @@ class NodeWithinParent < SimpleDelegator
     super(node)
   end
 
+  def inspect
+    "NodeWithinParent<#{node}, #{parent}>"
+  end
+
+  def to_s
+    inspect
+  end
+
   def maximum_bounds
     return node.maximum_bounds if node.maximum_bounds.defined?
 

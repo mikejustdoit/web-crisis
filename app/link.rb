@@ -6,6 +6,14 @@ class Link < SimpleDelegator
     super(node)
   end
 
+  def inspect
+    "Link<#{node}>"
+  end
+
+  def to_s
+    inspect
+  end
+
   attr_reader :href
 
   def clone_with(**attributes)
