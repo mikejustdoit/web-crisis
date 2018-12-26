@@ -1,10 +1,11 @@
 require "arranger"
+require "block_level_element"
 require "box"
 require "build_text"
+require "element"
 require "inline_element"
 require "node_within_parent"
 require "support/gosu_adapter_stubs"
-require "support/shared_examples/visitor"
 
 RSpec.describe Arranger do
   subject(:visitor) {
