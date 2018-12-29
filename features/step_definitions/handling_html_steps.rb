@@ -1,4 +1,4 @@
-Given(/^the HTML input:$/) do |html|
+Given(/^the HTML input:?$/) do |html|
   @html_input = html
 end
 

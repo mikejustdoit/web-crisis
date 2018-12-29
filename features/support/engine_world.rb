@@ -31,7 +31,7 @@ module EngineWorld
   end
 
   def viewport_width
-    640
+    @viewport_width || 640
   end
 
   def viewport_height
@@ -82,9 +82,15 @@ module OfflineHtmlWorld
         "https://dummy.address",
         viewport_width: viewport_width,
         viewport_height: viewport_height,
-        text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
+        text_width_calculator: gosu_text_width_calculator_stub(
+          returns: universal_width_for_any_word_or_space,
+        ),
         image_dimensions_calculator: GosuImageDimensionsCalculator.new,
       )
+  end
+
+  def universal_width_for_any_word_or_space
+    @universal_width_for_any_word_or_space || 50
   end
 
   def elements_are_positioned_left_to_right
@@ -147,17 +153,6 @@ module OfflineHtmlWorld
 
     expect(parent_node.y).to be <= furthest_top
     expect(parent_node.bottom).to be >= furthest_bottom
-  end
-
-  def text_is_split_across_multiple_nodes
-    entire_text_content = "The web-development community was briefly thrown into chaos in late March when a lone Node.js developer suddenly unpublished a short but widely used package from the Node Package Manager (npm) repository. The events leading up to that developer's withdrawal are controversial in their own right, but the chaotic effects raise even more serious questions for the Node.js and npm user communities."
-    text_node = page.find_single_node_with_text(entire_text_content)
-    expect(text_node.rows.size).to be > 1
-  end
-
-  def text_width_is_within_viewport_width
-    first_text = page.find_nodes_with_text("The web-development community").first
-    expect(first_text.right).to be <= viewport_width
   end
 end
 
