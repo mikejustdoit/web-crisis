@@ -20,4 +20,9 @@ class TextBounds
   def defined?
     ![x, width].any?(&:nil?)
   end
+
+  def ==(other_text_bounds)
+    x == other_text_bounds.x &&
+      width == other_text_bounds.width
+  end
 end

@@ -85,4 +85,22 @@ RSpec.describe TextBounds do
       end
     end
   end
+
+  describe "comparing with other TextBounds" do
+    context "when their values of x and width are the same" do
+      let(:other_bounds) { bounds.clone_with }
+
+      it "matches the other TextBounds" do
+        expect(bounds == other_bounds).to be true
+      end
+    end
+
+    context "when their values of either x or width are not the same" do
+      let(:other_bounds) { bounds.clone_with(x: bounds.x + 1) }
+
+      it "doesn't match the other TextBounds" do
+        expect(bounds == other_bounds).to be false
+      end
+    end
+  end
 end
