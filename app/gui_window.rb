@@ -10,30 +10,27 @@ class GuiWindow < Gosu::Window
   def initialize(engine:, drawing_visitors:)
     @engine = engine
     @drawing_visitors = drawing_visitors
-
     @address = ""
-
     @needs_redraw = false
 
     super(640, 480)
-
     self.caption = "Web Crisis browser"
   end
 
-  attr_accessor :address
+  attr_writer :address
 
   def draw
     drawing_visitors.visit(
       engine.request(
         address,
-        viewport_width: viewport_width,
-        viewport_height: viewport_height,
+        viewport_width: viewport.width,
+        viewport_height: viewport.height,
         text_width_calculator: GosuTextWidthCalculator.new,
         image_dimensions_calculator: GosuImageDimensionsCalculator.new,
       ),
-      box_renderer: box_renderer,
-      image_renderer: image_renderer,
-      text_renderer: text_renderer,
+      box_renderer: GosuBoxRenderer.new(viewport),
+      image_renderer: GosuImageRenderer.new(viewport),
+      text_renderer: GosuTextRenderer.new(viewport),
     )
 
     @needs_redraw = false
@@ -49,42 +46,9 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :drawing_visitors, :engine, :needs_redraw
-
-  def viewport_x
-    0
-  end
-
-  def viewport_y
-    0
-  end
-
-  def viewport_width
-    width
-  end
-
-  def viewport_height
-    height
-  end
+  attr_reader :address, :drawing_visitors, :engine, :needs_redraw
 
   def viewport
-    Box.new(
-      x: viewport_x,
-      y: viewport_y,
-      width: viewport_width,
-      height: viewport_height,
-    )
-  end
-
-  def box_renderer
-    GosuBoxRenderer.new(viewport)
-  end
-
-  def image_renderer
-    GosuImageRenderer.new(viewport)
-  end
-
-  def text_renderer
-    GosuTextRenderer.new(viewport)
+    Box.new(x: 0, y: 0, width: width, height: height)
   end
 end
