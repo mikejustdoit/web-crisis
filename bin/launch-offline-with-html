@@ -3,8 +3,6 @@
 require_relative "../config/env"
 require "drawing_visitors"
 require "engine"
-require "gosu_box_renderer"
-require "gosu_text_renderer"
 require "gui_window"
 require "layout_visitors"
 require "local_file_image_store"
