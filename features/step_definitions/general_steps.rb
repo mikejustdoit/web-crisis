@@ -162,7 +162,7 @@ def root_node_is_at_least_as_tall_as_all_of_its_children
   expect(parent_node.bottom).to be >= furthest_bottom
 end
 
-Given(/^the HTML input:?$/) do |html|
+Given("a web page:") do |html|
   @address = RandomUri.new.to_s
 
   stub_request(:get, @address).to_return(body: html)

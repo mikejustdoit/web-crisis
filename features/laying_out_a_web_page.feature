@@ -1,7 +1,7 @@
 Feature: laying out a web page
 
   Scenario: wrapping block-level nodes
-    Given the HTML input:
+    Given a web page:
       """
       <div>
         <h1>Firstly.</h1> <h2>Secondly.</h2> <h3>Lastly.</h3>
@@ -12,7 +12,7 @@ Feature: laying out a web page
     And their parent fits them all horizontically and vertically
 
   Scenario: not wrapping inline nodes
-    Given the HTML input:
+    Given a web page:
       """
       <div>
         <a>Your</a> <a>ad</a> <a>here</a>.
@@ -23,7 +23,7 @@ Feature: laying out a web page
     And their parent fits them all horizontically and vertically
 
   Scenario: wrapping mixed block-level and inline nodes
-    Given the HTML input:
+    Given a web page:
       """
       <div>
         <div>Firstly.</div> <h2>Secondly.</h2>

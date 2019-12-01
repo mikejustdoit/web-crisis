@@ -1,7 +1,7 @@
 Feature: wrapping text
 
   Scenario: wrapping a long text node
-    Given the HTML input
+    Given a web page:
       """
       <p>briefly thrown into chaos</p>
       """

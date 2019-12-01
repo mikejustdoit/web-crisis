@@ -1,7 +1,7 @@
 Feature: rendering HTML
 
   Scenario: handling renderable element types
-    Given the HTML input:
+    Given a web page:
       """
       <html><body><body><html>
       """
@@ -9,7 +9,7 @@ Feature: rendering HTML
     Then the resulting tree should have 2 nodes
 
   Scenario: handling unrenderable element types
-    Given the HTML input:
+    Given a web page:
       """
       <html><head></head><body><body><html>
       """
