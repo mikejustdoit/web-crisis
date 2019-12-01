@@ -2,12 +2,8 @@
 
 require_relative "../config/env"
 require "drawing_visitors"
-require "engine"
 require "gui_window"
-require "layout_visitors"
-require "local_file_image_store"
-require "offline_html_fetcher"
-require "parser"
+require "offline_engine"
 
 =begin
   Usage:
@@ -30,12 +26,7 @@ end
 LOGGER = ->(message) { puts(message) }
 
 browser = GuiWindow.new(
-  engine: Engine.new(
-    fetcher: OfflineHtmlFetcher.new(html),
-    image_store_factory: LocalFileImageStore.method(:new),
-    layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new,
-  ),
+  engine: OFFLINE_ENGINE.call(html),
   drawing_visitors: DRAWING_VISITORS,
 )
 

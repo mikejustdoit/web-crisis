@@ -2,12 +2,8 @@
 
 require_relative "../config/env"
 require "drawing_visitors"
-require "engine"
-require "fetcher"
 require "gui_window"
-require "image_store"
-require "layout_visitors"
-require "parser"
+require "online_engine"
 
 uri = ARGV[0]
 
@@ -19,12 +15,7 @@ end
 LOGGER = ->(message) { puts(message) }
 
 browser = GuiWindow.new(
-  engine: Engine.new(
-    fetcher: Fetcher.new,
-    image_store_factory: -> (**) { ImageStore.new(fetcher: Fetcher.new) },
-    layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new,
-  ),
+  engine: ONLINE_ENGINE.call,
   drawing_visitors: DRAWING_VISITORS,
 )
 

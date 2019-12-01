@@ -1,13 +1,9 @@
 require "node_counter"
-require "engine"
-require "fetcher"
+require "online_engine"
 require "gosu_adapter_stubs"
 require "gosu_image_dimensions_calculator"
-require "image_store"
 require "inspector"
-require "layout_visitors"
 require "node_lister"
-require "parser"
 require "random_uri"
 
 def tree_size(tree)
@@ -19,12 +15,7 @@ def node_counter
 end
 
 def engine
-  @engine ||= Engine.new(
-    fetcher: Fetcher.new,
-    image_store_factory: -> (**) { ImageStore.new(fetcher: Fetcher.new) },
-    layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new,
-  )
+  @engine ||= ONLINE_ENGINE.call
 end
 
 def visit_address(new_address)
