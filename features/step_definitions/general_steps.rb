@@ -10,6 +10,7 @@ require "local_file_image_store"
 require "node_lister"
 require "offline_html_fetcher"
 require "parser"
+require "random_uri"
 
 def tree_size(tree)
   node_counter.call(tree)
@@ -162,7 +163,9 @@ def root_node_is_at_least_as_tall_as_all_of_its_children
 end
 
 Given(/^the HTML input:?$/) do |html|
-  @html_input = html
+  @address = RandomUri.new.to_s
+
+  stub_request(:get, @address).to_return(body: html)
 end
 
 Then(/^the resulting tree should have (\d+) nodes$/) do |n|
@@ -183,11 +186,11 @@ When(/^I request an address$/) do
 end
 
 When(/^I render it in the browser$/) do
-  render_in_browser(@html_input)
+  visit_address(@address)
 end
 
 When("the browser renders it") do
-  render_in_browser(@html_input)
+  visit_address(@address)
 end
 
 Then(/^the browser should visit the address$/) do
