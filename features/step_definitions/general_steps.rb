@@ -6,9 +6,7 @@ require "gosu_image_dimensions_calculator"
 require "image_store"
 require "inspector"
 require "layout_visitors"
-require "local_file_image_store"
 require "node_lister"
-require "offline_html_fetcher"
 require "parser"
 require "random_uri"
 
@@ -72,28 +70,6 @@ end
 
 def page
   Inspector.new(@render_tree)
-end
-
-def offline_html_engine(html_input)
-  Engine.new(
-    fetcher: OfflineHtmlFetcher.new(html_input),
-    image_store_factory: LocalFileImageStore.method(:new),
-    layout_pipeline: LAYOUT_VISITORS,
-    parser: Parser.new,
-  )
-end
-
-def render_in_browser(html_input)
-  @render_tree = offline_html_engine(html_input)
-    .request(
-      "https://dummy.address",
-      viewport_width: viewport_width,
-      viewport_height: viewport_height,
-      text_width_calculator: gosu_text_width_calculator_stub(
-        returns: universal_width_for_any_word_or_space,
-      ),
-      image_dimensions_calculator: GosuImageDimensionsCalculator.new,
-    )
 end
 
 def universal_width_for_any_word_or_space
