@@ -33,7 +33,9 @@ def visit_address(new_address)
     new_address,
     viewport_width: viewport_width,
     viewport_height: viewport_height,
-    text_width_calculator: gosu_text_width_calculator_stub(returns: 50),
+    text_width_calculator: gosu_text_width_calculator_stub(
+      returns: universal_width_for_any_word_or_space,
+    ),
     image_dimensions_calculator: GosuImageDimensionsCalculator.new,
   )
 end
