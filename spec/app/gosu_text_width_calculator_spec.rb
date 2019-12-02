@@ -23,8 +23,8 @@ RSpec.describe GosuTextWidthCalculator do
         )
       end
 
-      it "propagates Gosu::Font#text_width's calculation" do
-        expect(@calculation).to eq(canned_text_width)
+      it "propagates Gosu::Font#text_width and its own hard-coded line height" do
+        expect(@calculation).to eq([canned_text_width, 18])
       end
     end
   end

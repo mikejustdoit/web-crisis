@@ -36,7 +36,6 @@ class NodeFactory
     when "text"
       parsed_element.content.strip.split("\n").map { |content|
         BuildText.new.call(
-          box: Box.new(height: text_node_height),
           content: content,
         )
       }
@@ -75,9 +74,5 @@ class NodeFactory
 
   def renderable_types
     ELEMENT_TYPES + OTHER_NODE_TYPES
-  end
-
-  def text_node_height
-    18
   end
 end

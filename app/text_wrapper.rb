@@ -55,12 +55,14 @@ class TextWrapper
   end
 
   def node_from(word)
+    width, height = text_width_calculator.call(word)
+
     TextRow.new(
       box: Box.new(
         x: 0,
         y: 0,
-        width: text_width_calculator.call(word),
-        height: text_node.height,
+        width: width,
+        height: height,
       ),
       content: word,
     )

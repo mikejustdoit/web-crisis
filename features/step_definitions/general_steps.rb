@@ -24,7 +24,7 @@ def visit_address(new_address)
     viewport_width: viewport_width,
     viewport_height: viewport_height,
     text_width_calculator: gosu_text_width_calculator_stub(
-      returns: universal_width_for_any_word_or_space,
+      returns: [universal_width_for_any_word_or_space, universal_line_height],
     ),
     image_dimensions_calculator: GosuImageDimensionsCalculator.new,
   )
@@ -65,6 +65,10 @@ end
 
 def universal_width_for_any_word_or_space
   @universal_width_for_any_word_or_space || 50
+end
+
+def universal_line_height
+  18
 end
 
 def elements_are_positioned_left_to_right

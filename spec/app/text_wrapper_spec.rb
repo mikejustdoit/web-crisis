@@ -9,7 +9,7 @@ RSpec.describe TextWrapper do
   subject(:text_wrapper) {
     TextWrapper.new(
       input_text,
-      text_width_calculator: gosu_text_width_calculator_stub(returns: 20),
+      text_width_calculator: gosu_text_width_calculator_stub(returns: [20, 18]),
       maximum_bounds: maximum_bounds,
     )
   }
