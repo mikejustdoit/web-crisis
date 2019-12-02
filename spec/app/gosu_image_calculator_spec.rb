@@ -1,7 +1,7 @@
-require "gosu_image_dimensions_calculator"
+require "gosu_image_calculator"
 
-RSpec.describe GosuImageDimensionsCalculator do
-  subject(:calculator) { GosuImageDimensionsCalculator.new }
+RSpec.describe GosuImageCalculator do
+  subject(:calculator) { GosuImageCalculator.new }
 
   before do
     allow(Gosu::Image).to receive(:new).and_call_original
@@ -35,7 +35,7 @@ RSpec.describe GosuImageDimensionsCalculator do
 
     it "raises its own error" do
       expect { calculator.call(filename) }.to raise_error(
-        GosuImageDimensionsCalculator::Error
+        GosuImageCalculator::Error
       )
     end
 

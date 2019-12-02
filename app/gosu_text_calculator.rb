@@ -1,6 +1,6 @@
 require "gosu"
 
-class GosuTextWidthCalculator
+class GosuTextCalculator
   def call(text_line)
     return font.text_width(text_line), line_height
   end

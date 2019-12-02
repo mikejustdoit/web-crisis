@@ -1,7 +1,7 @@
 require "node_counter"
 require "online_engine"
 require "gosu_adapter_stubs"
-require "gosu_image_dimensions_calculator"
+require "gosu_image_calculator"
 require "inspector"
 require "node_lister"
 require "random_uri"
@@ -23,10 +23,10 @@ def visit_address(new_address)
     new_address,
     viewport_width: viewport_width,
     viewport_height: viewport_height,
-    text_width_calculator: gosu_text_width_calculator_stub(
+    text_calculator: gosu_text_calculator_stub(
       returns: [universal_width_for_any_word_or_space, universal_line_height],
     ),
-    image_dimensions_calculator: GosuImageDimensionsCalculator.new,
+    image_calculator: GosuImageCalculator.new,
   )
 end
 

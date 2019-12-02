@@ -1,13 +1,13 @@
 class ImageFetcher
-  def initialize(image_dimensions_calculator:, image_store:, **)
-    @image_dimensions_calculator = image_dimensions_calculator
+  def initialize(image_calculator:, image_store:, **)
+    @image_calculator = image_calculator
     @image_store = image_store
   end
 
   def call(node)
     if node.respond_to?(:src)
       name = image_store[node.src]
-      width, height = image_dimensions_calculator.call(name)
+      width, height = image_calculator.call(name)
 
       node.clone_with(
         width: width,
@@ -23,5 +23,5 @@ class ImageFetcher
 
   private
 
-  attr_reader :image_dimensions_calculator, :image_store
+  attr_reader :image_calculator, :image_store
 end

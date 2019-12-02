@@ -10,7 +10,7 @@ require "support/gosu_adapter_stubs"
 RSpec.describe Arranger do
   subject(:visitor) {
     Arranger.new(
-      text_width_calculator: gosu_text_width_calculator_stub(returns: [50, 18]),
+      text_calculator: gosu_text_calculator_stub(returns: [50, 18]),
     )
   }
   let(:viewport) { Box.new(x: 0, y: 0, width: 640, height: 480) }

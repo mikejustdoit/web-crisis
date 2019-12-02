@@ -6,13 +6,13 @@ class Engine
     @parser = parser
   end
 
-  def request(uri, viewport_width:, viewport_height:, text_width_calculator:, image_dimensions_calculator:)
+  def request(uri, viewport_width:, viewport_height:, text_calculator:, image_calculator:)
     layout_pipeline.visit(
       parse(uri),
       viewport_width: viewport_width,
       viewport_height: viewport_height,
-      text_width_calculator: text_width_calculator,
-      image_dimensions_calculator: image_dimensions_calculator,
+      text_calculator: text_calculator,
+      image_calculator: image_calculator,
       image_store: image_store_factory.call(origin: uri),
     )
   end

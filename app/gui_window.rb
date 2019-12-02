@@ -1,10 +1,10 @@
 require "box"
 require "gosu"
 require "gosu_box_renderer"
-require "gosu_image_dimensions_calculator"
+require "gosu_image_calculator"
 require "gosu_image_renderer"
 require "gosu_text_renderer"
-require "gosu_text_width_calculator"
+require "gosu_text_calculator"
 
 class GuiWindow < Gosu::Window
   def initialize(engine:, drawing_visitors:)
@@ -25,8 +25,8 @@ class GuiWindow < Gosu::Window
         address,
         viewport_width: viewport.width,
         viewport_height: viewport.height,
-        text_width_calculator: GosuTextWidthCalculator.new,
-        image_dimensions_calculator: GosuImageDimensionsCalculator.new,
+        text_calculator: GosuTextCalculator.new,
+        image_calculator: GosuImageCalculator.new,
       ),
       box_renderer: GosuBoxRenderer.new(viewport),
       image_renderer: GosuImageRenderer.new(viewport),

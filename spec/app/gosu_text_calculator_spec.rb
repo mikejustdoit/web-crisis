@@ -1,7 +1,7 @@
-require "gosu_text_width_calculator"
+require "gosu_text_calculator"
 
-RSpec.describe GosuTextWidthCalculator do
-  subject(:gosu_text_width_calculator) { GosuTextWidthCalculator.new }
+RSpec.describe GosuTextCalculator do
+  subject(:gosu_text_calculator) { GosuTextCalculator.new }
   let(:gosu_font) { double(:gosu_font, :text_width => canned_text_width) }
   let(:canned_text_width) { 220 }
 
@@ -14,7 +14,7 @@ RSpec.describe GosuTextWidthCalculator do
       let(:text) { "OHAI" }
 
       before do
-        @calculation = gosu_text_width_calculator.call(text)
+        @calculation = gosu_text_calculator.call(text)
       end
 
       it "creates a Gosu::Font and calculates the text's width with it" do

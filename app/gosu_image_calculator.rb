@@ -1,13 +1,13 @@
 require "gosu"
 
-class GosuImageDimensionsCalculator
+class GosuImageCalculator
   class Error < StandardError; end
 
   def call(filename)
     begin
       image = Gosu::Image.new(filename)
     rescue RuntimeError => e
-      raise GosuImageDimensionsCalculator::Error.new(
+      raise GosuImageCalculator::Error.new(
         "Caught '#{e}' while attempting to open #{filename}"
       )
     end

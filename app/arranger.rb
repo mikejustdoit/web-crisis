@@ -3,8 +3,8 @@ require "node_types"
 require "text_wrapper"
 
 class Arranger
-  def initialize(text_width_calculator:, **)
-    @text_width_calculator = text_width_calculator
+  def initialize(text_calculator:, **)
+    @text_calculator = text_calculator
   end
 
   def call(node)
@@ -21,7 +21,7 @@ class Arranger
 
   private
 
-  attr_reader :text_width_calculator
+  attr_reader :text_calculator
 
   def visit_element(positioned_node)
     ElementArranger.new(
@@ -33,7 +33,7 @@ class Arranger
   def visit_text(positioned_node)
     wrapped_text = TextWrapper.new(
       positioned_node,
-      text_width_calculator: text_width_calculator,
+      text_calculator: text_calculator,
       maximum_bounds: positioned_node.maximum_bounds,
     ).call
 

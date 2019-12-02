@@ -1,8 +1,8 @@
 require "gosu_box_renderer"
-require "gosu_image_dimensions_calculator"
+require "gosu_image_calculator"
 require "gosu_image_renderer"
 require "gosu_text_renderer"
-require "gosu_text_width_calculator"
+require "gosu_text_calculator"
 
 def gosu_box_renderer_stub
   GosuBoxRenderer.new(double(:viewport))
@@ -11,10 +11,10 @@ def gosu_box_renderer_stub
     }
 end
 
-def gosu_image_dimensions_calculator_stub(returns:)
-  GosuImageDimensionsCalculator.new
-    .tap { |idc|
-      allow(idc).to receive(:call).and_return(returns)
+def gosu_image_calculator_stub(returns:)
+  GosuImageCalculator.new
+    .tap { |ic|
+      allow(ic).to receive(:call).and_return(returns)
     }
 end
 
@@ -32,9 +32,9 @@ def gosu_text_renderer_stub
     }
 end
 
-def gosu_text_width_calculator_stub(returns:)
-  GosuTextWidthCalculator.new
-    .tap { |twc|
-      allow(twc).to receive(:call).and_return(returns)
+def gosu_text_calculator_stub(returns:)
+  GosuTextCalculator.new
+    .tap { |tc|
+      allow(tc).to receive(:call).and_return(returns)
     }
 end

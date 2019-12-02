@@ -8,13 +8,13 @@ require "support/shared_examples/visitor"
 RSpec.describe ImageFetcher do
   subject(:visitor) {
     ImageFetcher.new(
-      image_dimensions_calculator: image_dimensions_calculator,
+      image_calculator: image_calculator,
       image_store: image_store,
     )
   }
 
-  let(:image_dimensions_calculator) {
-    gosu_image_dimensions_calculator_stub(returns: [image_width, image_height])
+  let(:image_calculator) {
+    gosu_image_calculator_stub(returns: [image_width, image_height])
   }
   let(:image_width) { 20 }
   let(:image_height) { 50 }

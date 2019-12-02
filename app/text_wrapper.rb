@@ -2,9 +2,9 @@ require "box"
 require "text_row"
 
 class TextWrapper
-  def initialize(text_node, text_width_calculator:, maximum_bounds:)
+  def initialize(text_node, text_calculator:, maximum_bounds:)
     @text_node = text_node
-    @text_width_calculator = text_width_calculator
+    @text_calculator = text_calculator
     @maximum_bounds = maximum_bounds
   end
 
@@ -33,7 +33,7 @@ class TextWrapper
 
   private
 
-  attr_reader :text_node, :text_width_calculator, :maximum_bounds
+  attr_reader :text_node, :text_calculator, :maximum_bounds
 
   def words
     text_node.content.split(" ")
@@ -55,7 +55,7 @@ class TextWrapper
   end
 
   def node_from(word)
-    width, height = text_width_calculator.call(word)
+    width, height = text_calculator.call(word)
 
     TextRow.new(
       box: Box.new(
