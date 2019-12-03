@@ -6,7 +6,7 @@ RSpec.describe Engine do
     Engine.new(
       fetcher: fetcher,
       image_store_factory: image_store_factory,
-      layout_pipeline: layout_pipeline,
+      layout_visitors: layout_visitors,
       parser: parser,
     )
   }
@@ -18,7 +18,7 @@ RSpec.describe Engine do
       :call => double(:image_store, :[] => nil),
     )
   }
-  let(:layout_pipeline) { double(:layout_pipeline, :visit => a_tree) }
+  let(:layout_visitors) { double(:layout_visitors, :visit => a_tree) }
   let(:parser) { double(:parser, :call => nil) }
 
   let(:a_tree) { Element.new }
@@ -45,7 +45,7 @@ RSpec.describe Engine do
     end
 
     it "starts its visitors visiting" do
-      expect(layout_pipeline).to have_received(:visit)
+      expect(layout_visitors).to have_received(:visit)
     end
   end
 

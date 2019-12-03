@@ -1,13 +1,13 @@
 class Engine
-  def initialize(fetcher:, image_store_factory:, layout_pipeline:, parser:)
+  def initialize(fetcher:, image_store_factory:, layout_visitors:, parser:)
     @fetcher = fetcher
     @image_store_factory = image_store_factory
-    @layout_pipeline = layout_pipeline
+    @layout_visitors = layout_visitors
     @parser = parser
   end
 
   def request(uri, viewport_width:, viewport_height:, text_calculator:, image_calculator:)
-    layout_pipeline.visit(
+    layout_visitors.visit(
       parse(uri),
       viewport_width: viewport_width,
       viewport_height: viewport_height,
@@ -19,7 +19,7 @@ class Engine
 
   private
 
-  attr_reader :fetcher, :image_store_factory, :layout_pipeline, :parser
+  attr_reader :fetcher, :image_store_factory, :layout_visitors, :parser
 
   def parse(uri)
     parser.call(fetch(uri))

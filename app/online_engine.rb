@@ -8,7 +8,7 @@ ONLINE_ENGINE = -> {
   Engine.new(
     fetcher: Fetcher.new,
     image_store_factory: -> (**) { ImageStore.new(fetcher: Fetcher.new) },
-    layout_pipeline: LAYOUT_VISITORS,
+    layout_visitors: LAYOUT_VISITORS,
     parser: Parser.new,
   )
 }

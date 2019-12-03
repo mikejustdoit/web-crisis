@@ -8,7 +8,7 @@ OFFLINE_ENGINE = -> (html) {
   Engine.new(
     fetcher: OfflineHtmlFetcher.new(html),
     image_store_factory: LocalFileImageStore.method(:new),
-    layout_pipeline: LAYOUT_VISITORS,
+    layout_visitors: LAYOUT_VISITORS,
     parser: Parser.new,
   )
 }
