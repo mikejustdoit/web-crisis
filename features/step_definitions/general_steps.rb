@@ -1,10 +1,10 @@
-require "node_counter"
-require "online_engine"
-require "gosu_adapter_stubs"
-require "gosu_image_calculator"
+require "drawing_visitors"
 require "inspector"
+require "node_counter"
 require "node_lister"
+require "online_engine"
 require "random_uri"
+require "window_double"
 
 def tree_size(tree)
   node_counter.call(tree)
@@ -14,34 +14,23 @@ def node_counter
   NodeCounter.new
 end
 
-def engine
-  @engine ||= ONLINE_ENGINE.call
-end
-
-def visit_address(new_address)
-  @render_tree = engine.request(
-    new_address,
-    viewport_width: viewport_width,
-    viewport_height: viewport_height,
-    text_calculator: gosu_text_calculator_stub(
-      returns: [universal_width_for_any_word_or_space, universal_line_height],
-    ),
-    image_calculator: GosuImageCalculator.new,
+def browser
+  @browser ||= WindowDouble.new(
+    engine: ONLINE_ENGINE.call,
+    drawing_visitors: DRAWING_VISITORS,
   )
 end
 
-def viewport_width
-  @viewport_width || 640
-end
+def visit_address(new_address)
+  browser.address = new_address
 
-def viewport_height
-  480
+  @render_tree = browser.go
 end
 
 def page_displays_heading(text)
   node = page.find_nodes_with_text(text).first
 
-  expect(node.y).to be < viewport_height
+  expect(browser.in_view?(node)).to be true
 end
 
 def page_displays_image(image_address, width:, height:)
@@ -61,14 +50,6 @@ end
 
 def page
   Inspector.new(@render_tree)
-end
-
-def universal_width_for_any_word_or_space
-  @universal_width_for_any_word_or_space || 50
-end
-
-def universal_line_height
-  18
 end
 
 def elements_are_positioned_left_to_right
@@ -145,10 +126,7 @@ Then(/^the resulting tree should have (\d+) nodes$/) do |n|
 end
 
 Given("a viewport only wide enough for {int} words on each row") do |words_per_row|
-  words_and_spaces_per_row = (words_per_row * 2) - 1
-
-  @viewport_width = 100
-  @universal_width_for_any_word_or_space = @viewport_width / words_and_spaces_per_row
+  browser.resize_window(allow_words_per_row: words_per_row)
 end
 
 When(/^I request an address$/) do
@@ -172,8 +150,8 @@ Then(/^the browser should render the web page$/) do
   page_displays_heading("Welcome to LWN.net")
   page_displays_image(
     "https://static.lwn.net/images/logo/barepenguin-70.png",
-    width: 70,
-    height: 81,
+    width: 100,
+    height: 100,
   )
   page_displays_link("/op/AuthorGuide.lwn", "Write for us")
 end
