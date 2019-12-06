@@ -3,38 +3,63 @@ require "gosu_image_calculator"
 require "gosu_image_renderer"
 require "gosu_text_renderer"
 require "gosu_text_calculator"
+require "rspec/expectations"
+require "rspec/mocks"
+
+class StubRenderer
+  include ::RSpec::Mocks::ExampleMethods
+
+  def initialize(klass)
+    @klass = klass
+  end
+
+  def call
+    instance_double(klass, call: nil)
+  end
+
+  private
+
+  attr_reader :klass
+end
+
+class StubCalculator
+  include ::RSpec::Matchers
+  include ::RSpec::Mocks::ExampleMethods
+
+  def initialize(klass)
+    @klass = klass
+  end
+
+  def call(dimensions)
+    expect(dimensions).not_to be_nil
+    expect(dimensions.size).to eq(2)
+    expect(dimensions.first).to eq(Integer(dimensions.first))
+    expect(dimensions.last).to eq(Integer(dimensions.last))
+
+    instance_double(klass, call: dimensions)
+  end
+
+  private
+
+  attr_reader :klass
+end
 
 def gosu_box_renderer_stub
-  GosuBoxRenderer.new(double(:viewport))
-    .tap { |br|
-      allow(br).to receive(:call).and_return(nil)
-    }
+  StubRenderer.new(GosuBoxRenderer).call
 end
 
 def gosu_image_calculator_stub(returns:)
-  GosuImageCalculator.new
-    .tap { |ic|
-      allow(ic).to receive(:call).and_return(returns)
-    }
+  StubCalculator.new(GosuImageCalculator).call(returns)
 end
 
 def gosu_image_renderer_stub
-  GosuImageRenderer.new(double(:viewport))
-    .tap { |ir|
-      allow(ir).to receive(:call).and_return(nil)
-    }
+  StubRenderer.new(GosuImageRenderer).call
 end
 
 def gosu_text_renderer_stub
-  GosuTextRenderer.new(double(:viewport))
-    .tap { |tr|
-      allow(tr).to receive(:call).and_return(nil)
-    }
+  StubRenderer.new(GosuTextRenderer).call
 end
 
 def gosu_text_calculator_stub(returns:)
-  GosuTextCalculator.new
-    .tap { |tc|
-      allow(tc).to receive(:call).and_return(returns)
-    }
+  StubCalculator.new(GosuTextCalculator).call(returns)
 end
