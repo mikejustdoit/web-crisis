@@ -42,6 +42,8 @@ class GuiWindow < Gosu::Window
 
   def go
     @needs_redraw = true
+
+    show
   end
 
   private

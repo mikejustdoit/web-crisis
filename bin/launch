@@ -21,5 +21,3 @@ browser = GuiWindow.new(
 
 browser.address = uri
 browser.go
-
-browser.show

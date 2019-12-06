@@ -32,5 +32,3 @@ browser = GuiWindow.new(
 
 browser.address = uri || "offline"
 browser.go
-
-browser.show
