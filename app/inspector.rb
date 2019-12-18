@@ -13,9 +13,9 @@ class Inspector
   def find_single_node_with_text(text)
     matches = find_nodes_with_text(text)
 
-    raise TooManyMatchesFound.new if matches.size > 1
+    raise TooManyMatchesFound.new(text) if matches.size > 1
 
-    raise NotEnoughMatchesFound.new if matches.size < 1
+    raise NotEnoughMatchesFound.new(text) if matches.size < 1
 
     matches.first
   end
@@ -23,9 +23,9 @@ class Inspector
   def find_single_element_with_text(text)
     matches = deepest_text_matching_elements(render_tree, text)
 
-    raise TooManyMatchesFound.new if matches.size > 1
+    raise TooManyMatchesFound.new(text) if matches.size > 1
 
-    raise NotEnoughMatchesFound.new if matches.size < 1
+    raise NotEnoughMatchesFound.new(text) if matches.size < 1
 
     matches.first
   end
@@ -33,9 +33,9 @@ class Inspector
   def find_single_image(src)
     matches = all_src_matches(render_tree, src)
 
-    raise TooManyMatchesFound.new if matches.size > 1
+    raise TooManyMatchesFound.new(src) if matches.size > 1
 
-    raise NotEnoughMatchesFound.new if matches.size < 1
+    raise NotEnoughMatchesFound.new(src) if matches.size < 1
 
     matches.first
   end
