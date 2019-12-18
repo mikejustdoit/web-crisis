@@ -1,9 +1,17 @@
+require "box"
+
 class Inspector
   class TooManyMatchesFound < TypeError; end
   class NotEnoughMatchesFound < TypeError; end
 
   def initialize(render_tree)
     @render_tree = render_tree
+  end
+
+  def bounding_box_for_first(text)
+    match = find_single_node_with_text(text)
+
+    Box.new(x: match.x, y: match.y, width: match.width, height: match.height)
   end
 
   def find_nodes_with_text(text)

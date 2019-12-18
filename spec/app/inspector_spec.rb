@@ -7,6 +7,66 @@ require "text"
 RSpec.describe Inspector do
   subject(:inspector) { Inspector.new(root_node) }
 
+  describe "#bounding_box_for_first" do
+    let(:root_node) {
+      Element.new(
+        box: Box.new(x: 80, y: 250, width: 140, height: 15),
+        children: [
+          BuildText.new.call(
+            box: Box.new(x: 80, y: 250, width: 20, height: 15),
+            content: "very ",
+          ),
+          BuildText.new.call(
+            box: Box.new(x: 100, y: 250, width: 40, height: 15),
+            content: "not very ",
+          ),
+          Element.new(
+            children: [
+              BuildText.new.call(
+                box: Box.new(x: 140, y: 250, width: 80, height: 15),
+                content: "interesting stuff",
+              ),
+            ],
+          ),
+        ],
+      )
+    }
+
+    context "when the tree contains the search text" do
+      context "when it's within a single node" do
+        it "returns the bounding box of that node" do
+          expect(
+            inspector.bounding_box_for_first("interesting stuff")
+          ).to eq(Box.new(x: 140, y: 250, width: 80, height: 15))
+        end
+      end
+
+      context "when it's spread across multiple nodes" do
+        it "returns a bounding box that clumsily surrounds all of the nodes" do
+          expect(
+            inspector.bounding_box_for_first("not very interesting stuff")
+          ).to eq(Box.new(x: 80, y: 250, width: 140, height: 15))
+        end
+      end
+    end
+
+    context "when the tree does not contain the search text" do
+      it "complains" do
+        expect {
+          inspector.bounding_box_for_first("non-existent text")
+        }.to raise_error(Inspector::NotEnoughMatchesFound)
+      end
+    end
+
+    context "when the tree contains the search text more than once" do
+      it "complains" do
+        expect {
+          inspector.bounding_box_for_first("very")
+        }.to raise_error(Inspector::TooManyMatchesFound)
+      end
+    end
+  end
+
   describe "#find_nodes_with_text" do
     context "when tree has a single node" do
       context "and the tree contains the search text" do
