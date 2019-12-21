@@ -8,8 +8,10 @@ Feature: laying out a web page
       </div>
       """
     When I render it in the browser
-    Then each element appears below its predecessor
-    And their parent fits them all horizontically and vertically
+    Then the text appears over three rows
+      | Firstly.     |
+      | Secondly.    |
+      | Lastly.      |
 
   Scenario: not wrapping inline nodes
     Given a web page:
@@ -19,8 +21,7 @@ Feature: laying out a web page
       </div>
       """
     When I render it in the browser
-    Then each element appears to the right of its predecessor
-    And their parent fits them all horizontically and vertically
+    Then "Youradhere." appears on a single row
 
   Scenario: wrapping mixed block-level and inline nodes
     Given a web page:
@@ -32,5 +33,8 @@ Feature: laying out a web page
       </div>
       """
     When I render it in the browser
-    Then the elements appear over four rows
-    And their parent fits them all horizontically and vertically
+    Then the text appears over four rows
+      | Firstly.   |
+      | Secondly.  |
+      | Youradhere |
+      | Lastly.    |

@@ -52,68 +52,6 @@ def page
   Inspector.new(@render_tree)
 end
 
-def elements_are_positioned_left_to_right
-  first_node = page.find_nodes_with_text("Your").first
-  second_node = page.find_nodes_with_text("ad").first
-  third_node = page.find_nodes_with_text("here").first
-
-  expect(second_node.x).to be >= first_node.right
-  expect(third_node.x).to be >= second_node.right
-end
-
-def elements_are_positioned_on_their_own_rows
-  first_node = page.find_nodes_with_text("Firstly.").first
-  second_node = page.find_nodes_with_text("Secondly.").first
-  third_node = page.find_nodes_with_text("Lastly.").first
-
-  expect(second_node.y).to be >= first_node.bottom
-  expect(third_node.y).to be >= second_node.bottom
-end
-
-def elements_are_positioned_over_four_rows
-  first_node = page.find_nodes_with_text("Firstly.").first
-
-  second_node = page.find_nodes_with_text("Secondly.").first
-
-  third_node = page.find_nodes_with_text("Your").first
-  fourth_node = page.find_nodes_with_text("ad").first
-  fifth_node = page.find_nodes_with_text("here").first
-
-  last_node = page.find_nodes_with_text("Lastly.").first
-
-  expect(second_node.y).to be >= first_node.bottom
-
-  expect(third_node.y).to be >= second_node.bottom
-  expect(fourth_node.y).to eq(third_node.y)
-  expect(fifth_node.y).to eq(third_node.y)
-
-  expect(last_node.y).to be >= fifth_node.bottom
-end
-
-def root_node_is_at_least_as_wide_as_all_of_its_children
-  parent_node = @render_tree
-
-  all_descendants = NodeLister.new.call(parent_node) - [parent_node]
-
-  furthest_left = all_descendants.map(&:x).min
-  furthest_right = all_descendants.map(&:right).max
-
-  expect(parent_node.x).to be <= furthest_left
-  expect(parent_node.right).to be >= furthest_right
-end
-
-def root_node_is_at_least_as_tall_as_all_of_its_children
-  parent_node = @render_tree
-
-  all_descendants = NodeLister.new.call(parent_node) - [parent_node]
-
-  furthest_top = all_descendants.map(&:y).min
-  furthest_bottom = all_descendants.map(&:bottom).max
-
-  expect(parent_node.y).to be <= furthest_top
-  expect(parent_node.bottom).to be >= furthest_bottom
-end
-
 Given("a web page:") do |html|
   @address = RandomUri.new.to_s
 
@@ -156,21 +94,28 @@ Then(/^the browser should render the web page$/) do
   page_displays_link("/op/AuthorGuide.lwn", "Write for us")
 end
 
-Then(/^each element appears to the right of its predecessor$/) do
-  elements_are_positioned_left_to_right
+Then("{string} appears on a single row") do |full_text|
+  bounding_boxes = page.bounding_boxes_for_first(full_text)
+
+  expect(bounding_boxes.map(&:y).uniq.size).to eq(1)
+
+  bounding_boxes.sort_by(&:x).each_cons(2) { |a, b|
+    expect(b.x).to be >= a.right
+  }
 end
 
-Then(/^each element appears below its predecessor$/) do
-  elements_are_positioned_on_their_own_rows
-end
+Then("the text appears over {word} rows") do |_, table|
+  texts = table.raw.map(&:first)
 
-Then(/^the elements appear over four rows$/) do
-  elements_are_positioned_over_four_rows
-end
+  texts.each do |search_text|
+    expect(@render_tree.content).to include(search_text)
+  end
 
-Then("their parent fits them all horizontically and vertically") do
-  root_node_is_at_least_as_wide_as_all_of_its_children
-  root_node_is_at_least_as_tall_as_all_of_its_children
+  expect(
+    texts.flat_map { |search_text|
+      page.bounding_boxes_for_first(search_text)
+    }.map(&:y).uniq.size
+  ).to eq(texts.size)
 end
 
 Then("the text is wrapped into {int} rows of") do |number_of_rows, rows_text_with_newlines|
