@@ -48,17 +48,22 @@ RSpec.describe TextDrawingVisitor do
 
   describe "delegating drawing task to text renderer" do
     describe "drawing text nodes" do
-      let(:node) { BuildText.new.call(box: box, content: text) }
+      let(:node) {
+        BuildText.new.call(
+          box: Box.new(x: 0, y: 1, width: 2, height: 3),
+          content: text,
+        )
+      }
       let(:text) { "Please, make yourself at home." }
-      let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
+      let(:internal_text_row) { node.rows.first }
 
       it "delegates the actual drawing to the text renderer" do
         visitor.call(node)
 
         expect(text_renderer).to have_received(:call).with(
           text,
-          x: box.x,
-          y: box.y,
+          x: internal_text_row.x,
+          y: internal_text_row.y,
           colour: :black,
         )
       end
@@ -110,30 +115,30 @@ RSpec.describe TextDrawingVisitor do
     }
     let(:first_row) {
       TextRow.new(
-        box: Box.new(x: 0, y: 0, width: 200, height: 18),
+        box: Box.new(x: 75, y: 1234, width: 200, height: 18),
         content: "My Life in Text Wrapping",
       )
     }
     let(:second_row) {
       TextRow.new(
-        box: Box.new(x: 0, y: 18, width: 150, height: 18),
+        box: Box.new(x: 75, y: 1252, width: 150, height: 18),
         content: "A true crime special",
       )
     }
 
-    it "draws each row separately, with absolute position" do
+    it "draws each row separately at its specified position" do
       visitor.call(node)
 
       expect(text_renderer).to have_received(:call).with(
         first_row.content,
-        x: node.x + first_row.x,
-        y: node.y + first_row.y,
+        x: first_row.x,
+        y: first_row.y,
         colour: :black,
       )
       expect(text_renderer).to have_received(:call).with(
         second_row.content,
-        x: node.x + second_row.x,
-        y: node.y + second_row.y,
+        x: second_row.x,
+        y: second_row.y,
         colour: :black,
       )
     end

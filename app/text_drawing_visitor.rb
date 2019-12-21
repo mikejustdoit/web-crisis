@@ -27,8 +27,8 @@ class TextDrawingVisitor
     node.rows.each { |row|
       text_renderer.call(
         row.content,
-        x: node.x + row.x,
-        y: node.y + row.y,
+        x: row.x,
+        y: row.y,
         colour: node.colour,
       )
     }
