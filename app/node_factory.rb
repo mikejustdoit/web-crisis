@@ -9,8 +9,8 @@ require "text"
 
 class NodeFactory
   BLOCK_LEVEL_ELEMENT_TYPES = %w{
-    body blockquote code del h1 h2 h3 h4
-    h5 h6 html li ol p pre table td tr ul
+    article body blockquote code del footer h1 h2 h3 h4
+    h5 h6 header html li nav ol p pre table td tr ul
   }
 
   INLINE_ELEMENT_TYPES = %w{
