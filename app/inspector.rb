@@ -1,4 +1,5 @@
 require "box"
+require "text_search"
 
 class Inspector
   class TooManyMatchesFound < TypeError; end
@@ -8,10 +9,20 @@ class Inspector
     @render_tree = render_tree
   end
 
-  def bounding_box_for_first(text)
-    match = find_single_node_with_text(text)
+  def bounding_boxes_for_first(text)
+    boxes = TextSearch.new(render_tree).find_owners_of(text)
+      .map { |text_row|
+        Box.new(
+          x: text_row.x,
+          y: text_row.y,
+          width: text_row.width,
+          height: text_row.height,
+        )
+      }
 
-    Box.new(x: match.x, y: match.y, width: match.width, height: match.height)
+    raise NotEnoughMatchesFound.new(text) if boxes.empty?
+
+    boxes
   end
 
   def find_nodes_with_text(text)
