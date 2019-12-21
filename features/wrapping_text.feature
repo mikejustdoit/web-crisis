@@ -5,14 +5,9 @@ Feature: wrapping text
       """
       <p>briefly thrown into chaos</p>
       """
-    And a viewport only wide enough for 2 words on each row
-    When the browser renders it
-    Then the whole page reads
-      """
-      briefly thrown into chaos
-      """
-    And the text is wrapped into 2 rows of
-      """
-      briefly thrown
-      into chaos
-      """
+    When I resize the window so that only 2 words fit across the viewport
+    And I render the page in the browser
+    Then the text appears over two rows
+      | briefly thrown |
+      | into chaos     |
+    And the whole thing still reads exactly "briefly thrown into chaos"

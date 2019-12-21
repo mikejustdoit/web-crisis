@@ -63,7 +63,7 @@ Then(/^the resulting tree should have (\d+) nodes$/) do |n|
   expect(tree_size(@render_tree)).to eq(n)
 end
 
-Given("a viewport only wide enough for {int} words on each row") do |words_per_row|
+When("I resize the window so that only {int} words fit across the viewport") do |words_per_row|
   browser.resize_window(allow_words_per_row: words_per_row)
 end
 
@@ -76,7 +76,7 @@ When(/^I render it in the browser$/) do
   visit_address(@address)
 end
 
-When("the browser renders it") do
+When("I render the page in the browser") do
   visit_address(@address)
 end
 
@@ -118,18 +118,6 @@ Then("the text appears over {word} rows") do |_, table|
   ).to eq(texts.size)
 end
 
-Then("the text is wrapped into {int} rows of") do |number_of_rows, rows_text_with_newlines|
-  rows_texts = rows_text_with_newlines.split("\n")
-
-  text_node = page.find_single_node_with_text(rows_texts.first)
-
-  expect(text_node.rows.size).to eq(number_of_rows)
-
-  text_node.rows.zip(rows_texts).each do |row, expected_text|
-    expect(row.content).to eq(expected_text)
-  end
-end
-
-Then("the whole page reads") do |whole_page_text|
+Then("the whole thing still reads exactly {string}") do |whole_page_text|
   expect(@render_tree.content).to eq(whole_page_text)
 end
