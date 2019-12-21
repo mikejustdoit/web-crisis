@@ -2,7 +2,6 @@ require "absolute_position_adder_upper"
 require "box"
 require "build_text"
 require "element"
-require "point"
 require "support/shared_examples/visitor"
 require "text"
 
@@ -14,11 +13,7 @@ RSpec.describe AbsolutePositionAdderUpper do
   let(:root) { Element.new(children: [child], box: offset_from_edges) }
   let(:child) { Element.new(children: [grandchild], box: offset_from_edges) }
   let(:grandchild) {
-    Text.new(
-      position: Point.new(x: offset_from_edges.x, y: offset_from_edges.y),
-      rows: [texts_internal_row],
-      colour: :black,
-    )
+    Text.new(box: offset_from_edges, rows: [texts_internal_row], colour: :black)
   }
   let(:texts_internal_row) { double(:texts_internal_row) }
 

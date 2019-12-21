@@ -35,6 +35,24 @@ RSpec.describe TextWrapper do
       it "produces a single row of text" do
         expect(wrapped_text.rows.size).to eq(1)
       end
+
+      it "updates the text node's dimensions" do
+        expect(
+          Box.new(
+            x: wrapped_text.x,
+            y: wrapped_text.y,
+            width: wrapped_text.width,
+            height: wrapped_text.height,
+          )
+        ).not_to eq(
+          Box.new(
+            x: input_text.x,
+            y: input_text.y,
+            width: input_text.width,
+            height: input_text.height,
+          )
+        )
+      end
     end
   end
 
@@ -58,6 +76,24 @@ RSpec.describe TextWrapper do
 
       it "produces multiple rows of text" do
         expect(wrapped_text.rows.size).to be > 1
+      end
+
+      it "updates the text node's dimensions" do
+        expect(
+          Box.new(
+            x: wrapped_text.x,
+            y: wrapped_text.y,
+            width: wrapped_text.width,
+            height: wrapped_text.height,
+          )
+        ).not_to eq(
+          Box.new(
+            x: input_text.x,
+            y: input_text.y,
+            width: input_text.width,
+            height: input_text.height,
+          )
+        )
       end
     end
   end

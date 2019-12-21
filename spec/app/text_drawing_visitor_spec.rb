@@ -103,7 +103,7 @@ RSpec.describe TextDrawingVisitor do
   describe "drawing text that wraps over multiple rows" do
     let(:node) {
       Text.new(
-        position: Point.new(x: 75, y: 1234),
+        box: Box.new(x: 75, y: 1234, width: 200, height: 36),
         rows: [first_row, second_row],
         colour: :black,
       )

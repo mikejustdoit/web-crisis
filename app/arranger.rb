@@ -31,29 +31,10 @@ class Arranger
   end
 
   def visit_text(positioned_node)
-    wrapped_text = TextWrapper.new(
+    TextWrapper.new(
       positioned_node,
       text_calculator: text_calculator,
       maximum_bounds: positioned_node.maximum_bounds,
     ).call
-
-    x_offset, y_offset = minimum_children_position_offset(wrapped_text.rows)
-
-    repositioned_rows = wrapped_text.rows.map { |row|
-      row.clone_with(
-        x: row.x - x_offset,
-        y: row.y - y_offset,
-      )
-    }
-
-    wrapped_text.clone_with(
-      rows: repositioned_rows,
-      x: wrapped_text.x + x_offset,
-      y: wrapped_text.y + y_offset,
-    )
-  end
-
-  def minimum_children_position_offset(children)
-    return children.map(&:x).min || 0, children.map(&:y).min || 0
   end
 end

@@ -6,8 +6,8 @@ require "text"
 require "text_row"
 
 RSpec.describe Text do
-  subject(:node) { Text.new(position: position, rows: rows, colour: :black) }
-  let(:position) { Point.new(x: 0, y: 1) }
+  subject(:node) { Text.new(box: box, rows: rows, colour: :black) }
+  let(:box) { Box.new(x: 0, y: 1, width: 2, height: 6) }
   let(:rows) { [first_row, second_row] }
   let(:first_row) {
     TextRow.new(
@@ -40,23 +40,11 @@ RSpec.describe Text do
       allow(second_row).to receive(:bottom).and_call_original
     end
 
-    it "exposes delegated getters for position's attributes" do
-      expect(node.x).to eq(position.x)
-      expect(node.y).to eq(position.y)
-    end
-
-    it "derives its width from its internal rows" do
-      node.width
-
-      expect(first_row).to have_received(:right)
-      expect(second_row).to have_received(:right)
-    end
-
-    it "derives its height from its internal rows" do
-      node.height
-
-      expect(first_row).to have_received(:bottom)
-      expect(second_row).to have_received(:bottom)
+    it "exposes delegated getters for box's attributes" do
+      expect(node.x).to eq(box.x)
+      expect(node.y).to eq(box.y)
+      expect(node.width).to eq(box.width)
+      expect(node.height).to eq(box.height)
     end
 
     it "exposes position and dimension aggregate methods" do
@@ -70,8 +58,8 @@ RSpec.describe Text do
       let(:clone_of_node) { node.clone_with(new_attributes) }
 
       it "doesn't change the old node's attributes" do
-        expect(node.x).to eq(position.x)
-        expect(node.y).to eq(position.y)
+        expect(node.x).to eq(box.x)
+        expect(node.y).to eq(box.y)
       end
 
       it "assigns the new node the specified attributes" do
@@ -97,7 +85,7 @@ RSpec.describe Text do
     describe "determining our starting position" do
       subject(:node) {
         Text.new(
-          position: Point.new(x: 100, y: 150),
+          box: Box.new(x: 100, y: 150, width: 10, height: 15),
           rows: double(:rows),
           colour: :black,
         )
@@ -119,14 +107,14 @@ RSpec.describe Text do
     end
 
     describe "communicating the next available position for subsequent nodes" do
-      subject(:node) { Text.new(position: position, rows: rows, colour: :black) }
-      let(:position) { Point.new(x: 10, y: 15) }
+      subject(:node) { Text.new(box: nodes_box, rows: rows, colour: :black) }
+      let(:nodes_box) { Box.new(x: 10, y: 15, width: 101, height: 152) }
       let(:rows) { [TextRow.new(box: final_rows_box, content: "Follow me.")] }
       let(:final_rows_box) { Box.new(x: 100, y: 150, width: 1, height: 2) }
 
       before do
-        allow(position).to receive(:x).and_call_original
-        allow(position).to receive(:y).and_call_original
+        allow(nodes_box).to receive(:x).and_call_original
+        allow(nodes_box).to receive(:y).and_call_original
         allow(final_rows_box).to receive(:right).and_call_original
         allow(final_rows_box).to receive(:y).and_call_original
       end
@@ -134,9 +122,9 @@ RSpec.describe Text do
       it "uses the position after its final internal row's box" do
         node.next_available_point
 
-        expect(position).to have_received(:x)
+        expect(nodes_box).to have_received(:x)
         expect(final_rows_box).to have_received(:right)
-        expect(position).to have_received(:y)
+        expect(nodes_box).to have_received(:y)
         expect(final_rows_box).to have_received(:y)
       end
 
