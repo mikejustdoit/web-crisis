@@ -6,6 +6,15 @@ class Box
     @height = height
   end
 
+  def self.from(source_object)
+    new(
+      x: source_object.x,
+      y: source_object.y,
+      width: source_object.width,
+      height: source_object.height,
+    )
+  end
+
   attr_reader :x, :y, :width, :height
 
   def right

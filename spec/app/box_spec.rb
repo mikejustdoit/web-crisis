@@ -1,6 +1,19 @@
 require "box"
+require "element"
 
 RSpec.describe Box do
+  describe "creating a box from another object's position and dimensions" do
+    it "copies the lot" do
+      source_object = Element.new(box: Box.new(x: 12, y: 34, width: 56, height: 78))
+      box = Box.from(source_object)
+
+      expect(box.x).to eq(source_object.x)
+      expect(box.y).to eq(source_object.y)
+      expect(box.width).to eq(source_object.width)
+      expect(box.height).to eq(source_object.height)
+    end
+  end
+
   describe "its position and dimensions" do
     subject(:box) { Box.new(x: x, y: y, width: width, height: height) }
     let(:x) { 0 }
