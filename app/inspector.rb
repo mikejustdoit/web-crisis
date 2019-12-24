@@ -29,16 +29,6 @@ class Inspector
     deepest_text_matches(render_tree, text)
   end
 
-  def find_single_node_with_text(text)
-    matches = find_nodes_with_text(text)
-
-    raise TooManyMatchesFound.new(text) if matches.size > 1
-
-    raise NotEnoughMatchesFound.new(text) if matches.size < 1
-
-    matches.first
-  end
-
   def find_single_element_with_text(text)
     matches = deepest_text_matching_elements(render_tree, text)
 
