@@ -7,7 +7,7 @@ class GosuTextRenderer
 
   def call(text, x:, y:, colour:)
     translate_viewport_to_gui(x, y) do |gui_x, gui_y|
-      font.draw(text, gui_x, gui_y, 0, 1.0, 1.0, gosu_colour(colour))
+      font.draw_text(text, gui_x, gui_y, 0, 1.0, 1.0, gosu_colour(colour))
     end
   end
 
