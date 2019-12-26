@@ -2,6 +2,7 @@ require "build_text"
 require "element"
 require "image"
 require "inspector"
+require "link"
 require "text_search"
 
 RSpec.describe Inspector do
@@ -189,6 +190,46 @@ RSpec.describe Inspector do
       it "complains" do
         expect {
           inspector.find_single_image("https://www.example.com/art.jpg")
+        }.to raise_error(Inspector::TooManyMatchesFound)
+      end
+    end
+  end
+
+  describe "finding a single <a> by `href`" do
+    context "when there is one on the page" do
+      let(:root_node) { Element.new(children: [link]) }
+      let(:link) { Link.new(Element.new, href: "https://www.example.com/news.html") }
+
+      it "returns it" do
+        expect(
+          inspector.find_single_link("https://www.example.com/news.html")
+        ).to eq(link)
+      end
+    end
+
+    context "when there are none" do
+      let(:root_node) { Element.new(children: []) }
+
+      it "complains" do
+        expect {
+          inspector.find_single_link("https://www.example.com/news.html")
+        }.to raise_error(Inspector::NotEnoughMatchesFound)
+      end
+    end
+
+    context "when there are multiple matches" do
+      let(:root_node) {
+        Element.new(
+          children: [
+            Link.new(Element.new, href: "https://www.example.com/news.html"),
+            Link.new(Element.new, href: "https://www.example.com/news.html"),
+          ]
+        )
+      }
+
+      it "complains" do
+        expect {
+          inspector.find_single_link("https://www.example.com/news.html")
         }.to raise_error(Inspector::TooManyMatchesFound)
       end
     end

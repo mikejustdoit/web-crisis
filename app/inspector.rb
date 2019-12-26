@@ -40,6 +40,16 @@ class Inspector
     matches.first
   end
 
+  def find_single_link(href)
+    matches = all_href_matches(render_tree, href)
+
+    raise TooManyMatchesFound.new(href) if matches.size > 1
+
+    raise NotEnoughMatchesFound.new(href) if matches.size < 1
+
+    matches.first
+  end
+
   private
 
   attr_reader :render_tree
@@ -84,5 +94,15 @@ class Inspector
     return [] unless parent_node.respond_to?(:children)
 
     parent_node.children.flat_map { |child| all_src_matches(child, src) }.compact
+  end
+
+  def all_href_matches(parent_node, href)
+    if parent_node.respond_to?(:href) && parent_node.href == href
+      return [parent_node]
+    end
+
+    return [] unless parent_node.respond_to?(:children)
+
+    parent_node.children.flat_map { |child| all_href_matches(child, href) }.compact
   end
 end
