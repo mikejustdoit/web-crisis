@@ -1,12 +1,12 @@
+require "box"
 require "build_text"
 require "element"
 require "inline_element"
 require "link"
-require "text_row"
 require "text_search"
 
 RSpec.describe TextSearch do
-  describe "looking up owners for a substring" do
+  describe "requesting bounding boxes for a substring" do
     subject(:search) { TextSearch.new(tree) }
 
     let(:tree) {
@@ -34,41 +34,41 @@ RSpec.describe TextSearch do
 
     context "when there's no match" do
       it "returns an empty array" do
-        expect(search.find_owners_of("non-existent text")).to eq([])
+        expect(search.bounding_boxes_for_first("non-existent text")).to eq([])
       end
     end
 
     context "when there's a match contained entirely in a single TextRow" do
       it "returns an array of that TextRow" do
-        owners = search.find_owners_of("October")
+        boxes = search.bounding_boxes_for_first("October")
 
-        expect(owners.size).to eq(1)
-        expect(owners.first).to be_a(TextRow)
+        expect(boxes.size).to eq(1)
+        expect(boxes.first).to be_a(Box)
       end
 
       it "doesn't get it wrong even if the match is right upto the TextRow's edge" do
-        owners = search.find_owners_of("World Wide Web mailing list")
+        boxes = search.bounding_boxes_for_first("World Wide Web mailing list")
 
-        expect(owners.size).to eq(1)
-        expect(owners.first).to be_a(TextRow)
+        expect(boxes.size).to eq(1)
+        expect(boxes.first).to be_a(Box)
       end
     end
 
     context "when there's a match that spans multiple TextRows" do
       it "returns an array of those TextRows" do
-        owners = search.find_owners_of("mailing list, which has")
+        boxes = search.bounding_boxes_for_first("mailing list, which has")
 
-        expect(owners.size).to eq(2)
-        expect(owners).to all(be_a(TextRow))
+        expect(boxes.size).to eq(2)
+        expect(boxes).to all(be_a(Box))
       end
     end
 
     context "when the search term appears multiple times" do
       it "only returns the first match until we decide to support more" do
-        owners = search.find_owners_of("th")
+        boxes = search.bounding_boxes_for_first("th")
 
-        expect(owners.size).to eq(1)
-        expect(owners.first).to be_a(TextRow)
+        expect(boxes.size).to eq(1)
+        expect(boxes.first).to be_a(Box)
       end
     end
   end

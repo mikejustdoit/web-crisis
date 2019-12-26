@@ -1,3 +1,5 @@
+require "box"
+
 class TextSearch
   def initialize(render_tree)
     @string = SearchableAnnotatedString.new
@@ -7,8 +9,8 @@ class TextSearch
     end
   end
 
-  def find_owners_of(text)
-    string.annotations_for_first_match(text)
+  def bounding_boxes_for_first(text)
+    string.annotations_for_first_match(text).map(&Box.method(:from))
   end
 
   private

@@ -1,4 +1,3 @@
-require "box"
 require "text_search"
 
 class Inspector
@@ -10,15 +9,7 @@ class Inspector
   end
 
   def bounding_boxes_for_first(text)
-    boxes = TextSearch.new(render_tree).find_owners_of(text)
-      .map { |text_row|
-        Box.new(
-          x: text_row.x,
-          y: text_row.y,
-          width: text_row.width,
-          height: text_row.height,
-        )
-      }
+    boxes = TextSearch.new(render_tree).bounding_boxes_for_first(text)
 
     raise NotEnoughMatchesFound.new(text) if boxes.empty?
 
