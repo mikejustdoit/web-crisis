@@ -72,6 +72,90 @@ RSpec.describe Box do
     end
   end
 
+  describe "comparing position with other box-like objects" do
+    let(:box) { Box.new(x: 100, y: 100, width: 600, height: 400) }
+
+    context "when our Box isn't fully defined" do
+      let(:box) { Box.new(x: nil, y: 100, width: 600, height: 400) }
+      let(:other_box) { Box.new(x: 100, y: 100, width: 600, height: 400) }
+
+      it "isn't considered to overlap either way" do
+        expect(box.overlaps?(other_box)).to be false
+        expect(other_box.overlaps?(box)).to be false
+      end
+    end
+
+    context "when the other object isn't fully defined" do
+      let(:box) { Box.new(x: 100, y: 100, width: 600, height: 400) }
+      let(:other_box) { Box.new(x: nil, y: 100, width: 600, height: 400) }
+
+      it "isn't considered to overlap either way" do
+        expect(box.overlaps?(other_box)).to be false
+        expect(other_box.overlaps?(box)).to be false
+      end
+    end
+
+    [
+      [
+        "when the other object overlaps our Box on the left",
+        Box.new(x: 90, y: 200, width: 20, height: 100),
+      ],
+      [
+        "when the other object overlaps our Box on the right",
+        Box.new(x: 690, y: 200, width: 20, height: 100),
+      ],
+      [
+        "when the other object overlaps our Box at the top",
+        Box.new(x: 200, y: 50, width: 100, height: 100),
+      ],
+      [
+        "when the other object overlaps our Box at the bottom",
+        Box.new(x: 200, y: 450, width: 100, height: 100),
+      ],
+      [
+        "when the other object fits within our Box",
+        Box.new(x: 200, y: 200, width: 100, height: 100),
+      ],
+      [
+        "when the other object entirely covers our Box",
+        Box.new(x: 50, y: 50, width: 700, height: 500),
+      ],
+    ].each do |name, other_box|
+      context name do
+        it "overlaps both ways" do
+          expect(box.overlaps?(other_box)).to be true
+          expect(other_box.overlaps?(box)).to be true
+        end
+      end
+    end
+
+    [
+      [
+        "when the other object touches our Box on the left",
+        Box.new(x: 90, y: 200, width: 10, height: 100),
+      ],
+      [
+        "when the other object touches our Box on the right",
+        Box.new(x: 700, y: 200, width: 20, height: 100),
+      ],
+      [
+        "when the other object touches our Box at the top",
+        Box.new(x: 200, y: 50, width: 100, height: 50),
+      ],
+      [
+        "when the other object touches our Box at the bottom",
+        Box.new(x: 200, y: 500, width: 100, height: 100),
+      ],
+    ].each do |name, other_box|
+      context name do
+        it "doesn't overlap either way" do
+          expect(box.overlaps?(other_box)).to be false
+          expect(other_box.overlaps?(box)).to be false
+        end
+      end
+    end
+  end
+
   describe "it behaving like a value object" do
     let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
 

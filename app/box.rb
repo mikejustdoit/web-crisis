@@ -25,6 +25,13 @@ class Box
     y + height
   end
 
+  def overlaps?(other)
+    return false unless self.defined? && Box.from(other).defined?
+
+    other.bottom > y && other.y < bottom &&
+      other.right > x && other.x < right
+  end
+
   def ==(other_box)
     [:x, :y, :width, :height]
       .all? { |attribute_name|
