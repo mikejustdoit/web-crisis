@@ -1,70 +1,35 @@
-require "absolute_position_adder_upper"
 require "build_text"
 require "element"
 require "image"
 require "inspector"
+require "text_search"
 
 RSpec.describe Inspector do
   subject(:inspector) { Inspector.new(root_node) }
 
   describe "#bounding_boxes_for_first" do
-    let(:root_node) {
-      AbsolutePositionAdderUpper.new.call(
-        Element.new(
-          box: Box.new(x: 80, y: 250, width: 180, height: 15),
-          children: [
-            BuildText.new.call(
-              box: Box.new(x: 0, y: 0, width: 20, height: 15),
-              content: "very ",
-            ),
-            BuildText.new.call(
-              box: Box.new(x: 20, y: 0, width: 40, height: 15),
-              content: "not very ",
-            ),
-            Element.new(
-              box: Box.new(x: 60, y: 0, width: 80, height: 15),
-              children: [
-                BuildText.new.call(
-                  box: Box.new(x: 0, y: 0, width: 80, height: 15),
-                  content: "interesting stuff ",
-                ),
-              ],
-            ),
-            BuildText.new.call(
-              box: Box.new(x: 140, y: 0, width: 40, height: 15),
-              content: "after all",
-            ),
-          ],
-        )
-      )
+    let(:root_node) { double(:render_tree) }
+    let(:text_search) {
+      instance_double(TextSearch, bounding_boxes_for_first: boxes)
     }
 
-    context "when the tree contains the search text" do
-      context "when it's within a single node" do
-        it "returns the bounding box of that node" do
-          expect(
-            inspector.bounding_boxes_for_first("interesting stuff")
-          ).to eq(
-            [Box.new(x: 140, y: 250, width: 80, height: 15)]
-          )
-        end
-      end
+    before do
+      allow(TextSearch).to receive(:new).and_return(text_search)
+    end
 
-      context "when it's spread across multiple nodes" do
-        it "returns a bounding box for each of the nodes" do
-          expect(
-            inspector.bounding_boxes_for_first("not very interesting stuff")
-          ).to eq(
-            [
-              Box.new(x: 100, y: 250, width: 40, height: 15),
-              Box.new(x: 140, y: 250, width: 80, height: 15),
-            ]
-          )
-        end
+    context "when the tree contains the search text" do
+      let(:boxes) { [double(:box), double(:box)] }
+
+      it "returns the bounding box of that node" do
+        expect(
+          inspector.bounding_boxes_for_first("existing text")
+        ).to eq(boxes)
       end
     end
 
     context "when the tree does not contain the search text" do
+      let(:boxes) { [] }
+
       it "complains" do
         expect {
           inspector.bounding_boxes_for_first("non-existent text")
