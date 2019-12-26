@@ -28,9 +28,13 @@ def visit_address(new_address)
 end
 
 def page_displays_heading(text)
-  node = page.find_nodes_with_text(text).first
+  bounding_boxes = page.bounding_boxes_for_first(text)
 
-  expect(browser.in_view?(node)).to be true
+  expect(bounding_boxes).not_to be_empty
+
+  bounding_boxes.each do |box|
+    expect(browser.in_view?(box)).to be true
+  end
 end
 
 def page_displays_image(image_address, width:, height:)
@@ -40,12 +44,14 @@ def page_displays_image(image_address, width:, height:)
   expect(image.height).to eq(height)
 end
 
-def page_displays_link(uri, content)
-  element = page.find_single_element_with_text(content)
-  child_text_nodes = page.find_nodes_with_text(content)
+def page_displays_link(uri)
+  link = page.find_single_link(uri)
 
-  expect(element.href).to eq(uri)
-  expect(child_text_nodes.map(&:colour).uniq).to eq([:blue])
+  expect(link).not_to be_nil
+  expect(browser.in_view?(link)).to be true
+
+  expect(link.children).not_to be_empty
+  expect(link.children.map(&:colour).uniq).to eq([:blue])
 end
 
 def page
@@ -91,7 +97,7 @@ Then(/^the browser should render the web page$/) do
     width: 100,
     height: 100,
   )
-  page_displays_link("/op/AuthorGuide.lwn", "Write for us")
+  page_displays_link("/op/AuthorGuide.lwn")
 end
 
 Then("{string} appears on a single row") do |full_text|
