@@ -1,29 +1,29 @@
-require "box"
-
 class TextSearch
   def initialize(render_tree)
     @string = SearchableAnnotatedString.new
 
-    list_text_rows(render_tree).each do |text_row|
+    list_text_nodes(render_tree).each do |text_row|
       @string.append(text_row.content, text_row)
     end
   end
 
   def bounding_boxes_for_first(text)
-    string.annotations_for_first_match(text).map(&Box.method(:from))
+    string.first_match(text).flat_map { |location, text_node|
+      text_node.bounding_boxes_for_substring(location)
+    }
   end
 
   private
 
   attr_reader :string
 
-  def list_text_rows(node)
+  def list_text_nodes(node)
     if node.content.empty?
       []
     elsif node.respond_to?(:children)
-      node.children.flat_map(&method(:list_text_rows))
+      node.children.flat_map(&method(:list_text_nodes))
     elsif node.respond_to?(:rows)
-      node.rows
+      [node]
     else
       []
     end
@@ -41,14 +41,16 @@ class TextSearch
       @string.concat(addition)
     end
 
-    def annotations_for_first_match(substring)
+    def first_match(substring)
       match_start = string.index(substring)
 
       return [] if match_start.nil?
 
       match_end =  match_start + substring.size - 1
 
-      overlapping(match_start, match_end)
+      overlapping(match_start, match_end).map { |location, metadata|
+        [node_local_location(location, match_start, match_end), metadata]
+      }
     end
 
     private
@@ -58,7 +60,16 @@ class TextSearch
     def overlapping(from, to)
       annotations.select { |location, _metadata|
         location.include?(from) || location.include?(to)
-      }.map(&:last)
+      }
+    end
+
+    def node_local_location(location, from, to)
+      location_array = location.to_a
+
+      local_from = location_array.index(from) || 0
+      local_to = location_array.index(to) || location_array.size - 1
+
+      local_from..local_to
     end
   end
 end
