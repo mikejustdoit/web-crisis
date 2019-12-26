@@ -37,7 +37,7 @@ class WindowDouble
   end
 
   def in_view?(node)
-    node.bottom > viewport.y && node.y < viewport.height
+    viewport.overlaps?(node)
   end
 
   private
