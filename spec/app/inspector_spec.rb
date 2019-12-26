@@ -3,7 +3,6 @@ require "build_text"
 require "element"
 require "image"
 require "inspector"
-require "text"
 
 RSpec.describe Inspector do
   subject(:inspector) { Inspector.new(root_node) }
