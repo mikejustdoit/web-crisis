@@ -134,4 +134,28 @@ RSpec.describe Text do
       end
     end
   end
+
+  describe "bounding boxes for substring" do
+    context "when the substring is contained within a single row" do
+      it "returns the box of the entire row" do
+        expect(node.bounding_boxes_for_substring(0..5)).to eq([Box.from(first_row)])
+      end
+    end
+
+    context "when the substring is spread over multiple rows" do
+      it "returns the boxes of all the rows involved" do
+        expect(node.bounding_boxes_for_substring(9..15)).to eq(
+          [Box.from(first_row), Box.from(second_row)]
+        )
+      end
+    end
+
+    context "when the given string location is out of range" do
+      it "complains" do
+        expect {
+          node.bounding_boxes_for_substring(9..100)
+        }.to raise_error(Text::OutOfContentRange)
+      end
+    end
+  end
 end
