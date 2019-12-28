@@ -1,7 +1,19 @@
+require "box"
+require "element"
 require "point"
 require "support/shared_examples/node"
 
 RSpec.describe Point do
+  describe "creating a point from another object's position" do
+    it "copies x and y from the object" do
+      source_object = Element.new(box: Box.new(x: 12, y: 34, width: 56, height: 78))
+      point = Point.from(source_object)
+
+      expect(point.x).to eq(source_object.x)
+      expect(point.y).to eq(source_object.y)
+    end
+  end
+
   describe "it behaving like a value object" do
     let(:point) { Point.new(x: 20, y: 15) }
 

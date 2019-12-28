@@ -4,6 +4,10 @@ class Point
     @y = y
   end
 
+  def self.from(source_object)
+    new(x: source_object.x, y: source_object.y)
+  end
+
   attr_reader :x, :y
 
   def ==(other_point)
