@@ -38,7 +38,7 @@ class Text
   end
 
   def next_available_point
-    Point.new(x: x, y: y) + rows.last.next_available_point
+    Point.from(self) + rows.last.next_available_point
   end
 
   def maximum_bounds

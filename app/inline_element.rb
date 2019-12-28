@@ -31,8 +31,7 @@ class InlineElement < SimpleDelegator
 
   def next_available_point
     if respond_to?(:children) && children.any?
-      point = children.last.next_available_point
-      Point.new(x: x + point.x, y: y + point.y)
+      Point.from(self) + children.last.next_available_point
     else
       Point.new(x: right, y: y)
     end
