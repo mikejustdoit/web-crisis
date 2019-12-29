@@ -15,12 +15,6 @@ class BlockLevelElement < SimpleDelegator
     )
   end
 
-  def clone_with_children(new_children)
-    BlockLevelElement.new(
-      __getobj__.clone_with_children(new_children),
-    )
-  end
-
   def position_after(preceding_node)
     clone_with(
       x: 0,

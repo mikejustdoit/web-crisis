@@ -29,13 +29,6 @@ class NodeWithinParent < SimpleDelegator
     )
   end
 
-  def clone_with_children(new_children)
-    NodeWithinParent.new(
-      node.clone_with_children(new_children),
-      parent,
-    )
-  end
-
   def position_after(preceding_node)
     NodeWithinParent.new(
       node.position_after(preceding_node),

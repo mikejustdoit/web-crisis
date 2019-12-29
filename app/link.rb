@@ -23,13 +23,6 @@ class Link < SimpleDelegator
     )
   end
 
-  def clone_with_children(new_children)
-    Link.new(
-      node.clone_with_children(new_children),
-      href: href,
-    )
-  end
-
   private
 
   attr_reader :node
