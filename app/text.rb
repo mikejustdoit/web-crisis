@@ -29,12 +29,8 @@ class Text
     )
   end
 
-  def position_after(preceding_node)
-    point = preceding_node.next_available_point
-    clone_with(
-      x: point.x,
-      y: point.y,
-    )
+  def the_position_after(preceding_node)
+    preceding_node.next_available_point
   end
 
   def next_available_point

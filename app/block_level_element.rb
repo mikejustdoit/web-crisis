@@ -15,11 +15,8 @@ class BlockLevelElement < SimpleDelegator
     )
   end
 
-  def position_after(preceding_node)
-    clone_with(
-      x: 0,
-      y: preceding_node.bottom,
-    )
+  def the_position_after(preceding_node)
+    Point.new(x: 0, y: preceding_node.bottom)
   end
 
   def next_available_point

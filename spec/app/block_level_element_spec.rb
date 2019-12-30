@@ -1,6 +1,7 @@
 require "block_level_element"
 require "box"
 require "element"
+require "point"
 
 RSpec.describe BlockLevelElement do
   describe "cloning" do
@@ -27,14 +28,10 @@ RSpec.describe BlockLevelElement do
         double(:preceding_node, bottom: double(:preceding_node_bottom))
       }
 
-      it "uses the preceding node's #bottom" do
-        node.position_after(preceding_node)
-
-        expect(preceding_node).to have_received(:bottom)
-      end
-
-      it "returns a new node" do
-        expect(node.position_after(preceding_node)).not_to eq(node)
+      it "returns a point including the preceding node's #bottom" do
+        expect(
+          node.the_position_after(preceding_node)
+        ).to eq(Point.new(x: 0, y: preceding_node.bottom))
       end
     end
 

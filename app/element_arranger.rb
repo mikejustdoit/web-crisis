@@ -48,7 +48,7 @@ class ElementArranger
 
       arranged_children + [
         arrange_child.call(
-          child.position_after(preceding_sibling)
+          child.clone_with(**(child.the_position_after(preceding_sibling).to_h))
         )
       ]
     }

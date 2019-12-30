@@ -95,14 +95,10 @@ RSpec.describe Text do
         double(:preceding_node, next_available_point: Point.new(x: 1, y: 2))
       }
 
-      it "uses the preceding node's #next_available_point" do
-        node.position_after(preceding_node)
-
-        expect(preceding_node).to have_received(:next_available_point)
-      end
-
-      it "returns a new node" do
-        expect(node.position_after(preceding_node)).not_to eq(node)
+      it "returns the preceding node's #next_available_point" do
+        expect(
+          node.the_position_after(preceding_node)
+        ).to eq(preceding_node.next_available_point)
       end
     end
 

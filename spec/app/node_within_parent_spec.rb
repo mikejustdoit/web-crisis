@@ -33,29 +33,11 @@ RSpec.describe NodeWithinParent do
   end
 
   describe "cloning" do
-    let(:node) {
-      double(
-        :node,
-        :clone_with => double(:cloned_node),
-        :position_after => double(:positioned_cloned_node),
-      )
-    }
+    let(:node) { double(:node, :clone_with => double(:cloned_node)) }
     let(:parent) { double(:parent) }
 
     it "returns a NodeWithinParent" do
       expect(node_within_parent.clone_with({})).to be_a(NodeWithinParent)
-    end
-
-    describe "handling clones invoked from inside node's methods" do
-      describe "overriding #position_after" do
-        let(:preceding_node) { double(:preceding_node) }
-
-        it "returns a NodeWithinParent" do
-          expect(
-            node_within_parent.position_after(preceding_node)
-          ).to be_a(NodeWithinParent)
-        end
-      end
     end
   end
 end

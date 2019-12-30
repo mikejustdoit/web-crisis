@@ -29,13 +29,6 @@ class NodeWithinParent < SimpleDelegator
     )
   end
 
-  def position_after(preceding_node)
-    NodeWithinParent.new(
-      node.position_after(preceding_node),
-      parent,
-    )
-  end
-
   private
 
   attr_reader :node, :parent
