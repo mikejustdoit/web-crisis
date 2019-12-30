@@ -1,15 +1,14 @@
 require "inline_element"
 require "element"
 require "point"
+require "support/shared_examples/node_decorator"
 
 RSpec.describe InlineElement do
-  describe "cloning" do
-    subject(:node) { InlineElement.new(Element.new(children: [])) }
-    let(:returned_node) { node.clone_with({}) }
+  describe "decorating" do
+    subject(:node) { InlineElement.new(internal_node) }
+    let(:internal_node) { Element.new }
 
-    it "returns a InlineElement" do
-      expect(returned_node).to be_a(InlineElement)
-    end
+    it_behaves_like "a valid node decorator"
   end
 
   describe "negotiating positions with consecutive nodes" do

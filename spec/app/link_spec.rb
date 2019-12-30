@@ -1,6 +1,7 @@
 require "box"
 require "element"
 require "link"
+require "support/shared_examples/node_decorator"
 
 RSpec.describe Link do
   subject(:node) { Link.new(element, href: "/faq") }
@@ -15,8 +16,10 @@ RSpec.describe Link do
     expect(node.href).to eq("/faq")
   end
 
-  it "exposes its underlying element's attributes too" do
-    expect(node.width).to eq(element.width)
+  describe "decorating" do
+    let(:internal_node) { element }
+
+    it_behaves_like "a valid node decorator"
   end
 
   describe "cloning" do

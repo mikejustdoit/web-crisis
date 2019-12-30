@@ -2,15 +2,14 @@ require "block_level_element"
 require "box"
 require "element"
 require "point"
+require "support/shared_examples/node_decorator"
 
 RSpec.describe BlockLevelElement do
-  describe "cloning" do
-    subject(:node) { BlockLevelElement.new(Element.new(children: [])) }
-    let(:returned_node) { node.clone_with({}) }
+  describe "decorating" do
+    subject(:node) { BlockLevelElement.new(internal_node) }
+    let(:internal_node) { Element.new }
 
-    it "returns a BlockLevelElement" do
-      expect(returned_node).to be_a(BlockLevelElement)
-    end
+    it_behaves_like "a valid node decorator"
   end
 
   describe "negotiating positions with consecutive nodes" do
