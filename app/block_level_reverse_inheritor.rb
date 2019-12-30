@@ -12,7 +12,7 @@ class BlockLevelReverseInheritor
     when BlockLevelElement
       visit_block_level_element(node)
     else
-      raise UnrecognisedNodeType
+      raise UnrecognisedNodeType.new(node)
     end
   end
 

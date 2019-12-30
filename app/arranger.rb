@@ -15,7 +15,7 @@ class Arranger
     elsif node.respond_to?(:src)
       node
     else
-      raise UnrecognisedNodeType.new
+      raise UnrecognisedNodeType.new(node)
     end
   end
 
