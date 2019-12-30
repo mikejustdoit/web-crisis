@@ -14,6 +14,14 @@ RSpec.describe Point do
     end
   end
 
+  describe "extracting a point's attributes" do
+    let(:point) { Point.new(x: 20, y: 15) }
+
+    it "converts itself to a symbol-keyed hash" do
+      expect(point.to_h).to eq({x: 20, y: 15})
+    end
+  end
+
   describe "it behaving like a value object" do
     let(:point) { Point.new(x: 20, y: 15) }
 

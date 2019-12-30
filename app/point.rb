@@ -10,6 +10,10 @@ class Point
 
   attr_reader :x, :y
 
+  def to_h
+    {x: x, y: y}
+  end
+
   def ==(other_point)
     x == other_point.x && y == other_point.y
   end
