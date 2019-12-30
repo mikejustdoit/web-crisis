@@ -1,8 +1,9 @@
 require "image_store"
 
 RSpec.describe ImageStore do
-  subject(:store) { ImageStore.new(fetcher: fetcher) }
+  subject(:store) { ImageStore.new(fetcher: fetcher, origin: origin) }
   let(:fetcher) { double(:fetcher, :call => "ABCIMAGECONTENTS") }
+  let(:origin) { "https://www.example.com/gallery.html" }
 
   before do
     stub_const("LOGGER", double(:logger, :call => nil))
@@ -90,6 +91,17 @@ RSpec.describe ImageStore do
       image_filename = store.call(src)
 
       expect(image_filename).to eq(data_uri.name)
+    end
+  end
+
+  context "when the image URI is missing a scheme" do
+    let(:origin) { "http://www.example.info" }
+    let(:src) { "//www.example.com/art.jpg" }
+
+    it "fetches the image using the origin URI's scheme" do
+      store.call(src)
+
+      expect(fetcher).to have_received(:call).with("http:" + src)
     end
   end
 end

@@ -4,8 +4,9 @@ require "data_uri"
 class ImageStore
   DATA_SCHEME_PATTERN = /^data:/
 
-  def initialize(fetcher:)
+  def initialize(fetcher:, origin:)
     @fetcher = fetcher
+    @origin = URI.parse(origin)
   end
 
   def call(uri)
@@ -13,12 +14,20 @@ class ImageStore
       return DataUri.new(uri).tap { |du| du.write_to_file }.name
     end
 
-    download(uri)
+    download(ensure_scheme(uri))
   end
 
   private
 
-  attr_reader :fetcher
+  attr_reader :fetcher, :origin
+
+  def ensure_scheme(uri_string)
+    uri = URI.parse(uri_string)
+
+    return uri_string unless uri.scheme.nil?
+
+    uri.tap { |u| u.scheme = origin.scheme }.to_s
+  end
 
   def download(uri)
     name = remote_image_to_filename(uri)
