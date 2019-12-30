@@ -44,11 +44,11 @@ class ElementArranger
     return [] if children.empty?
 
     children.inject([]) { |arranged_children, child|
-      preceding_sibling = arranged_children.last
+      preceding_sibling = arranged_children.last || no_preceding_sibling
 
       arranged_children + [
         arrange_child.call(
-          child.position_after(preceding_sibling || no_preceding_sibling)
+          child.position_after(preceding_sibling)
         )
       ]
     }
