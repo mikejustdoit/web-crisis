@@ -14,7 +14,7 @@ class NodeFactory
   }
 
   INLINE_ELEMENT_TYPES = %w{
-    a div em img strong
+    a b div em i img strong sup
   }
 
   ELEMENT_TYPES = BLOCK_LEVEL_ELEMENT_TYPES + INLINE_ELEMENT_TYPES
