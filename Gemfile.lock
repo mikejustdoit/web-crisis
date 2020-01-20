@@ -27,7 +27,7 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     gherkin (5.1.0)
-    gosu (0.14.5)
+    gosu (0.15.0)
     hashdiff (1.0.0)
     http-accept (1.7.0)
     http-cookie (1.0.3)
