@@ -34,7 +34,9 @@ class NodeFactory
 
     case parsed_element.name
     when "text"
-      parsed_element.content.strip.split("\n").map { |content|
+      text_content = parsed_element.content.strip.split("\n").reject(&:empty?)
+
+      text_content.map { |content|
         BuildText.new.call(
           content: content,
         )
