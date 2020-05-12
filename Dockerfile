@@ -5,7 +5,7 @@ RUN apt update --assume-yes \
     && apt install --assume-yes \
     build-essential libsdl2-dev libgl1-mesa-dev libopenal-dev libsndfile-dev \
     libmpg123-dev libgmp-dev libfontconfig1-dev \
-    xorg-dev xvfb
+    xorg-dev xvfb imagemagick
 
 ARG USER=dev
 ARG HOME=/home/${USER}

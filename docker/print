@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+uri="$1"
+
+if [ -z "$uri" ]; then
+  echo "Usage: `basename $0` uri" >&2
+  exit 1
+fi
+
+filename () {
+  now=$(date +%s)
+
+  echo "$1" | sed "s/[^-_\.0-9a-zA-Z]/-/g" | \
+    sed "s/^.*$/screen-$now-&.png/"
+}
+
+out_png=$(filename $uri)
+
+docker run --init  --mount type=bind,source=$(pwd)/tmp,target=/home/dev/tmp \
+  web-crisis-test \
+  /bin/bash -c "xvfb-run --server-num 99 ./bin/launch $uri & \
+    sleep 3 && \
+    export XAUTHORITY=\$(ls -d /tmp/xvfb-run*)/Xauthority && \
+    import -display :99 -window 'Web Crisis browser' -frame ~/tmp/$out_png && \
+    pkill ruby"
