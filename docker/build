@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+ruby_version=$(cat .ruby-version)
+
+if [ -z "$ruby_version" ]; then
+  echo "Error: didn't find a Ruby version in .ruby-version" >&2
+  exit 1
+fi
+
+docker build \
+  --build-arg RUBY_VERSION="$ruby_version" \
+  --tag web-crisis-test \
+  .
