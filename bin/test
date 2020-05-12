@@ -2,4 +2,4 @@
 
 bundle exec rspec
 
-bundle exec cucumber
+bundle exec cucumber --color
