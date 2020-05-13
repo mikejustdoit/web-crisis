@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+while read uri; do
+  ./docker/print $uri
+done
