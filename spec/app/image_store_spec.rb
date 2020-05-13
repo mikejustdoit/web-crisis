@@ -104,4 +104,15 @@ RSpec.describe ImageStore do
       expect(fetcher).to have_received(:call).with("http:" + src)
     end
   end
+
+  context "when the image URI is missing the host" do
+    let(:origin) { "http://www.example.info" }
+    let(:src) { "/art.jpg" }
+
+    it "fetches the image using the origin URI's host and scheme" do
+      store.call(src)
+
+      expect(fetcher).to have_received(:call).with(origin + src)
+    end
+  end
 end

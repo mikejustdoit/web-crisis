@@ -14,12 +14,20 @@ class ImageStore
       return DataUri.new(uri).tap { |du| du.write_to_file }.name
     end
 
-    download(ensure_scheme(uri))
+    download(ensure_scheme(ensure_host(uri)))
   end
 
   private
 
   attr_reader :fetcher, :origin
+
+  def ensure_host(uri_string)
+    uri = URI.parse(uri_string)
+
+    return uri_string unless uri.host.nil?
+
+    uri.tap { |u| u.host = origin.host }.to_s
+  end
 
   def ensure_scheme(uri_string)
     uri = URI.parse(uri_string)
