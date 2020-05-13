@@ -19,7 +19,7 @@ RSpec.describe ImageFetcher do
   let(:image_width) { 20 }
   let(:image_height) { 50 }
   let(:image_filename) { "https---www-example-com-art-jpg-art.jpg" }
-  let(:image_store) { double(:image_store, :[] => image_filename) }
+  let(:image_store) { double(:image_store, :call => image_filename) }
 
   it_behaves_like "a visitor"
 
@@ -29,10 +29,10 @@ RSpec.describe ImageFetcher do
       InlineElement.new(Image.new(src: "https://www.example.com/art.jpg"))
     }
 
-    it "fetches the image's asset from the store" do
+    it "saves the image's data to and gets its filename from the store" do
       visitor.call(root)
 
-      expect(image_store).to have_received(:[])
+      expect(image_store).to have_received(:call)
         .with("https://www.example.com/art.jpg")
     end
 

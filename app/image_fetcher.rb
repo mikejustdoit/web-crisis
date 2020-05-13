@@ -6,7 +6,7 @@ class ImageFetcher
 
   def call(node)
     if node.respond_to?(:src)
-      name = image_store[node.src]
+      name = image_store.call(node.src)
       width, height = image_calculator.call(name)
 
       node.clone_with(

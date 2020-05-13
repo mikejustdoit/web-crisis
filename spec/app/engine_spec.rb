@@ -15,7 +15,7 @@ RSpec.describe Engine do
   let(:image_store_factory) {
     double(
       :image_store_factory,
-      :call => double(:image_store, :[] => nil),
+      :call => double(:image_store, :call => nil),
     )
   }
   let(:layout_visitors) { double(:layout_visitors, :visit => a_tree) }

@@ -8,7 +8,7 @@ class ImageStore
     @fetcher = fetcher
   end
 
-  def [](uri)
+  def call(uri)
     if is_data_uri?(uri)
       return DataUri.new(uri).tap { |du| du.write_to_file }.name
     end

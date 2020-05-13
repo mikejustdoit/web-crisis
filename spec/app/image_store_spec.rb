@@ -15,19 +15,19 @@ RSpec.describe ImageStore do
   let(:src) { "https://www.example.com/art.jpg" }
 
   it "fetches the image" do
-    store[src]
+    store.call(src)
 
     expect(fetcher).to have_received(:call).with(src)
   end
 
   it "writes the image to disk" do
-    store[src]
+    store.call(src)
 
     expect(file).to have_received(:print)
   end
 
   it "returns the filename of the image on disk" do
-    image_filename = store[src]
+    image_filename = store.call(src)
 
     expect(image_filename).to match(/art\.jpg/)
   end
@@ -40,13 +40,13 @@ RSpec.describe ImageStore do
     let(:src) { "https://www.example.com/art.jpg" }
 
     it "falls back to our placeholder image" do
-      image_filename = store[src]
+      image_filename = store.call(src)
 
       expect(image_filename).to eq(PLACEHOLDER_IMAGE)
     end
 
     it "logs the error and the URI in question" do
-      store[src]
+      store.call(src)
 
       expect(LOGGER).to have_received(:call).with(
         /StandardError.*bad internet.*https:\/\/www\.example\.com\/art\.jpg/
@@ -69,25 +69,25 @@ RSpec.describe ImageStore do
     }
 
     it "doesn't attempt to fetch the remote image" do
-      store[src]
+      store.call(src)
 
       expect(fetcher).not_to have_received(:call)
     end
 
     it "delegates to DataUri" do
-      store[src]
+      store.call(src)
 
       expect(DataUri).to have_received(:new).with(src)
     end
 
     it "writes the image data to disk" do
-      store[src]
+      store.call(src)
 
       expect(data_uri).to have_received(:write_to_file)
     end
 
     it "uses the name DataUri generates" do
-      image_filename = store[src]
+      image_filename = store.call(src)
 
       expect(image_filename).to eq(data_uri.name)
     end
