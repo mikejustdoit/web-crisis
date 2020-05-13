@@ -9,6 +9,10 @@ class ImageStore
   end
 
   def [](uri)
+    if is_data_uri?(uri)
+      return DataUri.new(uri).tap { |du| du.write_to_file }.name
+    end
+
     download(uri)
   end
 
@@ -17,17 +21,9 @@ class ImageStore
   attr_reader :fetcher
 
   def download(uri)
-    if is_data_uri?(uri)
-      data_uri = DataUri.new(uri)
+    name = remote_image_to_filename(uri)
 
-      data_uri.write_to_file
-
-      name = data_uri.name
-    else
-      name = remote_image_to_filename(uri)
-
-      File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
-    end
+    File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
 
     name
 
