@@ -16,7 +16,9 @@ filename () {
 
 out_png=$(filename $uri)
 
-docker run --init  --mount type=bind,source=$(pwd)/tmp,target=/home/dev/tmp \
+docker run --init \
+  --mount type=bind,source=$(pwd)/tmp,target=/home/dev/tmp \
+  --mount type=bind,source=$(pwd)/assets,target=/home/dev/web-crisis/assets \
   web-crisis-test \
   /bin/bash -c "xvfb-run --server-num 99 ./bin/launch $uri & \
     sleep 3 && \
