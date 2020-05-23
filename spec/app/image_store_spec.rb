@@ -12,56 +12,24 @@ RSpec.describe ImageStore do
   end
   let(:file) { StringIO.new }
 
-  context "when we have a matching file on disk" do
-    before do
-      allow(File).to receive(:exist?).and_return(true)
-    end
+  let(:src) { "https://www.example.com/art.jpg" }
 
-    let(:src) { "https://www.example.com/art.jpg" }
+  it "fetches the image" do
+    store[src]
 
-    it "still fetches the remote image" do
-      store[src]
-
-      expect(fetcher).to have_received(:call)
-    end
-
-    it "overwrites the existing file" do
-      store[src]
-
-      expect(File).to have_received(:open)
-    end
-
-    it "returns the filename of the image on disk" do
-      image_filename = store[src]
-
-      expect(image_filename).to match(/art\.jpg/)
-    end
+    expect(fetcher).to have_received(:call).with(src)
   end
 
-  context "when there is no matching file on disk" do
-    before do
-      allow(File).to receive(:exist?).and_return(false)
-    end
+  it "writes the image to disk" do
+    store[src]
 
-    let(:src) { "https://www.example.com/art.jpg" }
+    expect(file).to have_received(:print)
+  end
 
-    it "fetches the image" do
-      store[src]
+  it "returns the filename of the image on disk" do
+    image_filename = store[src]
 
-      expect(fetcher).to have_received(:call).with(src)
-    end
-
-    it "writes the image to disk" do
-      store[src]
-
-      expect(file).to have_received(:print)
-    end
-
-    it "returns the filename of the image on disk" do
-      image_filename = store[src]
-
-      expect(image_filename).to match(/art\.jpg/)
-    end
+    expect(image_filename).to match(/art\.jpg/)
   end
 
   context "when something goes wrong" do
