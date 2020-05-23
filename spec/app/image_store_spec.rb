@@ -19,16 +19,16 @@ RSpec.describe ImageStore do
 
     let(:src) { "https://www.example.com/art.jpg" }
 
-    it "doesn't attempt to fetch the remote image" do
+    it "still fetches the remote image" do
       store[src]
 
-      expect(fetcher).not_to have_received(:call)
+      expect(fetcher).to have_received(:call)
     end
 
-    it "doesn't attempt to write to disk" do
+    it "overwrites the existing file" do
       store[src]
 
-      expect(File).not_to have_received(:open)
+      expect(File).to have_received(:open)
     end
 
     it "returns the filename of the image on disk" do

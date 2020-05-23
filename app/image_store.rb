@@ -26,9 +26,7 @@ class ImageStore
     else
       name = remote_image_to_filename(uri)
 
-      if !File.exist?(name)
-        File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
-      end
+      File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
     end
 
     name
