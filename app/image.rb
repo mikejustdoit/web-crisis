@@ -4,6 +4,8 @@ require "forwardable"
 class Image
   extend Forwardable
 
+  SUPPORTED_MIME_TYPES = %w{image/gif image/jpeg image/png}
+
   def initialize(box: Box.new, filename: placeholder_filename, src:)
     @box = box
     @filename = filename
