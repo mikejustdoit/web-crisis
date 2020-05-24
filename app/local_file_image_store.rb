@@ -22,7 +22,7 @@ class LocalFileImageStore
     @origin = Pathname.new(origin).expand_path.dirname
   end
 
-  def [](uri)
+  def call(uri)
     if is_data_uri?(uri)
       data_uri = DataUri.new(uri)
 

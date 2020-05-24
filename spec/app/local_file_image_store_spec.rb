@@ -11,7 +11,7 @@ RSpec.describe LocalFileImageStore do
 
   context "when the URI contains the file:// scheme" do
     it "uses the file path from the URI" do
-      image_filename = store["file:///home/seppel/art.jpg"]
+      image_filename = store.call("file:///home/seppel/art.jpg")
 
       expect(image_filename).to eq("/home/seppel/art.jpg")
     end
@@ -19,7 +19,7 @@ RSpec.describe LocalFileImageStore do
 
   context "without the file:// scheme" do
     it "uses the URI as the file path" do
-      image_filename = store["/home/seppel/art.jpg"]
+      image_filename = store.call("/home/seppel/art.jpg")
 
       expect(image_filename).to eq("/home/seppel/art.jpg")
     end
@@ -27,7 +27,7 @@ RSpec.describe LocalFileImageStore do
 
   context "when the URI isn't even a string" do
     it "falls back to our placeholder image" do
-      image_filename = store[nil]
+      image_filename = store.call(nil)
 
       expect(image_filename).to eq(PLACEHOLDER_IMAGE)
     end
@@ -39,13 +39,13 @@ RSpec.describe LocalFileImageStore do
     end
 
     it "falls back to our placeholder image" do
-      image_filename = store["https://www.example.com/art.jpg"]
+      image_filename = store.call("https://www.example.com/art.jpg")
 
       expect(image_filename).to eq(PLACEHOLDER_IMAGE)
     end
 
     it "logs the problem" do
-      store["https://www.example.com/art.jpg"]
+      store.call("https://www.example.com/art.jpg")
 
       expect(LOGGER).to have_received(:call)
         .with(/FileNotFound.*not found on disk/)
@@ -54,13 +54,13 @@ RSpec.describe LocalFileImageStore do
 
   describe "resolving relative file paths" do
     it "returns an absolute path" do
-      image_filename = store["art.jpg"]
+      image_filename = store.call("art.jpg")
 
       expect(Pathname.new(image_filename)).to be_absolute
     end
 
     it "locates the file relative to the store's `origin` path" do
-      image_filename = store["art.jpg"]
+      image_filename = store.call("art.jpg")
 
       expect(image_filename).to eq("/home/seppel/art.jpg")
     end
@@ -69,13 +69,13 @@ RSpec.describe LocalFileImageStore do
   describe "handling file paths that aren't descendants of the origin" do
     context "when file path is absolute" do
       it "falls back to our placeholder image" do
-        image_filename = store["/home/zaccharias/art.jpg"]
+        image_filename = store.call("/home/zaccharias/art.jpg")
 
         expect(image_filename).to eq(PLACEHOLDER_IMAGE)
       end
 
       it "logs the problem" do
-        store["/home/zaccharias/art.jpg"]
+        store.call("/home/zaccharias/art.jpg")
 
         expect(LOGGER).to have_received(:call)
           .with(/FileNotAccessible.*not a descendant of origin.*\/home\/seppel/)
@@ -84,13 +84,13 @@ RSpec.describe LocalFileImageStore do
 
     context "when file path is relative" do
       it "falls back to our placeholder image" do
-        image_filename = store["../zaccharias/art.jpg"]
+        image_filename = store.call("../zaccharias/art.jpg")
 
         expect(image_filename).to eq(PLACEHOLDER_IMAGE)
       end
 
       it "logs the problem" do
-        store["../zaccharias/art.jpg"]
+        store.call("../zaccharias/art.jpg")
 
         expect(LOGGER).to have_received(:call)
           .with(/FileNotAccessible.*not a descendant of origin.*\/home\/seppel/)
@@ -113,19 +113,19 @@ RSpec.describe LocalFileImageStore do
     }
 
     it "delegates to DataUri" do
-      store[src]
+      store.call(src)
 
       expect(DataUri).to have_received(:new).with(src)
     end
 
     it "writes the image data to disk" do
-      store[src]
+      store.call(src)
 
       expect(data_uri).to have_received(:write_to_file)
     end
 
     it "uses the name DataUri generates" do
-      image_filename = store[src]
+      image_filename = store.call(src)
 
       expect(image_filename).to eq(data_uri.name)
     end
