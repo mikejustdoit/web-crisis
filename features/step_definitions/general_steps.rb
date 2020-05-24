@@ -59,7 +59,7 @@ def page
 end
 
 Given("a web page:") do |html|
-  @address = RandomUri.new.to_s
+  @address ||= RandomUri.new.to_s
 
   stub_request(:get, @address).to_return(body: html)
 end
