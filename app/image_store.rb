@@ -26,7 +26,7 @@ class ImageStore
 
     return uri_string unless uri.host.nil?
 
-    uri.tap { |u| u.host = origin.host }.to_s
+    (origin + uri).to_s
   end
 
   def ensure_scheme(uri_string)

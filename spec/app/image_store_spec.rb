@@ -106,13 +106,28 @@ RSpec.describe ImageStore do
   end
 
   context "when the image URI is missing the host" do
-    let(:origin) { "http://www.example.info" }
-    let(:src) { "/art.jpg" }
+    context "and the URI is absolute" do
+      let(:origin) { "http://www.example.info" }
+      let(:src) { "/art.jpg" }
 
-    it "fetches the image using the origin URI's host and scheme" do
-      store.call(src)
+      it "fetches the image using the origin URI's host and scheme" do
+        store.call(src)
 
-      expect(fetcher).to have_received(:call).with(origin + src)
+        expect(fetcher).to have_received(:call).with(origin + src)
+      end
+    end
+
+    context "and the URI is relative" do
+      let(:origin) { "http://www.example.info/gallery/index.html" }
+      let(:src) { "art.jpg" }
+
+      it "fetches the image relative to the 'origin'" do
+        store.call(src)
+
+        expect(fetcher).to have_received(:call).with(
+          "http://www.example.info/gallery/art.jpg"
+        )
+      end
     end
   end
 end
