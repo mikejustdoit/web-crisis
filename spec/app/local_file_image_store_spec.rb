@@ -1,4 +1,5 @@
 require "local_file_image_store"
+require "support/shared_examples/image_store"
 
 RSpec.describe LocalFileImageStore do
   subject(:store) { LocalFileImageStore.new(origin: "/home/seppel/index.html") }
@@ -7,6 +8,10 @@ RSpec.describe LocalFileImageStore do
     stub_const("LOGGER", double(:logger, :call => nil))
 
     allow(File).to receive(:exist?).and_return(true)
+  end
+
+  describe "implements the image store interface" do
+    include_examples "the image store interface"
   end
 
   context "when the URI contains the file:// scheme" do

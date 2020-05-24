@@ -1,4 +1,5 @@
 require "image_store"
+require "support/shared_examples/image_store"
 
 RSpec.describe ImageStore do
   subject(:store) { ImageStore.new(fetcher: fetcher, origin: origin) }
@@ -14,6 +15,10 @@ RSpec.describe ImageStore do
   let(:file) { StringIO.new }
 
   let(:src) { "https://www.example.com/art.jpg" }
+
+  describe "implements the image store interface" do
+    include_examples "the image store interface"
+  end
 
   it "fetches the image" do
     store.call(src)
