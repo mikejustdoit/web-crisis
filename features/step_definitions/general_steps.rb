@@ -44,6 +44,14 @@ def page_displays_image(image_address, width:, height:)
   expect(image.height).to eq(height)
 end
 
+def image_is_using_placeholder(image_address)
+  image = page.find_single_image(image_address)
+
+  expect(image.filename).to eq(PLACEHOLDER_IMAGE)
+  expect(image.width).to eq(100)
+  expect(image.height).to eq(100)
+end
+
 def page_displays_link(uri)
   link = page.find_single_link(uri)
 
@@ -62,6 +70,18 @@ Given("a web page:") do |html|
   @address ||= RandomUri.new.to_s
 
   stub_request(:get, @address).to_return(body: html)
+end
+
+Given("an {string} image {string}") do |mime_type, image_path|
+  @address ||= RandomUri.new.to_s
+
+  stub_request(
+    :get,
+    URI.parse(@address) + URI.parse(image_path)
+  ).to_return(
+    body: "TEST IMAGE DATA",
+    headers: {"Content-Type" => mime_type},
+  )
 end
 
 Then(/^the resulting tree should have (\d+) nodes$/) do |n|
@@ -98,6 +118,10 @@ Then(/^the browser should render the web page$/) do
     height: 100,
   )
   page_displays_link("/op/AuthorGuide.lwn")
+end
+
+Then("{string} should fall back to the placeholder image") do |image_path|
+  image_is_using_placeholder(image_path)
 end
 
 Then("{string} appears on a single row") do |full_text|
