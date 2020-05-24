@@ -1,4 +1,5 @@
 require "fetcher"
+require "support/shared_examples/fetcher"
 require "webmock/rspec"
 
 RSpec.describe Fetcher do
@@ -12,6 +13,8 @@ RSpec.describe Fetcher do
     before do
       stub_request(:get, uri).to_return(raw_response)
     end
+
+    include_examples "the fetcher interface"
 
     it "returns the response body" do
       expect( fetcher.call(uri) ).to eq(response_body)
