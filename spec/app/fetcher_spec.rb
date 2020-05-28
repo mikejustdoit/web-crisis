@@ -1,20 +1,30 @@
 require "fetcher"
+require "rest-client"
 require "support/shared_examples/fetcher"
 require "webmock/rspec"
 
 RSpec.describe Fetcher do
   describe "a successful fetch" do
+    let(:http_client) { RestClient }
     let(:response_body) { "<!doctype html><html><head><meta content=\"text/html; charset=UTF-8\" http-equiv=\"Content-Type\"></head><body></body></html>\n" }
     let(:raw_response) { "HTTP/1.1 200 OK\nContent-Type: text/html; charset=ISO-8859-1\n\n#{response_body}" }
 
     let(:uri) { "https://www.example.com" }
-    subject(:fetcher) { Fetcher.new }
+    subject(:fetcher) { Fetcher.new(http_client) }
 
     before do
+      allow(http_client).to receive(:get).and_call_original
+
       stub_request(:get, uri).to_return(raw_response)
     end
 
     include_examples "the fetcher interface"
+
+    it "delegates to the HTTP client" do
+      fetcher.call(uri, accept: accept_header)
+
+      expect(http_client).to have_received(:get).with(uri)
+    end
 
     it "returns the response body" do
       expect( fetcher.call(uri) ).to eq(response_body)
