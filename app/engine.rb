@@ -9,7 +9,7 @@ class Engine
   def request(uri, viewport_width:, viewport_height:, text_calculator:, image_calculator:)
     layout_visitors.visit(
       parser.call(
-        fetcher.call(uri),
+        fetcher.call(uri, accept: parser.supported_mime_types),
       ),
       viewport_width: viewport_width,
       viewport_height: viewport_height,

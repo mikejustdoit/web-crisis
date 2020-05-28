@@ -4,6 +4,8 @@ RSpec.shared_examples "the fetcher interface" do
   end
 
   it "accepts a URI string and returns a response body" do
-    expect(fetcher.call(uri)).to match(response_body)
+    expect(
+      fetcher.call(uri, accept: supported_mime_types)
+    ).to match(response_body)
   end
 end

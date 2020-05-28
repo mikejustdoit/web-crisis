@@ -19,7 +19,9 @@ RSpec.describe Engine do
     )
   }
   let(:layout_visitors) { double(:layout_visitors, :visit => a_tree) }
-  let(:parser) { double(:parser, :call => nil) }
+  let(:parser) {
+    double(:parser, :call => nil, :supported_mime_types => %w{text/html})
+  }
 
   let(:a_tree) { Element.new }
 

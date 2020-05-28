@@ -15,6 +15,7 @@ RSpec.describe ImageStore do
   let(:file) { StringIO.new }
 
   let(:src) { "https://www.example.com/art.jpg" }
+  let(:supported_mime_types) { %w{image/gif image/jpeg image/png} }
 
   describe "implements the image store interface" do
     include_examples "the image store interface"
@@ -23,7 +24,7 @@ RSpec.describe ImageStore do
   it "fetches the image" do
     store.call(src)
 
-    expect(fetcher).to have_received(:call).with(src)
+    expect(fetcher).to have_received(:call).with(src, accept: supported_mime_types)
   end
 
   it "writes the image to disk" do
@@ -106,7 +107,8 @@ RSpec.describe ImageStore do
     it "fetches the image using the origin URI's scheme" do
       store.call(src)
 
-      expect(fetcher).to have_received(:call).with("http:" + src)
+      expect(fetcher).to have_received(:call)
+        .with("http:" + src, accept: supported_mime_types)
     end
   end
 
@@ -118,7 +120,8 @@ RSpec.describe ImageStore do
       it "fetches the image using the origin URI's host and scheme" do
         store.call(src)
 
-        expect(fetcher).to have_received(:call).with(origin + src)
+        expect(fetcher).to have_received(:call)
+          .with(origin + src, accept: supported_mime_types)
       end
     end
 
@@ -130,7 +133,8 @@ RSpec.describe ImageStore do
         store.call(src)
 
         expect(fetcher).to have_received(:call).with(
-          "http://www.example.info/gallery/art.jpg"
+          "http://www.example.info/gallery/art.jpg",
+          accept: supported_mime_types,
         )
       end
     end

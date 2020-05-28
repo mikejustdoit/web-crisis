@@ -1,3 +1,4 @@
+require "image"
 require "uri"
 require "data_uri"
 
@@ -40,7 +41,9 @@ class ImageStore
   def download(uri)
     name = remote_image_to_filename(uri)
 
-    File.open(name, "wb") { |file| file.print(fetcher.call(uri)) }
+    File.open(name, "wb") { |file|
+      file.print(fetcher.call(uri, accept: Image::SUPPORTED_MIME_TYPES))
+    }
 
     name
 

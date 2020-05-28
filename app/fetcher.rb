@@ -3,7 +3,7 @@ class Fetcher
     @http_client = http_client
   end
 
-  def call(uri)
+  def call(uri, accept:)
     http_client.get(uri).body
   end
 

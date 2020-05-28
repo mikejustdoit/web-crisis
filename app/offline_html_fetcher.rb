@@ -3,7 +3,7 @@ class OfflineHtmlFetcher
     @body = body
   end
 
-  def call(uri)
+  def call(uri, accept:)
     body
   end
 

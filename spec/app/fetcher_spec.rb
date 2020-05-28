@@ -10,6 +10,7 @@ RSpec.describe Fetcher do
     let(:raw_response) { "HTTP/1.1 200 OK\nContent-Type: text/html; charset=ISO-8859-1\n\n#{response_body}" }
 
     let(:uri) { "https://www.example.com" }
+    let(:supported_mime_types) { %w{text/html} }
     subject(:fetcher) { Fetcher.new(http_client) }
 
     before do
@@ -21,13 +22,15 @@ RSpec.describe Fetcher do
     include_examples "the fetcher interface"
 
     it "delegates to the HTTP client" do
-      fetcher.call(uri, accept: accept_header)
+      fetcher.call(uri, accept: supported_mime_types)
 
       expect(http_client).to have_received(:get).with(uri)
     end
 
     it "returns the response body" do
-      expect( fetcher.call(uri) ).to eq(response_body)
+      expect(
+        fetcher.call(uri, accept: supported_mime_types)
+      ).to eq(response_body)
     end
   end
 end
