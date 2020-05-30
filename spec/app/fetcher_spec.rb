@@ -16,6 +16,7 @@ RSpec.describe Fetcher do
 
   let(:uri) { "https://www.example.com" }
   let(:supported_mime_types) { %w{text/html} }
+  let(:accept_header) { "text/html" }
   subject(:fetcher) { Fetcher.new(http_client) }
 
   before do
@@ -29,12 +30,25 @@ RSpec.describe Fetcher do
   it "delegates to the HTTP client" do
     fetcher.call(uri, accept: supported_mime_types)
 
-    expect(http_client).to have_received(:get).with(uri)
+    expect(http_client).to have_received(:get)
+      .with(uri, {accept: accept_header})
   end
 
   it "returns the response body" do
     expect(
       fetcher.call(uri, accept: supported_mime_types)
     ).to eq(response_body)
+  end
+
+  describe "handling an unacceptable Content-Type" do
+    context "with a 406 Not Acceptable response (i.e. can't satisfy request)" do
+      let(:response_status) { "406 Not Acceptable" }
+
+      it "raises an error" do
+        expect {
+          fetcher.call(uri, accept: supported_mime_types)
+        }.to raise_error(Fetcher::Error, /406 Not Acceptable/)
+      end
+    end
   end
 end
