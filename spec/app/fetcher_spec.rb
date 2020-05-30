@@ -6,8 +6,14 @@ require "webmock/rspec"
 RSpec.describe Fetcher do
   describe "a successful fetch" do
     let(:http_client) { RestClient }
+
+    let(:response_status) { "200 OK" }
+    let(:response_content_type) { "text/html; charset=ISO-8859-1" }
+    let(:response_headers) { "Content-Type: #{response_content_type}" }
     let(:response_body) { "<!doctype html><html><head><meta content=\"text/html; charset=UTF-8\" http-equiv=\"Content-Type\"></head><body></body></html>\n" }
-    let(:raw_response) { "HTTP/1.1 200 OK\nContent-Type: text/html; charset=ISO-8859-1\n\n#{response_body}" }
+    let(:raw_response) {
+      "HTTP/1.1 #{response_status}\n#{response_headers}\n\n#{response_body}"
+    }
 
     let(:uri) { "https://www.example.com" }
     let(:supported_mime_types) { %w{text/html} }
