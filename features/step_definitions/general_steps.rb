@@ -69,7 +69,10 @@ end
 Given("a web page:") do |html|
   @address ||= RandomUri.new.to_s
 
-  stub_request(:get, @address).to_return(body: html)
+  stub_request(:get, @address).to_return(
+    body: html,
+    headers: {"Content-Type" => "text/html"},
+  )
 end
 
 Given("an {string} image {string}") do |mime_type, image_path|
