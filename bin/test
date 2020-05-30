@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
-bundle exec rspec
+./bin/rspec
 
-bundle exec cucumber --color
+./bin/cucumber
