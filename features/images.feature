@@ -1,6 +1,5 @@
 Feature: rendering images
 
-  @wip
   Scenario: handling unsupported image types
     Given an "image/svg+xml" image "/svg/abc123"
     And a web page:

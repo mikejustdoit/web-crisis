@@ -50,5 +50,25 @@ RSpec.describe Fetcher do
         }.to raise_error(Fetcher::Error, /406 Not Acceptable/)
       end
     end
+
+    context "when the response Content-Type don't satisfy the Accept" do
+      let(:response_content_type) { "application/json" }
+
+      it "raises an error" do
+        expect {
+          fetcher.call(uri, accept: supported_mime_types)
+        }.to raise_error(Fetcher::Error, /application\/json/)
+      end
+    end
+
+    context "when there's no Content-Type header" do
+      let(:response_headers) { "" }
+
+      it "raises an error" do
+        expect {
+          fetcher.call(uri, accept: supported_mime_types)
+        }.to raise_error(Fetcher::Error, /Content-Type/)
+      end
+    end
   end
 end
