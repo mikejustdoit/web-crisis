@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+if [ -z "$@" ]; then
+  echo "Usage: $0 ./command-to-run-on-container" >&2
+  exit 1
+fi
+
+./docker/build
+
+docker run --init --rm web-crisis-test xvfb-run "$@"
