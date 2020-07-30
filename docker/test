@@ -2,4 +2,4 @@
 
 ./docker/build
 
-docker run --init --rm web-crisis-test xvfb-run ./bin/test
+./docker/run ./bin/test
