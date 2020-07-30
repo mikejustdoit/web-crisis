@@ -17,6 +17,7 @@ filename () {
 out_png=$(filename $uri)
 
 docker run --init \
+  --rm \
   --mount type=bind,source=$(pwd)/tmp,target=/home/dev/tmp \
   --mount type=bind,source=$(pwd)/assets,target=/home/dev/web-crisis/assets \
   web-crisis-test \
