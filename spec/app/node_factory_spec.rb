@@ -10,11 +10,14 @@ RSpec.describe NodeFactory do
       expect(factory.call).to be_nil
     end
 
-    it "creates a single Text" do
-      parsed_element = parsed_text_node("  \n  abc  \n def \n")
+    it "creates a single Text, maintaining its original text content" do
+      original_content = "  \n  abc  \n def \n"
+      parsed_element = parsed_text_node(original_content.dup)
       factory = NodeFactory.new(parsed_element, logger: ->(_) {})
 
-      expect(factory.call).to be_a(Text)
+      node = factory.call
+      expect(node).to be_a(Text)
+      expect(node.content).to eq(original_content)
     end
   end
 end

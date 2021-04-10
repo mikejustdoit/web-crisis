@@ -58,7 +58,9 @@ class TextWrapper
   end
 
   def words
-    text_node.content.scan(/\s+|\S+/)
+    text_node.content
+      .tr("\n", " ").squeeze(" ")
+      .scan(/\s+|\S+/)
       .map { |word_text| node_from(word_text) }
   end
 
