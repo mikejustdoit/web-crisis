@@ -1,6 +1,6 @@
+require "cgi"
 require "data_uri"
 require "pathname"
-require "uri"
 
 class LocalFileImageStore
   DATA_SCHEME_PATTERN = /^data:/
@@ -44,7 +44,7 @@ class LocalFileImageStore
   attr_reader :origin
 
   def local_file_filename(uri)
-    path = absolute(to_path(URI.unescape(uri)))
+    path = absolute(to_path(CGI.unescape(uri)))
 
     raise FileNotFound.new(path) unless File.exist?(path)
 

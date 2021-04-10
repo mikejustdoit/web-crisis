@@ -1,3 +1,4 @@
+require "delegate"
 require "point"
 
 class BlockLevelElement < SimpleDelegator

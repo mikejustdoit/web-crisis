@@ -21,7 +21,7 @@ RSpec.describe VisitorPipeline do
 
     describe "building the visitor objects from the provided factories" do
       it "invokes each factory and supplies a hash representing the app context" do
-        app_context = {}
+        app_context = {gui_library_utility: :x}
 
         visitor_pipeline.visit(initial_tree, **app_context)
 

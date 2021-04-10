@@ -1,3 +1,5 @@
+require "delegate"
+
 class Link < SimpleDelegator
   def initialize(node, href:)
     @node = node
