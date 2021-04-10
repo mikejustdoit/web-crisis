@@ -138,7 +138,7 @@ Then("{string} appears on a single row") do |full_text|
 end
 
 Then("the text appears over {word} rows") do |_, table|
-  texts = table.raw.map(&:first)
+  texts = table.raw.map(&:first).map(&:strip)
 
   texts.each do |search_text|
     expect(@render_tree.content).to include(search_text)
