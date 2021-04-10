@@ -12,7 +12,7 @@ RSpec.describe Text do
   let(:first_row) {
     TextRow.new(
       box: Box.new(x: 0, y: 0, width: 2, height: 3),
-      content: "Tweet of the",
+      content: "Tweet of the ",
     )
   }
   let(:second_row) {
@@ -23,7 +23,7 @@ RSpec.describe Text do
   }
 
   describe "#content" do
-    it "presents its rows' content, with spaces" do
+    it "presents its rows' content, with their original whitespace" do
       expect(node.content).to eq("Tweet of the Week")
     end
   end

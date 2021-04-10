@@ -44,7 +44,7 @@ class TextWrapper
         if current_row.nil?
           [create_first_row(next_word)]
         else
-          row_with_word = current_row + space + next_word
+          row_with_word = current_row + next_word
 
           if row_with_word.right > maximum_bounds.right
             rows + [
@@ -58,7 +58,7 @@ class TextWrapper
   end
 
   def words
-    text_node.content.split(" ")
+    text_node.content.scan(/\s+|\S+/)
       .map { |word_text| node_from(word_text) }
   end
 
@@ -88,10 +88,6 @@ class TextWrapper
       ),
       content: word,
     )
-  end
-
-  def space
-    @space ||= node_from(" ")
   end
 
   def measure_children_dimensions(rows)

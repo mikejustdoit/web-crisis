@@ -18,7 +18,7 @@ class Text
   def_delegators :box, :x, :y, :width, :height, :right, :bottom
 
   def content
-    rows.map(&:content).join(" ")
+    rows.map(&:content).join
   end
 
   def clone_with(**attributes)

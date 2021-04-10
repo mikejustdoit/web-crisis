@@ -34,13 +34,11 @@ class NodeFactory
 
     case parsed_element.name
     when "text"
-      text_content = parsed_element.content.strip.split("\n").reject(&:empty?)
+      content = parsed_element.content.tr("\n", " ").squeeze(" ")
 
-      text_content.map { |content|
-        BuildText.new.call(
-          content: content,
-        )
-      }
+      return if content.empty? || content =~ /^\s+$/
+
+      BuildText.new.call(content: content)
     when "img"
       InlineElement.new(Image.new(src: parsed_element["src"]))
     when "a"
