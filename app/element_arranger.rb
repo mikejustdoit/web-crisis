@@ -15,22 +15,10 @@ class ElementArranger
       }
     )
 
-    x_offset, y_offset = minimum_children_position_offset(arranged_children)
-
-    repositioned_children = arranged_children.map { |child|
-      child.clone_with(
-        x: child.x - x_offset,
-        y: child.y - y_offset,
-      )
-    }
-
-    inner_width, inner_height = measure_children_dimensions(repositioned_children)
-    x_offset, y_offset = minimum_children_position_offset(repositioned_children)
+    inner_width, inner_height = measure_children_dimensions(arranged_children)
 
     positioned_node.clone_with(
-      children: repositioned_children,
-      x: positioned_node.x + x_offset,
-      y: positioned_node.y + y_offset,
+      children: arranged_children,
       width: inner_width,
       height: inner_height,
     )
@@ -60,9 +48,5 @@ class ElementArranger
 
   def measure_children_dimensions(children)
     ChildrenMeasurer.new.call(children)
-  end
-
-  def minimum_children_position_offset(children)
-    return children.map(&:x).min || 0, children.map(&:y).min || 0
   end
 end
