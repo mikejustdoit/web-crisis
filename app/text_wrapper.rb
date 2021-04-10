@@ -12,21 +12,10 @@ class TextWrapper
   def call
     wrapped_rows = wrap_rows
 
-    x_offset, y_offset = minimum_children_position_offset(wrapped_rows)
-
-    repositioned_rows = wrapped_rows.map { |row|
-      row.clone_with(
-        x: row.x - x_offset,
-        y: row.y - y_offset,
-      )
-    }
-
-    inner_width, inner_height = measure_children_dimensions(repositioned_rows)
+    inner_width, inner_height = measure_children_dimensions(wrapped_rows)
 
     text_node.clone_with(
-      rows: repositioned_rows,
-      x: text_node.x + x_offset,
-      y: text_node.y + y_offset,
+      rows: wrapped_rows,
       width: inner_width,
       height: inner_height,
     )
@@ -94,9 +83,5 @@ class TextWrapper
 
   def measure_children_dimensions(rows)
     ChildrenMeasurer.new.call(rows)
-  end
-
-  def minimum_children_position_offset(children)
-    return children.map(&:x).min || 0, children.map(&:y).min || 0
   end
 end
