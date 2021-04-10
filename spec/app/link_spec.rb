@@ -23,7 +23,7 @@ RSpec.describe Link do
   end
 
   describe "cloning" do
-    let(:returned_node) { node.clone_with({}) }
+    let(:returned_node) { node.clone_with(**{}) }
 
     let(:node_specific_attribute) { :href }
 

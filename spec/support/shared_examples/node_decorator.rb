@@ -5,7 +5,7 @@ RSpec.shared_examples "a valid node decorator" do
     end
 
     it "returns a clone of itself" do
-      expect(node.clone_with({})).to be_a(node.class)
+      expect(node.clone_with(**{})).to be_a(node.class)
     end
   end
 

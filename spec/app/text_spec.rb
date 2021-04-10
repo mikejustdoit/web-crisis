@@ -55,7 +55,7 @@ RSpec.describe Text do
     describe "creating a new node with new attributes" do
       let(:new_attributes) { {:x => 10, :y => 10} }
 
-      let(:clone_of_node) { node.clone_with(new_attributes) }
+      let(:clone_of_node) { node.clone_with(**new_attributes) }
 
       it "doesn't change the old node's attributes" do
         expect(node.x).to eq(box.x)
