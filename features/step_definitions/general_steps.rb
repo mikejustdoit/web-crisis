@@ -107,6 +107,20 @@ When("I render the page in the browser") do
   visit_address(@address)
 end
 
+When('I click on {string}') do |link_text|
+  text_node = page.bounding_boxes_for_first(link_text).first
+
+  browser.click(text_node.x, text_node.y)
+end
+
+Then('the browser visits {string}') do |address|
+  expect(a_request(:get, address)).to have_been_made.once
+end
+
+Then('the browser renders the heading {string}') do |text|
+  page_displays_heading(text)
+end
+
 Then(/^the browser visits the address$/) do
   expect(a_request(:get, @address)).to have_been_made.once
 end
