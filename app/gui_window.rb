@@ -19,6 +19,12 @@ class GuiWindow < Gosu::Window
     engine.uri = new_address
   end
 
+  def button_down(id)
+    if id == Gosu::MS_LEFT
+      engine.click(mouse_x - viewport.x, mouse_y - viewport.y, self)
+    end
+  end
+
   def draw
     engine.render(
       viewport_width: viewport.width,

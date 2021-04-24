@@ -47,6 +47,10 @@ class WindowDouble
     viewport.overlaps?(node)
   end
 
+  def click(viewport_x, viewport_y)
+    engine.click(viewport_x, viewport_y, self)
+  end
+
   private
 
   attr_reader :engine,

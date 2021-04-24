@@ -1,6 +1,5 @@
 Feature: Clicking links
 
-  @wip
   Scenario: Clicking a link with an absolute URI
     Given a web page:
       """
