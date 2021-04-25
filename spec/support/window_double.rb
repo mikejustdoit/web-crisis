@@ -27,8 +27,8 @@ class WindowDouble
     )
   end
 
-  def resize_window(allow_words_per_row:)
-    @fixed_width_for_word_or_space = width / allow_words_per_row
+  def allow_words_per_row(n)
+    @fixed_width_for_word_or_space = width / n
   end
 
   def in_view?(node)

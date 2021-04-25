@@ -91,7 +91,7 @@ Then(/^the resulting tree should have (\d+) nodes$/) do |n|
 end
 
 When("I resize the window so that only a total of {int} words + spaces fit across the viewport") do |words_per_row|
-  browser.resize_window(allow_words_per_row: words_per_row)
+  browser.allow_words_per_row(words_per_row)
 end
 
 When(/^I request an address$/) do
