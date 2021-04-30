@@ -19,7 +19,7 @@ class GuiWindow < Gosu::Window
   attr_writer :address
 
   def draw
-    engine.request(
+    engine.render(
       address,
       viewport_width: viewport.width,
       viewport_height: viewport.height,

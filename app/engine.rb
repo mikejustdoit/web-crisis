@@ -13,7 +13,7 @@ class Engine
     @parser = parser
   end
 
-  def request(
+  def render(
     uri,
     viewport_width:,
     viewport_height:,

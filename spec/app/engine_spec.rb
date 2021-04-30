@@ -29,7 +29,7 @@ RSpec.describe Engine do
 
   describe "relationship with its collaborators" do
     before do
-      engine.request(
+      engine.render(
         "http://www.drchip.org/astronaut/vim/index.html",
         viewport_width: 640,
         viewport_height: 480,
@@ -59,7 +59,7 @@ RSpec.describe Engine do
 
   describe "#fetch returning a layed-out tree" do
     let(:returned_tree) {
-      engine.request(
+      engine.render(
         "http://www.drchip.org/astronaut/vim/index.html",
         viewport_width: 640,
         viewport_height: 480,

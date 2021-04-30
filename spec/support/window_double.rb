@@ -13,7 +13,7 @@ class WindowDouble
   attr_writer :address
 
   def go
-    engine.request(
+    engine.render(
       address,
       viewport_width: viewport.width,
       viewport_height: viewport.height,
