@@ -27,6 +27,10 @@ class WindowDouble
     )
   end
 
+  def needs_redraw!
+    go
+  end
+
   def allow_words_per_row(n)
     fixed_width_for_word = width / n
 
