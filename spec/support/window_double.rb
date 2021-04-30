@@ -4,9 +4,9 @@ require "gosu_adapter_stubs"
 class WindowDouble
   def initialize(engine:)
     @engine = engine
-    @width = 640
-    @height = 480
     @fixed_width_for_word_or_space = 50
+    @height = 480
+    @width = 640
   end
 
   def address=(new_address)
