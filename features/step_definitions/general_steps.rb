@@ -1,4 +1,3 @@
-require "drawing_visitors"
 require "inspector"
 require "node_counter"
 require "node_lister"
@@ -17,7 +16,6 @@ end
 def browser
   @browser ||= WindowDouble.new(
     engine: ONLINE_ENGINE.call,
-    drawing_visitors: DRAWING_VISITORS,
   )
 end
 

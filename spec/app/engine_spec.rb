@@ -4,6 +4,7 @@ require "engine"
 RSpec.describe Engine do
   subject(:engine) {
     Engine.new(
+      drawing_visitors: drawing_visitors,
       fetcher: fetcher,
       image_store_factory: image_store_factory,
       layout_visitors: layout_visitors,
@@ -11,6 +12,7 @@ RSpec.describe Engine do
     )
   }
 
+  let(:drawing_visitors) { double(:drawing_visitors, :visit => a_tree) }
   let(:fetcher) { double(:fetcher, :call => nil) }
   let(:image_store_factory) {
     double(
@@ -33,6 +35,9 @@ RSpec.describe Engine do
         viewport_height: 480,
         text_calculator: double(:text_calculator),
         image_calculator: double(:image_calculator),
+        box_renderer: double(:box_renderer),
+        image_renderer: double(:image_renderer),
+        text_renderer: double(:text_renderer),
       )
     end
 
@@ -48,6 +53,7 @@ RSpec.describe Engine do
 
     it "starts its visitors visiting" do
       expect(layout_visitors).to have_received(:visit)
+      expect(drawing_visitors).to have_received(:visit)
     end
   end
 
@@ -59,6 +65,9 @@ RSpec.describe Engine do
         viewport_height: 480,
         text_calculator: double(:text_calculator),
         image_calculator: double(:image_calculator),
+        box_renderer: double(:box_renderer),
+        image_renderer: double(:image_renderer),
+        text_renderer: double(:text_renderer),
       )
     }
 

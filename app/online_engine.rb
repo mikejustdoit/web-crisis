@@ -1,3 +1,4 @@
+require "drawing_visitors"
 require "engine"
 require "fetcher"
 require "image_store"
@@ -9,6 +10,7 @@ fetcher = Fetcher.new(RestClient)
 
 ONLINE_ENGINE = -> {
   Engine.new(
+    drawing_visitors: DRAWING_VISITORS,
     fetcher: fetcher,
     image_store_factory: -> (origin:) {
       ImageStore.new(fetcher: fetcher, origin: origin)

@@ -7,9 +7,8 @@ require "gosu_text_renderer"
 require "gosu_text_calculator"
 
 class GuiWindow < Gosu::Window
-  def initialize(engine:, drawing_visitors:)
+  def initialize(engine:)
     @engine = engine
-    @drawing_visitors = drawing_visitors
     @address = ""
     @needs_redraw = false
 
@@ -20,14 +19,12 @@ class GuiWindow < Gosu::Window
   attr_writer :address
 
   def draw
-    drawing_visitors.visit(
-      engine.request(
-        address,
-        viewport_width: viewport.width,
-        viewport_height: viewport.height,
-        text_calculator: GosuTextCalculator.new,
-        image_calculator: GosuImageCalculator.new,
-      ),
+    engine.request(
+      address,
+      viewport_width: viewport.width,
+      viewport_height: viewport.height,
+      text_calculator: GosuTextCalculator.new,
+      image_calculator: GosuImageCalculator.new,
       box_renderer: GosuBoxRenderer.new(viewport),
       image_renderer: GosuImageRenderer.new(viewport),
       text_renderer: GosuTextRenderer.new(viewport),
@@ -48,7 +45,7 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :address, :drawing_visitors, :engine, :needs_redraw
+  attr_reader :address, :engine, :needs_redraw
 
   def viewport
     Box.new(x: 0, y: 0, width: width, height: height)

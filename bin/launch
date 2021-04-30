@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative "../config/env"
-require "drawing_visitors"
 require "gui_window"
 require "online_engine"
 
@@ -16,7 +15,6 @@ LOGGER = ->(message) { puts(message) }
 
 browser = GuiWindow.new(
   engine: ONLINE_ENGINE.call,
-  drawing_visitors: DRAWING_VISITORS,
 )
 
 browser.address = uri
