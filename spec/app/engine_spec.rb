@@ -28,7 +28,7 @@ RSpec.describe Engine do
   describe "relationship with its collaborators" do
     before do
       engine.request(
-        "https://weworkremotely.com/",
+        "http://www.drchip.org/astronaut/vim/index.html",
         viewport_width: 640,
         viewport_height: 480,
         text_calculator: double(:text_calculator),
@@ -43,7 +43,7 @@ RSpec.describe Engine do
 
     it "builds its image store with the current 'origin' URI" do
       expect(image_store_factory).to have_received(:call)
-        .with(origin: "https://weworkremotely.com/")
+        .with(origin: "http://www.drchip.org/astronaut/vim/index.html")
     end
 
     it "starts its visitors visiting" do
@@ -54,7 +54,7 @@ RSpec.describe Engine do
   describe "#fetch returning a layed-out tree" do
     let(:returned_tree) {
       engine.request(
-        "https://weworkremotely.com/",
+        "http://www.drchip.org/astronaut/vim/index.html",
         viewport_width: 640,
         viewport_height: 480,
         text_calculator: double(:text_calculator),
