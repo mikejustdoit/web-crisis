@@ -9,18 +9,18 @@ require "gosu_text_calculator"
 class GuiWindow < Gosu::Window
   def initialize(engine:)
     @engine = engine
-    @address = ""
     @needs_redraw = false
 
     super(640, 480)
     self.caption = "Web Crisis browser"
   end
 
-  attr_writer :address
+  def address=(new_address)
+    engine.uri = new_address
+  end
 
   def draw
     engine.render(
-      address,
       viewport_width: viewport.width,
       viewport_height: viewport.height,
       text_calculator: GosuTextCalculator.new,
@@ -45,7 +45,7 @@ class GuiWindow < Gosu::Window
 
   private
 
-  attr_reader :address, :engine, :needs_redraw
+  attr_reader :engine, :needs_redraw
 
   def viewport
     Box.new(x: 0, y: 0, width: width, height: height)

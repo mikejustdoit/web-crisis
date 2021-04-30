@@ -13,8 +13,11 @@ class Engine
     @parser = parser
   end
 
+  def uri=(new_uri)
+    @uri = new_uri
+  end
+
   def render(
-    uri,
     viewport_width:,
     viewport_height:,
     text_calculator:,
@@ -46,5 +49,6 @@ class Engine
     :fetcher,
     :image_store_factory,
     :layout_visitors,
-    :parser
+    :parser,
+    :uri
 end

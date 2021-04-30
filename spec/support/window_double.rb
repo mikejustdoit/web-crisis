@@ -4,17 +4,17 @@ require "gosu_adapter_stubs"
 class WindowDouble
   def initialize(engine:)
     @engine = engine
-    @address = ""
     @width = 640
     @height = 480
     @fixed_width_for_word_or_space = 50
   end
 
-  attr_writer :address
+  def address=(new_address)
+    engine.uri = new_address
+  end
 
   def go
     engine.render(
-      address,
       viewport_width: viewport.width,
       viewport_height: viewport.height,
       text_calculator: gosu_text_calculator_stub(
@@ -37,8 +37,7 @@ class WindowDouble
 
   private
 
-  attr_reader :address, :engine, :fixed_width_for_word_or_space,
-    :height, :width
+  attr_reader :engine, :fixed_width_for_word_or_space, :height, :width
 
   def viewport
     Box.new(x: 0, y: 0, width: width, height: height)
