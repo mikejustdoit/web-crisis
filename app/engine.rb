@@ -1,3 +1,5 @@
+require "element"
+
 class Engine
   def initialize(
     drawing_visitors:,
@@ -11,7 +13,10 @@ class Engine
     @image_store_factory = image_store_factory
     @layout_visitors = layout_visitors
     @parser = parser
+    @render_tree = Element.new
   end
+
+  attr_reader :render_tree
 
   def uri=(new_uri)
     @uri = new_uri
@@ -26,7 +31,7 @@ class Engine
     image_renderer:,
     text_renderer:
   )
-    drawing_visitors.visit(
+    @render_tree = drawing_visitors.visit(
       layout_visitors.visit(
         parser.call(
           fetcher.call(uri, accept: parser.supported_mime_types),
@@ -41,6 +46,8 @@ class Engine
       image_renderer: image_renderer,
       text_renderer: text_renderer,
     )
+
+    render_tree
   end
 
   private
