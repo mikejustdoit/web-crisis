@@ -90,7 +90,7 @@ Then(/^the resulting tree has (\d+) nodes$/) do |n|
   expect(tree_size(@render_tree)).to eq(n)
 end
 
-When("I resize the window so that only a total of {int} words + spaces fit across the viewport") do |words_per_row|
+When("I resize the window so that only a total of {int} words fit across the viewport") do |words_per_row|
   browser.allow_words_per_row(words_per_row)
 end
 

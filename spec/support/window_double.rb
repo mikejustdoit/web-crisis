@@ -28,10 +28,14 @@ class WindowDouble
   end
 
   def allow_words_per_row(n)
-    fixed_width_for_word_or_space = width / n
+    fixed_width_for_word = width / n
 
     allow(text_calculator).to receive(:call).and_return(
-      [fixed_width_for_word_or_space, 18]
+      [fixed_width_for_word, 18]
+    )
+
+    allow(text_calculator).to receive(:call).with(/\A\s+\Z/).and_return(
+      [0, 0]
     )
   end
 
