@@ -5,8 +5,8 @@ Feature: wrapping text
       """
       <p>briefly thrown into chaos</p>
       """
-    When I resize the window so that only a total of 2 words fit across the viewport
-    And I render the page in the browser
+    And a maximum of 2 words can fit across the viewport
+    When I render the page in the browser
     Then the text appears over two rows
       | briefly thrown |
       | into chaos     |
