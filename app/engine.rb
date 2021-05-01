@@ -1,4 +1,6 @@
 require "element"
+require "inspector"
+require "point"
 
 class Engine
   def initialize(
@@ -48,6 +50,17 @@ class Engine
     )
 
     render_tree
+  end
+
+  def click(x, y, gui)
+    target = Inspector.new(render_tree).find_element_at(Point.new(x: x, y: y))
+
+    return if target.nil?
+
+    if target.respond_to?(:href) && !target.href.nil? && !target.href.empty?
+      @uri = target.href
+      gui.needs_redraw!
+    end
   end
 
   private

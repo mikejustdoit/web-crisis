@@ -1,8 +1,12 @@
+require "box"
+require "build_text"
 require "drawing_visitors"
 require "element"
 require "engine"
 require "fetcher"
+require "inline_element"
 require "layout_visitors"
+require "link"
 require "parser"
 
 RSpec.describe Engine do
@@ -59,5 +63,43 @@ RSpec.describe Engine do
     expect(drawing_visitors).to have_received(:visit)
 
     expect(returned_tree).to eq(a_tree)
+  end
+
+  describe "handling a click" do
+    context "when the target is a link with an href" do
+      it "notifies the GuiWindow that a redraw is required" do
+        gui_window = double(:gui_window, needs_redraw!: nil)
+
+        allow(drawing_visitors).to receive(:visit).and_return(
+          InlineElement.new(
+            Link.new(
+              Element.new(
+                box: Box.new(x: 0, y: 0, width: 100, height: 100),
+                children: [BuildText.new.call(content: "Click here")],
+              ),
+              href: "https://https://en.wikipedia.org/wiki/Hyperlink",
+            )
+          )
+        )
+
+        render
+
+        engine.click(0, 0, gui_window)
+
+        expect(gui_window).to have_received(:needs_redraw!)
+      end
+    end
+
+    context "when the target doesn't link to anywhere" do
+      it "doesn't do anything" do
+        gui_window = double(:gui_window, needs_redraw!: nil)
+
+        render
+
+        engine.click(0, 0, gui_window)
+
+        expect(gui_window).not_to have_received(:needs_redraw!)
+      end
+    end
   end
 end
