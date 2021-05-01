@@ -1,8 +1,10 @@
+require "box"
 require "build_text"
 require "element"
 require "image"
 require "inspector"
 require "link"
+require "point"
 require "text_search"
 
 RSpec.describe Inspector do
@@ -115,6 +117,71 @@ RSpec.describe Inspector do
         expect {
           inspector.find_single_link("https://www.example.com/news.html")
         }.to raise_error(Inspector::TooManyMatchesFound)
+      end
+    end
+  end
+
+  describe "finding an element in the viewport based on (x, y) coordinates" do
+    context "when the coordinates are outside of the viewport" do
+      let(:root_node) {
+        Element.new(box: Box.new(x: 0, y: 0, width: 10, height: 10))
+      }
+
+      it "returns nil" do
+        expect(
+          inspector.find_element_at(Point.new(x: 9000, y: 9000))
+        ).to be_nil
+      end
+    end
+
+    context "when there's only one element at the coordinates" do
+      let(:root_node) {
+        Element.new(box: Box.new(x: 0, y: 0, width: 10, height: 10))
+      }
+
+      it "returns it" do
+        expect(
+          inspector.find_element_at(Point.new(x: 5, y: 5))
+        ).to eq(root_node)
+      end
+    end
+
+    context "when there are nested elements at the coordinates" do
+      let(:root_node) {
+        Element.new(
+          box: Box.new(x: 0, y: 0, width: 100, height: 100),
+          children: [
+            Element.new(
+              box: Box.new(x: 0, y: 0, width: 10, height: 10),
+            ),
+          ],
+        )
+      }
+
+      it "returns the most specific one" do
+        expect(
+          inspector.find_element_at(Point.new(x: 5, y: 5))
+        ).to eq(root_node.children.first)
+      end
+    end
+
+    context "when there's text at the coordinates" do
+      let(:root_node) {
+        Element.new(
+          box: Box.new(x: 0, y: 0, width: 100, height: 100),
+          children: [
+            Element.new(
+              box: Box.new(x: 0, y: 0, width: 10, height: 10),
+              children: [BuildText.new.call(content: "Now you see me")],
+            ),
+          ],
+        )
+      }
+
+      it "returns the text node's immediate parent element" do
+        expect(
+          inspector.find_element_at(Point.new(x: 5, y: 5))
+        ).to eq(root_node.children.first)
       end
     end
   end

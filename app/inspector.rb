@@ -36,6 +36,10 @@ class Inspector
     matches.first
   end
 
+  def find_element_at(point)
+    all_at(render_tree, point).last
+  end
+
   private
 
   attr_reader :render_tree
@@ -56,5 +60,17 @@ class Inspector
     return [] unless parent_node.respond_to?(:children)
 
     parent_node.children.flat_map { |child| all_href_matches(child, href) }.compact
+  end
+
+  def all_at(parent_node, point)
+    return [] unless parent_node.overlaps?(point)
+
+    return [] if parent_node.respond_to?(:rows)
+
+    return [parent_node] unless parent_node.respond_to?(:children)
+
+    [parent_node] + parent_node.children.flat_map { |child|
+      all_at(child, point)
+    }.compact
   end
 end
