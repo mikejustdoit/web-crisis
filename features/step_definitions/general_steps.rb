@@ -13,16 +13,18 @@ def node_counter
   NodeCounter.new
 end
 
+def engine
+  @engine ||= ONLINE_ENGINE.call
+end
+
 def browser
-  @browser ||= WindowDouble.new(
-    engine: ONLINE_ENGINE.call,
-  )
+  @browser ||= WindowDouble.new(engine: engine)
 end
 
 def visit_address(new_address)
   browser.address = new_address
 
-  @render_tree = browser.go
+  browser.go
 end
 
 def page_displays_heading(text)
@@ -61,7 +63,7 @@ def page_displays_link(uri)
 end
 
 def page
-  Inspector.new(@render_tree)
+  Inspector.new(engine.render_tree)
 end
 
 Given("a web page:") do |html|
@@ -86,8 +88,8 @@ Given("an {string} image {string}") do |mime_type, image_path|
 end
 
 Then(/^the resulting tree has (\d+) nodes$/) do |n|
-  expect(@render_tree).not_to be_nil
-  expect(tree_size(@render_tree)).to eq(n)
+  expect(engine.render_tree).not_to be_nil
+  expect(tree_size(engine.render_tree)).to eq(n)
 end
 
 Given("a maximum of {int} words can fit across the viewport") do |words_per_row|
@@ -153,7 +155,7 @@ Then("the text appears over {word} rows") do |_, table|
   texts = table.raw.map(&:first).map(&:strip)
 
   texts.each do |search_text|
-    expect(@render_tree.content).to include(search_text)
+    expect(engine.render_tree.content).to include(search_text)
   end
 
   expect(
@@ -164,5 +166,5 @@ Then("the text appears over {word} rows") do |_, table|
 end
 
 Then("the whole thing still reads exactly {string}") do |whole_page_text|
-  expect(@render_tree.content).to eq(whole_page_text)
+  expect(engine.render_tree.content).to eq(whole_page_text)
 end
