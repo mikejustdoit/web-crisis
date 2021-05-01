@@ -6,7 +6,7 @@ Feature: rendering HTML
       <html><body><body><html>
       """
     When I render it in the browser
-    Then the resulting tree should have 2 nodes
+    Then the resulting tree has 2 nodes
 
   Scenario: handling unrenderable element types
     Given a web page:
@@ -14,4 +14,4 @@ Feature: rendering HTML
       <html><head></head><body><body><html>
       """
     When I render it in the browser
-    Then the resulting tree should have 2 nodes
+    Then the resulting tree has 2 nodes

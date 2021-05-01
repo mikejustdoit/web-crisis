@@ -73,7 +73,7 @@ RSpec.describe Engine do
       )
     }
 
-    it "should return a tree alright" do
+    it "returns a tree alright" do
       expect(returned_tree).to respond_to(:children)
     end
   end

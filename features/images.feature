@@ -11,4 +11,4 @@ Feature: rendering images
       </html>
       """
     When I render the page in the browser
-    Then "/svg/abc123" should fall back to the placeholder image
+    Then "/svg/abc123" falls back to the placeholder image

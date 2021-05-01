@@ -85,7 +85,7 @@ Given("an {string} image {string}") do |mime_type, image_path|
   )
 end
 
-Then(/^the resulting tree should have (\d+) nodes$/) do |n|
+Then(/^the resulting tree has (\d+) nodes$/) do |n|
   expect(@render_tree).not_to be_nil
   expect(tree_size(@render_tree)).to eq(n)
 end
@@ -107,11 +107,11 @@ When("I render the page in the browser") do
   visit_address(@address)
 end
 
-Then(/^the browser should visit the address$/) do
+Then(/^the browser visits the address$/) do
   expect(a_request(:get, @address)).to have_been_made.once
 end
 
-Then(/^the browser should render the web page$/) do
+Then(/^the browser renders the web page$/) do
   page_displays_heading("Welcome to LWN.net")
   page_displays_image(
     "https://static.lwn.net/images/logo/barepenguin-70.png",
@@ -121,7 +121,7 @@ Then(/^the browser should render the web page$/) do
   page_displays_link("/op/AuthorGuide.lwn")
 end
 
-Then("{string} should fall back to the placeholder image") do |image_path|
+Then("{string} falls back to the placeholder image") do |image_path|
   image_is_using_placeholder(image_path)
 end
 
