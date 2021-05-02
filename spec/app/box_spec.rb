@@ -148,7 +148,7 @@ RSpec.describe Box do
       ],
     ].each do |name, other_box|
       context name do
-        it "doesn't overlap either way" do
+        it "isn't considered to overlap because right and bottom are +1" do
           expect(box.overlaps?(other_box)).to be false
           expect(other_box.overlaps?(box)).to be false
         end
