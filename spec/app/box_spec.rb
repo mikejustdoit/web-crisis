@@ -1,5 +1,6 @@
 require "box"
 require "element"
+require "point"
 
 RSpec.describe Box do
   describe "creating a box from another object's position and dimensions" do
@@ -11,6 +12,18 @@ RSpec.describe Box do
       expect(box.y).to eq(source_object.y)
       expect(box.width).to eq(source_object.width)
       expect(box.height).to eq(source_object.height)
+    end
+
+    context "when the source object is missing dimension properties" do
+      it "builds a point of a box" do
+        source_object = Point.new(x: 12, y: 34)
+        box = Box.from(source_object)
+
+        expect(box.x).to eq(12)
+        expect(box.y).to eq(34)
+        expect(box.width).to eq(1)
+        expect(box.height).to eq(1)
+      end
     end
   end
 

@@ -10,8 +10,8 @@ class Box
     new(
       x: source_object.x,
       y: source_object.y,
-      width: source_object.width,
-      height: source_object.height,
+      width: source_object.respond_to?(:width) ?  source_object.width : 1,
+      height: source_object.respond_to?(:height) ?  source_object.height : 1,
     )
   end
 
