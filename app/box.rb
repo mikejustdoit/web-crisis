@@ -26,10 +26,14 @@ class Box
   end
 
   def overlaps?(other)
-    return false unless self.defined? && Box.from(other).defined?
+    return false unless self.defined?
 
-    other.bottom > y && other.y < bottom &&
-      other.right > x && other.x < right
+    other_box = Box.from(other)
+
+    return false unless other_box.defined?
+
+    other_box.bottom > y && other_box.y < bottom &&
+      other_box.right > x && other_box.x < right
   end
 
   def ==(other_box)

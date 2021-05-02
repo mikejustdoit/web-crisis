@@ -85,7 +85,7 @@ RSpec.describe Box do
     end
   end
 
-  describe "comparing position with other box-like objects" do
+  describe "comparing position with other objects" do
     let(:box) { Box.new(x: 100, y: 100, width: 600, height: 400) }
 
     context "when our Box isn't fully defined" do
@@ -105,6 +105,17 @@ RSpec.describe Box do
       it "isn't considered to overlap either way" do
         expect(box.overlaps?(other_box)).to be false
         expect(other_box.overlaps?(box)).to be false
+      end
+    end
+
+    context "when the other object only has its x and y defined" do
+      let(:box) { Box.new(x: 100, y: 100, width: 600, height: 400) }
+      let(:overlapping_point) { Point.new(x: 350, y: 250) }
+      let(:far_away_point) { Point.new(x: 0, y: 0) }
+
+      it "is treated as a point" do
+        expect(box.overlaps?(overlapping_point)).to be true
+        expect(box.overlaps?(far_away_point)).to be false
       end
     end
 
