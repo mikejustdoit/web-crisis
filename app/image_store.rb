@@ -1,3 +1,4 @@
+require "build_uri"
 require "image"
 require "uri"
 require "data_uri"
@@ -7,7 +8,7 @@ class ImageStore
 
   def initialize(fetcher:, origin:)
     @fetcher = fetcher
-    @origin = URI.parse(origin)
+    @origin = origin
   end
 
   def call(uri)
@@ -15,28 +16,14 @@ class ImageStore
       return DataUri.new(uri).tap { |du| du.write_to_file }.name
     end
 
-    download(ensure_scheme(ensure_host(uri)))
+    download(
+      BuildUri.new(origin: origin).call(uri)
+    )
   end
 
   private
 
   attr_reader :fetcher, :origin
-
-  def ensure_host(uri_string)
-    uri = URI.parse(uri_string)
-
-    return uri_string unless uri.host.nil?
-
-    (origin + uri).to_s
-  end
-
-  def ensure_scheme(uri_string)
-    uri = URI.parse(uri_string)
-
-    return uri_string unless uri.scheme.nil?
-
-    uri.tap { |u| u.scheme = origin.scheme }.to_s
-  end
 
   def download(uri)
     name = remote_image_to_filename(uri)
