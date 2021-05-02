@@ -15,7 +15,7 @@ class Text
 
   attr_reader :colour, :rows
 
-  def_delegators :box, :x, :y, :width, :height, :right, :bottom
+  def_delegators :box, :x, :y, :width, :height, :right, :bottom, :overlaps?
 
   def content
     rows.map(&:content).join

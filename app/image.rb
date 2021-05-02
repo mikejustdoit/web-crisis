@@ -14,7 +14,7 @@ class Image
 
   attr_reader :filename, :src
 
-  def_delegators :box, :x, :y, :width, :height, :right, :bottom
+  def_delegators :box, :x, :y, :width, :height, :right, :bottom, :overlaps?
 
   def content
     ""

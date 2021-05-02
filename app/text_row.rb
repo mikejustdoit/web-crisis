@@ -12,7 +12,7 @@ class TextRow
 
   attr_reader :content
 
-  def_delegators :box, :x, :y, :width, :height, :right, :bottom
+  def_delegators :box, :x, :y, :width, :height, :right, :bottom, :overlaps?
 
   def clone_with(**attributes)
     TextRow.new(

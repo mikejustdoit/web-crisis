@@ -10,7 +10,7 @@ class Element
     @children = children.dup
   end
 
-  def_delegators :box, :x, :y, :width, :height, :right, :bottom
+  def_delegators :box, :x, :y, :width, :height, :right, :bottom, :overlaps?
 
   def children
     @children.dup

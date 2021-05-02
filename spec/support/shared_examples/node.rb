@@ -8,6 +8,10 @@ RSpec.shared_examples "a node with position and dimensions" do
     expect(node.bottom).to eq(box.bottom)
   end
 
+  it "exposes box's #overlaps? method" do
+    expect(node).to respond_to(:overlaps?)
+  end
+
   describe "creating a new node with new attributes" do
     let(:new_attributes) { {:x => 10, :y => 10, :width => 50, :height => 50} }
 
