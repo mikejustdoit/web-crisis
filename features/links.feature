@@ -11,3 +11,10 @@ Feature: Clicking links
     When I click on "Wikipedia that"
     Then the browser visits "https://en.wikipedia.org/wiki/Hyperlink"
     And the browser renders the heading "Hyperlink"
+
+  @wip
+  Scenario: Clicking a relative link
+    Given I'm on the page "https://en.wikipedia.org/wiki/Hyperlink"
+    When I click on "computing"
+    Then the browser visits "https://en.wikipedia.org/wiki/Computing"
+    And the browser renders the heading "Computing"

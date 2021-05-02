@@ -96,6 +96,10 @@ Given("a maximum of {int} words can fit across the viewport") do |words_per_row|
   browser.allow_words_per_row(words_per_row)
 end
 
+Given("I'm on the page {string}") do |address|
+  visit_address(address)
+end
+
 When(/^I request an address$/) do
   @address = "https://lwn.net/"
   visit_address(@address)
