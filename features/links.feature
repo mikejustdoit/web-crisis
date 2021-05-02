@@ -12,7 +12,6 @@ Feature: Clicking links
     Then the browser visits "https://en.wikipedia.org/wiki/Hyperlink"
     And the browser renders the heading "Hyperlink"
 
-  @wip
   Scenario: Clicking a relative link
     Given I'm on the page "https://en.wikipedia.org/wiki/Hyperlink"
     When I click on "computing"

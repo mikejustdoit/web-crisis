@@ -1,3 +1,4 @@
+require "build_uri"
 require "element"
 require "inspector"
 require "point"
@@ -16,12 +17,13 @@ class Engine
     @layout_visitors = layout_visitors
     @parser = parser
     @render_tree = Element.new
+    @uri = nil
   end
 
   attr_reader :render_tree
 
   def uri=(new_uri)
-    @uri = new_uri
+    @uri = BuildUri.new(origin: uri).call(new_uri)
   end
 
   def render(
@@ -58,7 +60,7 @@ class Engine
     return if target.nil?
 
     if target.respond_to?(:href) && !target.href.nil? && !target.href.empty?
-      @uri = target.href
+      self.uri = target.href
       gui.needs_redraw!
     end
   end
