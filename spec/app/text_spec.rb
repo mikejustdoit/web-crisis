@@ -32,42 +32,7 @@ RSpec.describe Text do
     expect(node.colour).to eq(:black)
   end
 
-  describe "working with node's position and dimensions" do
-    before do
-      allow(first_row).to receive(:right).and_call_original
-      allow(second_row).to receive(:right).and_call_original
-      allow(first_row).to receive(:bottom).and_call_original
-      allow(second_row).to receive(:bottom).and_call_original
-    end
-
-    it "exposes delegated getters for box's attributes" do
-      expect(node.x).to eq(box.x)
-      expect(node.y).to eq(box.y)
-      expect(node.width).to eq(box.width)
-      expect(node.height).to eq(box.height)
-    end
-
-    it "exposes position and dimension aggregate methods" do
-      expect(node).to respond_to(:right)
-      expect(node).to respond_to(:bottom)
-    end
-
-    describe "creating a new node with new attributes" do
-      let(:new_attributes) { {:x => 10, :y => 10} }
-
-      let(:clone_of_node) { node.clone_with(**new_attributes) }
-
-      it "doesn't change the old node's attributes" do
-        expect(node.x).to eq(box.x)
-        expect(node.y).to eq(box.y)
-      end
-
-      it "assigns the new node the specified attributes" do
-        expect(clone_of_node.x).to eq(new_attributes.fetch(:x))
-        expect(clone_of_node.y).to eq(new_attributes.fetch(:y))
-      end
-    end
-  end
+  it_behaves_like "a node with position and dimensions"
 
   describe "cloning" do
     let(:node_specific_attribute) { :rows }
