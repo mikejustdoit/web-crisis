@@ -113,7 +113,7 @@ RSpec.describe ImageStore do
   end
 
   context "when the image URI is missing the host" do
-    context "and the URI is absolute" do
+    context "and the URI is root-relative" do
       let(:origin) { "http://www.example.info" }
       let(:src) { "/art.jpg" }
 
