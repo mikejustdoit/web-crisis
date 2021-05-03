@@ -15,6 +15,7 @@ def raw_responses
     "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/SRI_ARC_Engelbart_Nov_1969.jpg/220px-SRI_ARC_Engelbart_Nov_1969.jpg" => -> { File.new("features/support/wikipedia-hyperlink-engelbart-sri-raw-response.txt") },
     "https://en.wikipedia.org/static/images/footer/wikimedia-button.png" => -> { File.new("features/support/wikipedia-hyperlink-wikimedia-button-raw-response.txt") },
     "https://en.wikipedia.org/static/images/footer/poweredby_mediawiki_88x31.png" => -> { File.new("features/support/wikipedia-hyperlink-poweredby-mediawiki-raw-response.txt") },
+    "https://en.wikipedia.org/wiki/Computing" => -> { File.new("features/support/wikipedia-computing-raw-response.txt") },
   }
 end
 
