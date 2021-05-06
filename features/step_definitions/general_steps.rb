@@ -37,6 +37,16 @@ def page_displays_heading(text)
   end
 end
 
+def heading_is_not_in_view(text)
+  bounding_boxes = page.bounding_boxes_for_first(text)
+
+  expect(bounding_boxes).not_to be_empty
+
+  bounding_boxes.each do |box|
+    expect(browser.in_view?(box)).to be false
+  end
+end
+
 def page_displays_image(image_address, width:, height:)
   image = page.find_single_image(image_address)
 
@@ -119,12 +129,24 @@ When('I click on {string}') do |link_text|
   browser.click(text_node.x, text_node.y)
 end
 
+When('I scroll down the page') do
+  browser.scroll_down
+end
+
 Then('the browser visits {string}') do |address|
   expect(a_request(:get, address)).to have_been_made.once
 end
 
 Then('the browser renders the heading {string}') do |text|
   page_displays_heading(text)
+end
+
+Then('I can see the heading {string}') do |text|
+  page_displays_heading(text)
+end
+
+Then('I cannot see the heading {string}') do |text|
+  heading_is_not_in_view(text)
 end
 
 Then(/^the browser visits the address$/) do
