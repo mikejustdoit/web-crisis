@@ -5,7 +5,6 @@ Feature: browsing the WWW
     Then the browser visits the address
     And the browser renders the web page
 
-  @wip
   Scenario: scrolling down a page
     Given I'm on the page "https://en.wikipedia.org/wiki/Scrolling"
     And I can see the heading "Scrolling"

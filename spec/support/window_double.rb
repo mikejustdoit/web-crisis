@@ -51,6 +51,14 @@ class WindowDouble
     engine.click(viewport_x, viewport_y, self)
   end
 
+  def scroll_down
+    engine.scroll_down(viewport, self)
+  end
+
+  def scroll_up
+    engine.scroll_up(viewport, self)
+  end
+
   private
 
   attr_reader :engine,

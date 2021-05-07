@@ -20,8 +20,13 @@ class GuiWindow < Gosu::Window
   end
 
   def button_down(id)
-    if id == Gosu::MS_LEFT
+    case id
+    when Gosu::MS_LEFT
       engine.click(mouse_x - viewport.x, mouse_y - viewport.y, self)
+    when Gosu::KB_PAGE_DOWN
+      engine.scroll_down(viewport, self)
+    when Gosu::KB_PAGE_UP
+      engine.scroll_up(viewport, self)
     end
   end
 
