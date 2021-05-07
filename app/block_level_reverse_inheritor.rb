@@ -1,6 +1,6 @@
-require "node_types"
-
 class BlockLevelReverseInheritor
+  class UnrecognisedNodeType < StandardError; end
+
   def initialize(**_); end
 
   def call(node)

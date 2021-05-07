@@ -62,10 +62,10 @@ RSpec.describe Arranger do
     context "when a node doesn't support #children and isn't text" do
       let(:unrecognised_type_of_node) { double(:unrecognised_type_of_node) }
 
-      it "complains about the unrecognised node type" do
-        expect {
+      it "returns the node untouched" do
+        expect(
           visitor.call(unrecognised_type_of_node)
-        }.to raise_error(UnrecognisedNodeType)
+        ).to eq(unrecognised_type_of_node)
       end
     end
   end

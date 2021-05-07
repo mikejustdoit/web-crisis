@@ -1,5 +1,4 @@
 require "build_text"
-require "node_types"
 require "support/element_helpers"
 require "support/visitor_double"
 require "text"

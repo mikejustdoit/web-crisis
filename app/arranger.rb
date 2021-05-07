@@ -1,5 +1,4 @@
 require "element_arranger"
-require "node_types"
 require "text_wrapper"
 
 class Arranger
@@ -12,10 +11,8 @@ class Arranger
       visit_element(node)
     elsif node.respond_to?(:rows)
       visit_text(node)
-    elsif node.respond_to?(:src)
-      node
     else
-      raise UnrecognisedNodeType.new(node)
+      node
     end
   end
 

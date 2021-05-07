@@ -66,7 +66,7 @@ RSpec.describe BlockLevelReverseInheritor do
       it "complains about the unrecognised node type" do
         expect {
           visitor.call(unrecognised_type_of_node)
-        }.to raise_error(UnrecognisedNodeType)
+        }.to raise_error(BlockLevelReverseInheritor::UnrecognisedNodeType)
       end
     end
   end
