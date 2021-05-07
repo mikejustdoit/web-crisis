@@ -18,6 +18,7 @@ class Engine
     @layout_visitors = layout_visitors
     @parser = parser
     @render_tree = Element.new
+    @scroll_y = 0
     @uri = nil
   end
 
@@ -74,6 +75,7 @@ class Engine
     :image_store_factory,
     :layout_visitors,
     :parser,
+    :scroll_y,
     :uri
 
   def build_uri
