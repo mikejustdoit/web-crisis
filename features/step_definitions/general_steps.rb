@@ -24,7 +24,9 @@ end
 def visit_address(new_address)
   browser.address = new_address
 
-  browser.go
+  VCR.use_cassette(new_address) do
+    browser.go
+  end
 end
 
 def page_displays_heading(text)
@@ -116,7 +118,9 @@ end
 When('I click on {string}') do |link_text|
   text_node = page.bounding_boxes_for_first(link_text).first
 
-  browser.click(text_node.x, text_node.y)
+  VCR.use_cassette(link_text) do
+    browser.click(text_node.x, text_node.y)
+  end
 end
 
 Then('the browser visits {string}') do |address|
