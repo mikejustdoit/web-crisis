@@ -7,6 +7,7 @@ require "parser"
 
 OFFLINE_ENGINE = -> (html) {
   Engine.new(
+    build_uri_factory: -> (origin:) { -> (uri) { uri } },
     drawing_visitors: DRAWING_VISITORS,
     fetcher: OfflineHtmlFetcher.new(html),
     image_store_factory: LocalFileImageStore.method(:new),

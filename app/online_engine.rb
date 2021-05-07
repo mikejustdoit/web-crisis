@@ -1,3 +1,4 @@
+require "build_uri"
 require "drawing_visitors"
 require "engine"
 require "fetcher"
@@ -10,6 +11,7 @@ fetcher = Fetcher.new(RestClient)
 
 ONLINE_ENGINE = -> {
   Engine.new(
+    build_uri_factory: BuildUri.method(:new),
     drawing_visitors: DRAWING_VISITORS,
     fetcher: fetcher,
     image_store_factory: -> (origin:) {

@@ -1,5 +1,6 @@
 require "box"
 require "build_text"
+require "build_uri"
 require "drawing_visitors"
 require "element"
 require "engine"
@@ -12,6 +13,7 @@ require "parser"
 RSpec.describe Engine do
   subject(:engine) {
     Engine.new(
+      build_uri_factory: BuildUri.method(:new),
       drawing_visitors: drawing_visitors,
       fetcher: fetcher,
       image_store_factory: image_store_factory,

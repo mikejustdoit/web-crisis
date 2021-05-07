@@ -1,16 +1,17 @@
-require "build_uri"
 require "element"
 require "inspector"
 require "point"
 
 class Engine
   def initialize(
+    build_uri_factory:,
     drawing_visitors:,
     fetcher:,
     image_store_factory:,
     layout_visitors:,
     parser:
   )
+    @build_uri_factory = build_uri_factory
     @drawing_visitors = drawing_visitors
     @fetcher = fetcher
     @image_store_factory = image_store_factory
@@ -23,7 +24,7 @@ class Engine
   attr_reader :render_tree
 
   def uri=(new_uri)
-    @uri = BuildUri.new(origin: uri).call(new_uri)
+    @uri = build_uri.call(new_uri)
   end
 
   def render(
@@ -67,10 +68,15 @@ class Engine
 
   private
 
-  attr_reader :drawing_visitors,
+  attr_reader :build_uri_factory,
+    :drawing_visitors,
     :fetcher,
     :image_store_factory,
     :layout_visitors,
     :parser,
     :uri
+
+  def build_uri
+    build_uri_factory.call(origin: uri)
+  end
 end
