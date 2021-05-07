@@ -68,6 +68,28 @@ class Engine
     end
   end
 
+  def scroll_down(viewport, gui)
+    max_scroll_y = render_tree.height - viewport.height
+
+    new_scroll_y = [scroll_y + 150, max_scroll_y].min
+
+    if new_scroll_y != scroll_y
+      @scroll_y = new_scroll_y
+
+      gui.needs_redraw!
+    end
+  end
+
+  def scroll_up(viewport, gui)
+    new_scroll_y = [scroll_y - 150, 0].max
+
+    if new_scroll_y != scroll_y
+      @scroll_y = new_scroll_y
+
+      gui.needs_redraw!
+    end
+  end
+
   private
 
   attr_reader :build_uri_factory,

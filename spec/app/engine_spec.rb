@@ -30,12 +30,14 @@ RSpec.describe Engine do
 
   let(:a_tree) { Element.new }
 
+  let(:viewport) { double(:viewport, height: 480) }
+
   def render
     engine.uri = "http://www.drchip.org/astronaut/vim/index.html"
 
     engine.render(
       viewport_width: 640,
-      viewport_height: 480,
+      viewport_height: viewport.height,
       text_calculator: double(:text_calculator),
       image_calculator: double(:image_calculator),
       box_renderer: double(:box_renderer),
@@ -102,6 +104,58 @@ RSpec.describe Engine do
 
         expect(gui_window).not_to have_received(:needs_redraw!)
       end
+    end
+  end
+
+  describe "scroll down event" do
+    it "notifies the GuiWindow that a redraw is required" do
+      gui_window = double(:gui_window, needs_redraw!: nil)
+
+      allow(drawing_visitors).to receive(:visit).and_return(
+        Element.new(box: Box.new(y: 0, height: viewport.height * 2))
+      )
+      render
+
+      engine.scroll_down(viewport, gui_window)
+
+      expect(gui_window).to have_received(:needs_redraw!)
+    end
+
+    it "doesn't scroll past the bottom of the page" do
+      gui_window = double(:gui_window, needs_redraw!: nil)
+
+      allow(drawing_visitors).to receive(:visit).and_return(
+        Element.new(box: Box.new(y: 0, height: viewport.height))
+      )
+      render
+
+      engine.scroll_down(viewport, gui_window)
+
+      expect(gui_window).not_to have_received(:needs_redraw!)
+    end
+  end
+
+  describe "scroll up event" do
+    it "notifies the GuiWindow that a redraw is required" do
+      gui_window = double(:gui_window, needs_redraw!: nil)
+
+      allow(drawing_visitors).to receive(:visit).and_return(
+        Element.new(box: Box.new(y: 0, height: viewport.height * 2))
+      )
+      render
+
+      engine.scroll_down(viewport, gui_window)
+      engine.scroll_up(viewport, gui_window)
+
+      expect(gui_window).to have_received(:needs_redraw!).twice
+    end
+
+    it "doesn't scroll above the top of the page" do
+      gui_window = double(:gui_window, needs_redraw!: nil)
+
+      engine.scroll_up(viewport, gui_window) # i.e. starting at the top
+
+      expect(gui_window).not_to have_received(:needs_redraw!)
     end
   end
 end
