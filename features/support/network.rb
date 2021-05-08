@@ -20,3 +20,9 @@ VCR.configure do |config|
     }
   end
 end
+
+Around do |scenario, block|
+  VCR.use_cassette(scenario.name) do
+    block.call
+  end
+end
