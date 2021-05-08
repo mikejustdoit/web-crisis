@@ -48,6 +48,7 @@ class Engine
         image_calculator: image_calculator,
         image_store: image_store_factory.call(origin: uri),
       ),
+      scroll_y: scroll_y,
       box_renderer: box_renderer,
       image_renderer: image_renderer,
       text_renderer: text_renderer,
