@@ -69,6 +69,34 @@ RSpec.describe Engine do
     expect(returned_tree).to eq(a_tree)
   end
 
+  context "re-rendering the same page" do
+    before do
+      allow(layout_visitors).to receive(:visit).and_return(a_tree)
+    end
+
+    it "doesn't fetch the page a second time" do
+      render
+      render
+
+      expect(fetcher).to have_received(:call).once
+      expect(parser).to have_received(:call).once
+    end
+
+    it "doesn't layout a second time" do
+      render
+      render
+
+      expect(layout_visitors).to have_received(:visit).once
+    end
+
+    it "draws to screen again" do
+      render
+      render
+
+      expect(drawing_visitors).to have_received(:visit).twice
+    end
+  end
+
   describe "handling a click" do
     context "when the target is a link with an href" do
       it "notifies the GuiWindow that a redraw is required" do

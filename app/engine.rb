@@ -16,6 +16,7 @@ class Engine
     @fetcher = fetcher
     @image_store_factory = image_store_factory
     @layout_visitors = layout_visitors
+    @layouts = {}
     @parser = parser
     @render_tree = Element.new
     @scroll_y = 0
@@ -37,17 +38,19 @@ class Engine
     image_renderer:,
     text_renderer:
   )
-    @render_tree = drawing_visitors.visit(
-      layout_visitors.visit(
-        parser.call(
-          fetcher.call(uri, accept: parser.supported_mime_types),
-        ),
-        viewport_width: viewport_width,
-        viewport_height: viewport_height,
-        text_calculator: text_calculator,
-        image_calculator: image_calculator,
-        image_store: image_store_factory.call(origin: uri),
+    layouts[uri] ||= layout_visitors.visit(
+      parser.call(
+        fetcher.call(uri, accept: parser.supported_mime_types),
       ),
+      viewport_width: viewport_width,
+      viewport_height: viewport_height,
+      text_calculator: text_calculator,
+      image_calculator: image_calculator,
+      image_store: image_store_factory.call(origin: uri),
+    )
+
+    @render_tree = drawing_visitors.visit(
+      layouts[uri],
       scroll_y: scroll_y,
       box_renderer: box_renderer,
       image_renderer: image_renderer,
@@ -96,6 +99,7 @@ class Engine
     :drawing_visitors,
     :fetcher,
     :image_store_factory,
+    :layouts,
     :layout_visitors,
     :parser,
     :scroll_y,
