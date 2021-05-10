@@ -37,15 +37,19 @@ class Engine
     image_renderer:,
     text_renderer:
   )
-    layouts[uri] ||= layout_visitors.visit(
-      parser.call(
-        fetcher.call(uri, accept: parser.supported_mime_types),
-      ),
-      viewport_width: viewport_width,
-      text_calculator: text_calculator,
-      image_calculator: image_calculator,
-      image_store: image_store_factory.call(origin: uri),
-    )
+    layouts[uri] ||= begin
+      @scroll_y = 0
+
+      layout_visitors.visit(
+        parser.call(
+          fetcher.call(uri, accept: parser.supported_mime_types),
+        ),
+        viewport_width: viewport_width,
+        text_calculator: text_calculator,
+        image_calculator: image_calculator,
+        image_store: image_store_factory.call(origin: uri),
+      )
+    end
 
     @render_tree = drawing_visitors.visit(
       layouts[uri],
