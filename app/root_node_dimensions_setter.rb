@@ -1,7 +1,6 @@
 class RootNodeDimensionsSetter
-  def initialize(viewport_width:, viewport_height:, **)
+  def initialize(viewport_width:, **)
     @viewport_width = viewport_width
-    @viewport_height = viewport_height
   end
 
   def call(node)
@@ -9,11 +8,10 @@ class RootNodeDimensionsSetter
       x: 0,
       y: 0,
       width: viewport_width,
-      height: viewport_height,
     )
   end
 
   private
 
-  attr_reader :viewport_width, :viewport_height
+  attr_reader :viewport_width
 end

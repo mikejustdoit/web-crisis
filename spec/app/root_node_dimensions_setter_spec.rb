@@ -7,11 +7,9 @@ RSpec.describe RootNodeDimensionsSetter do
   subject(:visitor) {
     RootNodeDimensionsSetter.new(
       viewport_width: viewport_width,
-      viewport_height: viewport_height,
     )
   }
   let(:viewport_width) { 640 }
-  let(:viewport_height) { 480 }
 
   it_behaves_like "a visitor"
 
@@ -26,9 +24,12 @@ RSpec.describe RootNodeDimensionsSetter do
       expect(returned_root).not_to eq(root)
     end
 
-    it "sets the returned root node's dimensions to viewport's" do
+    it "sets the returned root node's width to viewport's" do
       expect(returned_root.width).to eq(viewport_width)
-      expect(returned_root.height).to eq(viewport_height)
+    end
+
+    it "don't set the root node's height because later layout will do that" do
+      expect(returned_root.height).to be_nil
     end
 
     it "sets the returned root node's position to the left, top page edge" do
