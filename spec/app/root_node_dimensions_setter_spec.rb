@@ -31,7 +31,7 @@ RSpec.describe RootNodeDimensionsSetter do
       expect(returned_root.height).to eq(viewport_height)
     end
 
-    it "sets the returned root node's position to the left, top viewport edge" do
+    it "sets the returned root node's position to the left, top page edge" do
       expect(returned_root.x).to eq(0)
       expect(returned_root.y).to eq(0)
     end
