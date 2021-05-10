@@ -18,7 +18,6 @@ class WindowDouble
   def go
     engine.render(
       viewport_width: viewport.width,
-      viewport_height: viewport.height,
       text_calculator: text_calculator,
       image_calculator: gosu_image_calculator_stub(returns: [100, 100]),
       box_renderer: gosu_box_renderer_stub,

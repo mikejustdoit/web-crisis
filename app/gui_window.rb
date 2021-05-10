@@ -33,7 +33,6 @@ class GuiWindow < Gosu::Window
   def draw
     engine.render(
       viewport_width: viewport.width,
-      viewport_height: viewport.height,
       text_calculator: GosuTextCalculator.new,
       image_calculator: GosuImageCalculator.new,
       box_renderer: GosuBoxRenderer.new(viewport),

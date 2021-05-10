@@ -31,7 +31,6 @@ class Engine
 
   def render(
     viewport_width:,
-    viewport_height:,
     text_calculator:,
     image_calculator:,
     box_renderer:,
@@ -43,7 +42,6 @@ class Engine
         fetcher.call(uri, accept: parser.supported_mime_types),
       ),
       viewport_width: viewport_width,
-      viewport_height: viewport_height,
       text_calculator: text_calculator,
       image_calculator: image_calculator,
       image_store: image_store_factory.call(origin: uri),

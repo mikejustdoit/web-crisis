@@ -37,7 +37,6 @@ RSpec.describe Engine do
 
     engine.render(
       viewport_width: 640,
-      viewport_height: viewport.height,
       text_calculator: double(:text_calculator),
       image_calculator: double(:image_calculator),
       box_renderer: double(:box_renderer),
