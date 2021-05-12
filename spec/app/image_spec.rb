@@ -7,6 +7,8 @@ RSpec.describe Image do
   let(:box) { Box.new(x: 0, y: 1, width: 2, height: 3) }
   let(:src) { "https://www.example.com/art.jpg" }
 
+  it_behaves_like "a render tree node"
+
   it "has a #src" do
     expect(node.src).to eq(src)
   end

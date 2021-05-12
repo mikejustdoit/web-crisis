@@ -1,3 +1,9 @@
+RSpec.shared_examples "a render tree node" do
+  it "is or is not clickable" do
+    expect(node.clickable?).to be(true).or be(false)
+  end
+end
+
 RSpec.shared_examples "a node with position and dimensions" do
   it "exposes delegated getters for box's attributes" do
     expect(node.x).to eq(box.x)

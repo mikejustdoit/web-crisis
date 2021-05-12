@@ -55,6 +55,10 @@ class Text
     string.overlapping(content_range).map(&:last).map(&Box.method(:from))
   end
 
+  def clickable?
+    false
+  end
+
   private
 
   attr_reader :box

@@ -28,6 +28,10 @@ class Image
     )
   end
 
+  def clickable?
+    false
+  end
+
   private
 
   attr_reader :box

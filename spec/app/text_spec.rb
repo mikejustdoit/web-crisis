@@ -22,6 +22,8 @@ RSpec.describe Text do
     )
   }
 
+  it_behaves_like "a render tree node"
+
   describe "#content" do
     it "presents its rows' content, with their original whitespace" do
       expect(node.content).to eq("Tweet of the Week")

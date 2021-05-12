@@ -31,6 +31,10 @@ class Element
     TextBounds.new(x: x, width: width)
   end
 
+  def clickable?
+    false
+  end
+
   private
 
   attr_reader :box

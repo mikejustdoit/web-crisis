@@ -10,6 +10,8 @@ RSpec.describe Element do
     let(:first_child) { Element.new }
     let(:second_child) { Element.new }
 
+    it_behaves_like "a render tree node"
+
     it "exposes its collection of children through a getter" do
       expect(node.children).to eq(children)
     end
