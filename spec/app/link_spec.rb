@@ -16,6 +16,32 @@ RSpec.describe Link do
     expect(node.href).to eq("/faq")
   end
 
+  describe "clickability" do
+    context "with no href" do
+      it "is not clickable" do
+        node = Link.new(Element.new, href: nil)
+
+        expect(node).not_to be_clickable
+      end
+    end
+
+    context "with an empty href" do
+      it "is not clickable" do
+        node = Link.new(Element.new, href: "")
+
+        expect(node).not_to be_clickable
+      end
+    end
+
+    context "with a non-empty href" do
+      it "is clickable" do
+        node = Link.new(Element.new, href: "/help")
+
+        expect(node).to be_clickable
+      end
+    end
+  end
+
   describe "decorating" do
     let(:internal_node) { element }
 

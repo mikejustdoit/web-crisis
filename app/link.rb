@@ -25,6 +25,10 @@ class Link < SimpleDelegator
     )
   end
 
+  def clickable?
+    !href.nil? && !href.empty?
+  end
+
   private
 
   attr_reader :node
