@@ -36,8 +36,8 @@ class Inspector
     matches.first
   end
 
-  def find_element_at(point)
-    all_at(render_tree, point).last
+  def find_clickable_at(point)
+    all_at(render_tree, point).select(&:clickable?).last
   end
 
   private

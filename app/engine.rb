@@ -63,14 +63,12 @@ class Engine
   end
 
   def click(x, y, gui)
-    target = Inspector.new(render_tree).find_element_at(Point.new(x: x, y: y))
+    target = Inspector.new(render_tree).find_clickable_at(Point.new(x: x, y: y))
 
     return if target.nil?
 
-    if target.respond_to?(:href) && !target.href.nil? && !target.href.empty?
-      self.uri = target.href
-      gui.needs_redraw!
-    end
+    self.uri = target.href
+    gui.needs_redraw!
   end
 
   def scroll_down(viewport, gui)

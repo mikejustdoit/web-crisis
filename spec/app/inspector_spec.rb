@@ -121,7 +121,7 @@ RSpec.describe Inspector do
     end
   end
 
-  describe "finding an element in the viewport based on (x, y) coordinates" do
+  describe "finding a clickable element based on (x, y) coordinates" do
     context "when the coordinates are outside of the viewport" do
       let(:root_node) {
         Element.new(box: Box.new(x: 0, y: 0, width: 10, height: 10))
@@ -129,19 +129,22 @@ RSpec.describe Inspector do
 
       it "returns nil" do
         expect(
-          inspector.find_element_at(Point.new(x: 9000, y: 9000))
+          inspector.find_clickable_at(Point.new(x: 9000, y: 9000))
         ).to be_nil
       end
     end
 
     context "when there's only one element at the coordinates" do
       let(:root_node) {
-        Element.new(box: Box.new(x: 0, y: 0, width: 10, height: 10))
+        Link.new(
+          Element.new(box: Box.new(x: 0, y: 0, width: 10, height: 10)),
+          href: "/root",
+        )
       }
 
       it "returns it" do
         expect(
-          inspector.find_element_at(Point.new(x: 5, y: 5))
+          inspector.find_clickable_at(Point.new(x: 5, y: 5))
         ).to eq(root_node)
       end
     end
@@ -151,17 +154,29 @@ RSpec.describe Inspector do
         Element.new(
           box: Box.new(x: 0, y: 0, width: 100, height: 100),
           children: [
-            Element.new(
-              box: Box.new(x: 0, y: 0, width: 10, height: 10),
+            Link.new(
+              Element.new(
+                box: Box.new(x: 0, y: 0, width: 50, height: 50),
+                children: [
+                  Link.new(
+                    Element.new(
+                      box: Box.new(x: 0, y: 0, width: 10, height: 10),
+                    ),
+                    href: "/grandchild",
+                  ),
+                ],
+              ),
+              href: "/child",
             ),
           ],
         )
       }
 
-      it "returns the most specific one" do
-        expect(
-          inspector.find_element_at(Point.new(x: 5, y: 5))
-        ).to eq(root_node.children.first)
+      it "returns the most specific clickable one" do
+        match = inspector.find_clickable_at(Point.new(x: 5, y: 5))
+
+        expect(match).to eq(root_node.children.first.children.first)
+        expect(match.href).to eq("/grandchild")
       end
     end
 
@@ -170,17 +185,20 @@ RSpec.describe Inspector do
         Element.new(
           box: Box.new(x: 0, y: 0, width: 100, height: 100),
           children: [
-            Element.new(
-              box: Box.new(x: 0, y: 0, width: 10, height: 10),
-              children: [BuildText.new.call(content: "Now you see me")],
+            Link.new(
+              Element.new(
+                box: Box.new(x: 0, y: 0, width: 10, height: 10),
+                children: [BuildText.new.call(content: "Now you see me")],
+              ),
+              href: "/text",
             ),
           ],
         )
       }
 
-      it "returns the text node's immediate parent element" do
+      it "returns the text node's nearest clickable ancestor element" do
         expect(
-          inspector.find_element_at(Point.new(x: 5, y: 5))
+          inspector.find_clickable_at(Point.new(x: 5, y: 5))
         ).to eq(root_node.children.first)
       end
     end
